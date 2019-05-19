@@ -22,47 +22,42 @@ def get_PB_graph(player, colors):
 
     times = [Utils.convert_to_human_readable_time(time)[0] for time in times]
 
-
-
-    graph = dcc.Graph(
-        id='pb-progression',
-        figure={
-            'data': [
-                go.Scatter(
-                    x=dates,
-                    y=times,
-                    mode='lines+markers',
-                    text=markers,
-                    marker={
-                        'size': 9,
-                        'line': {'width': 0.5, 'color': 'black'},
-                        'color':'lightgreen'
-                    },
-                    line=dict(
-                        shape='hv'
-                    ),
-                    hoverinfo='text'
-
-                )
-            ],
-            'layout': go.Layout(
-                title = {'text' : 'PB progression', 'font' : {'color' : colors['title']}},
-                plot_bgcolor = colors['background'],
-                paper_bgcolor = colors['background'],
-                font={
-                    'color' : colors['text']
+    figure={
+        'data': [
+            go.Scatter(
+                x=dates,
+                y=times,
+                mode='lines+markers',
+                text=markers,
+                marker={
+                    'size': 9,
+                    'line': {'width': 0.5, 'color': 'black'},
+                    'color':'lightgreen'
                 },
-                height=600,
-                xaxis={'title': 'Date', 'gridcolor': '#222222', 'linecolor': '#333333'},
-                yaxis={'title': 'Times', 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': '%H:%M:%S'},
-                margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
-                legend={'x': 0, 'y': 1},
-                hovermode='closest'
-            )
-        }
-    )
+                line=dict(
+                    shape='hv'
+                ),
+                hoverinfo='text'
 
-    return graph
+            )
+        ],
+        'layout': go.Layout(
+            title = {'text' : 'PB progression', 'font' : {'color' : colors['title']}},
+            plot_bgcolor = colors['background'],
+            paper_bgcolor = colors['background'],
+            font={
+                'color' : colors['text']
+            },
+            height=600,
+            xaxis={'title': 'Date', 'gridcolor': '#222222', 'linecolor': '#333333'},
+            yaxis={'title': 'Times', 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': '%H:%M:%S'},
+            margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
+            legend={'x': 0, 'y': 1},
+            hovermode='closest'
+        )
+    }
+
+    return figure
 
 
 

@@ -18,6 +18,7 @@ class Player:
         for race in json:
             for entrant in race['results']:
                 if entrant['player'].lower() == self.name.lower():
+                    self.name = entrant['player']
                     race_obj = Race(race, entrant, SRL_data)
                     results.append(race_obj)
         return [result for result in results if not result.dq]
