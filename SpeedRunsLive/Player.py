@@ -9,8 +9,10 @@ class Player:
         self.name = name
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
 
-        results = self.get_races(json['pastraces'], SRL_data)
-        self.races = results
+        if name == '':
+            self.races = []
+        else:
+            self.races = self.get_races(json['pastraces'], SRL_data)
 
 
     def get_races(self, json, SRL_data):

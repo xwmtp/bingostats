@@ -19,6 +19,9 @@ class SRL:
 
     def get_player(self, name, from_file=False):
 
+        if name == '':
+            return Player('', None, None)
+
         if from_file:
             json = readjson_file('./data/races_' + name + '.txt')
         else:
@@ -34,4 +37,6 @@ class SRL:
                 new_name = json['data'][0]['names']['international']
                 if new_name.lower() != name.lower():
                     return self.get_player(new_name)
+
+        return Player('', None, None)
 

@@ -32,14 +32,13 @@ class Dashboard:
 
         app = dash.Dash()
 
-        #player = self.srl.get_player('scaramanga')
+
 
         graphs = [
-            #html.Div([
-            #    get_header_markdown()
-            #], style = {'textAlign' : 'center', 'color' : 'white'}),
+            html.Div(
+                id = 'header', style = {'textAlign' : 'center', 'color' : 'white'}),
             html.Div([
-                dcc.Input(id='my-id', value='xwillmarktheplace', type='text'),
+                dcc.Input(id='my-id', value='', type='text'),
                 html.Div(id='my-div', style={'color' : 'white'})
             ]),
             html.Div([
@@ -70,6 +69,7 @@ class Dashboard:
 
         @app.callback([
              Output(component_id='my-div', component_property='children'),
+             Output(component_id='header', component_property='children'),
              Output(component_id='ranks-graph',     component_property='figure'),
              Output(component_id='srl-point-graph', component_property='figure'),
              Output(component_id='PB-graph',        component_property='figure'),
@@ -82,11 +82,12 @@ class Dashboard:
             player = self.get_player(input_value)
             logging.info('Found player ' + player.name)
             input_text = "Loaded player '{}'.".format(input_value)
+            markdown        = get_header_markdown(player)
             ranks_graph     = get_ranks_graph(player, self.colors)
             srl_point_graph = get_SRL_point_graph(player, self.colors)
             PB_graph        = get_PB_graph(player, self.colors)
             bingo_table     = get_bingo_table(player, self.colors)
-            return input_text, ranks_graph, srl_point_graph, PB_graph, bingo_table
+            return input_text, markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table
 
 
 
