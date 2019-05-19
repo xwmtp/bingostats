@@ -1,0 +1,11 @@
+"green gauntlets" : [saria, child_zl]
+"goron bracelet" : [saria, child_zl]
+"saria's song" : [saria, child_zl]
+"both lost woods hps" : [saria, child_zl]
+"keaton mask" : [child_zl]
+"10 song" : [rba_zl]
+"all 5 skulls in shadow temple" : [rba_zl]
+
+"beat jabu-jabu" : [jabu]
+"defeat barinade" : [jabu]
+"all 4 skulls in jabu" : [jabu]

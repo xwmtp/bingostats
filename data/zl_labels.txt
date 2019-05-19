@@ -1,0 +1,190 @@
+1 Skulltula from each Adult Dungeon;no
+1 Skulltula from each Child Dungeon;no
+1 Unused Small Key in each Adult Dungeon;no
+10 Songs;rba
+15 Different Skulltulas;no
+2 Boss Keys;no
+3 Boots;no
+3 Boss Keys;no
+3 Lake Hylia Skulltulas;no
+3 Shields;no
+3 Shields & 3 Boots;no
+3 Shields & 3 Tunics;no
+3 Skulltulas in Water Temple;no
+3 Songs;no
+3 Swords & 3 Boots;no
+3 Swords & 3 Shields;no
+3 Swords & 3 Tunics;no
+3 Swords, Tunics, Boots, and Shields;no
+3 Tunics;no
+3 Tunics & 3 Boots;no
+3 Unused Keys in Gerudo Training Grounds;no
+30 Deku Nuts;no
+37th Heart Piece (Child Fortress);no
+4 Compasses;no
+4 Maps;no
+4 Skulltulas in Shadow Temple;no
+4 Songs;no
+4 Unused Keys in Forest Temple;no
+4 Unused Keys in Gerudo Training Grounds;no
+5 Compasses;no
+5 Hearts;no
+5 Magic Beans;no
+5 Maps;no
+5 Unused Keys in Gerudo Training Grounds;no
+5 Zora area HPs;no
+500 Rupees;no
+6 Compasses;no
+6 Hearts;no
+6 Maps;no
+6 Songs;no
+6 Unused Keys in Gerudo Training Grounds;no
+7 Compasses;no
+7 Different Unused Keys in Gerudo Training Grounds;no
+7 Hearts;no
+7 Magic Beans;no
+7 Maps;no
+7 Songs;rba
+8 Different Unused Keys in Gerudo Training Grounds;no
+8 Hearts;no
+8 Songs;rba
+9 Hearts;no
+9 Songs;no
+All 3 Elemental Arrows;rba
+All 3 Kokiri Forest area Skulltulas;no
+All 3 Skulltulas in Bottom of the Well;no
+All 3 Skulltulas in Ice Cavern;no
+All 4 Gerudo Valley area Skulltulas;no
+All 4 Lon-Lon Ranch area Skulltulas;no
+All 4 Lost Woods area Skulltulas;no
+All 4 Market area Skulltulas;no
+All 4 Skulltulas in Deku Tree;no
+All 4 Skulltulas in Jabu-Jabu;no
+All 4 Wasteland/ Colossus area Skulltulas;no
+All 5 Lake Hylia Skulltulas;no
+All 5 Skulltulas in Dodongo's Cavern;no
+All 5 Skulltulas in Fire Temple;no
+All 5 Skulltulas in Forest Temple;no
+All 5 Skulltulas in Shadow Temple;rba
+All 5 Skulltulas in Spirit Temple;no
+All 5 Skulltulas in Water Temple;rba
+All 8 Death Mountain area Skulltulas;no
+All 8 Kakariko area Skulltulas;no
+All 8 Zora's Domain area Skulltulas;no
+Beat Dodongo's Cavern;no
+Beat Jabu-Jabu's Belly;no
+Beat the Deku Tree;no
+Beat the Fire Temple;no
+Beat the Forest Temple;no
+Beat the Shadow Temple;no
+Beat the Spirit Temple;no
+Beat the Water Temple;no
+Blue Fire;no
+Blue Gauntlets;no
+Blue Potion;no
+Bolero of Fire;no
+Bomb Bag (30);no
+Boomerang;no
+Both Gerudo Valley HPs;no
+Both Gerudo's Fortress area Skulltulas;no
+Both HPs in Death Mountain Crater;no
+Both HPs in Lost Woods;child
+Both Hyrule Field area Skulltulas;no
+Bottled Fairy;no
+Bronze Gauntlets;no
+Bullet Bag (40);no
+Bullet Bag (50);no
+Cow in House;no
+Defeat 4 Different Iron Knuckles;no
+Defeat a Skull Kid;no
+Defeat a White Wolfos;no
+Defeat all Lizalfos in Dodongo's Cavern;no
+Defeat Amy (Green Poe);no
+Defeat Barinade;no
+Defeat Big Octo;no
+Defeat Bongo-Bongo;no
+Defeat both Flare Dancers;no
+Defeat Dark Link;no
+Defeat King Dodongo;no
+Defeat Meg (purple Poe);no
+Defeat Morpha;no
+Defeat Nabooru-Knuckle;no
+Defeat Phantom Ganon;no
+Defeat Queen Gohma;no
+Defeat Twinrova;no
+Defeat Volvagia;no
+Din's Fire;child
+Double Defense;rba
+Double Magic;rba
+Epona's Song;no
+Exactly 20 Deku Sticks;no
+Exactly 30 Deku Sticks;no
+Fairy Bow;no
+Fairy Slingshot;no
+Farore's Wind;rba
+Fill all 4 Bottle Slots;no
+Fire Arrows;no
+Fire Medallion;no
+Fire Temple Boss Key;no
+Forest Medallion;no
+Forest Temple Boss Key;no
+Free all 9 Gorons in Fire Temple;no
+Frog's HP;no
+Ganon's Castle Boss Key;no
+Gerudo's Card;no
+Get Bombchu chest in Spirit Temple;no
+Get to the end of Fire Trial;no
+Get to the end of Forest Trial;no
+Get to the end of Light Trial;rba
+Get to the end of Shadow Trial;no
+Get to the end of Spirit Trial;no
+Get to the end of Water Trial;no
+Giant's Knife;no
+Giant's Wallet;no
+Golden Gauntlets;no
+Goron Bracelet;child
+Goron Tunic;no
+Green Gauntlets;child
+Ice Arrows;no
+Ice Cavern HP;no
+Iron Boots;no
+Keaton Mask;child
+Lens of Truth;no
+Light Arrows;rba
+Lon Lon Ranch HP;no
+Longshot;no
+Map & Compass in Bottom of the Well;no
+Map & Compass in Deku Tree;no
+Map & Compass in Dodongo's Cavern;no
+Map & Compass in Fire Temple;no
+Map & Compass in Forest Temple;no
+Map & Compass in Ice Cavern;no
+Map & Compass in Jabu-Jabu;no
+Map & Compass in Shadow Temple;no
+Map & Compass in Spirit Temple;rba
+Map & Compass in Water Temple;no
+Megaton Hammer;no
+Milk;no
+Minuet of Forest;no
+Mirror Shield;no
+Nayru's Love;rba
+Obtain all 5 Small Keys in Forest Temple;no
+Obtain all 5 Small Keys in Shadow Temple;rba
+Obtain all 8 Small Keys in Fire Temple;no
+Plant bean in Death Mountain Crater;no
+Quiver (40);no
+Quiver (50);no
+Requiem of Spirit;no
+Ruto's Letter;no
+Saria's Song;child
+Shadow Temple Boss Key;rba
+Silver Gauntlets;no
+Silver Scale;no
+Spirit Temple Boss Key;rba
+Spooky Mask;no
+Stone of Agony;no
+Two Fairy Spells;rba
+Water Medallion;no
+Water Temple Boss Key;no
+Win Bombchu Bowling Prize;no
+Zora Tunic;no

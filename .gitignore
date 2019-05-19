@@ -1,0 +1,28 @@
+.idea/
+__pycache__/
+notebooks/
+docs/
+dataframes/
+venv/
+logs/
+
+bingoboard/TEMP/
+
+Times.pyc
+
+
+*.bingo
+
+# Mac OS X
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# (Thumbnails)
+._*
+
+# (Files that might appear on external disk)
+.Spotlight-V100
+.Trashes

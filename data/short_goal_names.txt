@@ -1,0 +1,190 @@
+1 Skulltula from each Adult Dungeon;Skull from each AD
+1 Skulltula from each Child Dungeon;Skull from each CD
+1 Unused Small Key in each Adult Dungeon;Key from each AD
+10 Songs;10 Songs
+15 Different Skulltulas;15 skulls
+2 Boss Keys;2 BKs
+3 Boots;3 Boots
+3 Boss Keys;3 BKs
+3 Lake Hylia Skulltulas;3 Lake skulls
+3 Shields;-
+3 Shields & 3 Boots;3 Shields/Boots
+3 Shields & 3 Tunics;3 Shields/Tunics
+3 Skulltulas in Water Temple;3 Water skulls
+3 Songs;-
+3 Swords & 3 Boots;3 Swords/Boots
+3 Swords & 3 Shields;3 Swords/Shields
+3 Swords & 3 Tunics;3 Swords/Tunics
+3 Swords, Tunics, Boots, and Shields;Full Equipment
+3 Tunics;-
+3 Tunics & 3 Boots;3 Tunics/Boots
+3 Unused Keys in Gerudo Training Grounds;3 GTG keys
+30 Deku Nuts;30 Nuts
+37th Heart Piece (Child Fortress);37th HP
+4 Compasses;-
+4 Maps;-
+4 Skulltulas in Shadow Temple;4 Shadow skulls
+4 Songs;-
+4 Unused Keys in Forest Temple;4 Forest keys
+4 Unused Keys in Gerudo Training Grounds;4 unused GTG keys
+5 Compasses;-
+5 Hearts;-
+5 Magic Beans;5 Beans
+5 Maps;-
+5 Unused Keys in Gerudo Training Grounds;5 GTG keys
+5 Zora area HPs;5 Zora HPs
+500 Rupees;-
+6 Compasses;-
+6 Hearts;-
+6 Maps;-
+6 Songs;-
+6 Unused Keys in Gerudo Training Grounds;6 unused GTG keys
+7 Compasses;-
+7 Different Unused Keys in Gerudo Training Grounds;7 unused GTG keys
+7 Hearts;-
+7 Magic Beans;7 Beans
+7 Maps;-
+7 Songs;-
+8 Different Unused Keys in Gerudo Training Grounds;8 unused GTG keys
+8 Hearts;-
+8 Songs;-
+9 Hearts;-
+9 Songs;-
+All 3 Elemental Arrows;3 Elem Arrows
+All 3 Kokiri Forest area Skulltulas;3 Kokiri skulls
+All 3 Skulltulas in Bottom of the Well;3 BotW skulls
+All 3 Skulltulas in Ice Cavern;3 IC skulls
+All 4 Gerudo Valley area Skulltulas;4 Valley skulls
+All 4 Lon-Lon Ranch area Skulltulas;4 Lon Lon skulls
+All 4 Lost Woods area Skulltulas;4 LW skulls
+All 4 Market area Skulltulas;4 Market skulls
+All 4 Skulltulas in Deku Tree;4 Deku skulls
+All 4 Skulltulas in Jabu-Jabu;4 Jabu skulls
+All 4 Wasteland/ Colossus area Skulltulas;4 Wasteland skulls
+All 5 Lake Hylia Skulltulas;5 Lake skulls
+All 5 Skulltulas in Dodongo's Cavern;5 DC skulls
+All 5 Skulltulas in Fire Temple;5 Fire skulls
+All 5 Skulltulas in Forest Temple;5 Forest skulls
+All 5 Skulltulas in Shadow Temple;5 Shadow skulls
+All 5 Skulltulas in Spirit Temple;5 Spirit skulls
+All 5 Skulltulas in Water Temple;5 Water skulls
+All 8 Death Mountain area Skulltulas;8 DM skulls
+All 8 Kakariko area Skulltulas;8 Kakariko skulls
+All 8 Zora's Domain area Skulltulas;8 Zora skulls
+Beat Dodongo's Cavern;Beat DC
+Beat Jabu-Jabu's Belly;Beat Jabu
+Beat the Deku Tree;Beat Deku
+Beat the Fire Temple;Beat Fire
+Beat the Forest Temple;Beat Forest
+Beat the Shadow Temple;Beat Shadow
+Beat the Spirit Temple;Beat Spirit
+Beat the Water Temple;Beat Water
+Blue Fire;-
+Blue Gauntlets;-
+Blue Potion;-
+Bolero of Fire;Bolero
+Bomb Bag (30);Bomb Bag 30
+Boomerang;-
+Both Gerudo Valley HPs;Both Valley HPs
+Both Gerudo's Fortress area Skulltulas;Both GTG skulls
+Both HPs in Death Mountain Crater;Both DMC HPs
+Both HPs in Lost Woods;Both LW HPs
+Both Hyrule Field area Skulltulas;Both Field skulls
+Bottled Fairy;-
+Bronze Gauntlets;-
+Bullet Bag (40);Bullet Bag 40
+Bullet Bag (50);Bullet Bag 50
+Cow in House;-
+Defeat 4 Different Iron Knuckles;Defeat 4 Knuckles
+Defeat a Skull Kid;Defeat Skull Kid
+Defeat a White Wolfos;Defeat Wolfos
+Defeat all Lizalfos in Dodongo's Cavern;Defeat DC Lizalfos
+Defeat Amy (Green Poe);Defeat Amy
+Defeat Barinade;-
+Defeat Big Octo;-
+Defeat Bongo-Bongo;Defeat Bongo
+Defeat both Flare Dancers;Flare Dancers
+Defeat Dark Link;-
+Defeat King Dodongo;Defeat KD
+Defeat Meg (purple Poe);Defeat Meg
+Defeat Morpha;-
+Defeat Nabooru-Knuckle;Defeat Nabooru
+Defeat Phantom Ganon;Defeat PG
+Defeat Queen Gohma;Defeat Gohma
+Defeat Twinrova;Defeat Twinrova
+Defeat Volvagia;-
+Din's Fire;-
+Double Defense;-
+Double Magic;-
+Epona's Song;-
+Exactly 20 Deku Sticks;20 Sticks
+Exactly 30 Deku Sticks;30 Sticks
+Fairy Bow;-
+Fairy Slingshot;Slingshot
+Farore's Wind;-
+Fill all 4 Bottle Slots;Fill Bottle Slots
+Fire Arrows;-
+Fire Medallion;-
+Fire Temple Boss Key;Fire BK
+Forest Medallion;-
+Forest Temple Boss Key;Forest BK
+Free all 9 Gorons in Fire Temple;9 Gorons
+Frog's HP;Frog HP
+Ganon's Castle Boss Key;Ganon BK
+Gerudo's Card;-
+Get Bombchu chest in Spirit Temple;Spirit Chu chest
+Get to the end of Fire Trial;Fire Trial
+Get to the end of Forest Trial;Forest Trial
+Get to the end of Light Trial;Light Trial
+Get to the end of Shadow Trial;Shadow Trial
+Get to the end of Spirit Trial;Spirit Trial
+Get to the end of Water Trial;Water Trial
+Giant's Knife;-
+Giant's Wallet;-
+Golden Gauntlets;-
+Goron Bracelet;-
+Goron Tunic;-
+Green Gauntlets;-
+Ice Arrows;-
+Ice Cavern HP;-
+Iron Boots;-
+Keaton Mask;-
+Lens of Truth;-
+Light Arrows;-
+Lon Lon Ranch HP;Lon Lon HP
+Longshot;-
+Map & Compass in Bottom of the Well;BotW Map/Comp
+Map & Compass in Deku Tree;Deku Map/Comp
+Map & Compass in Dodongo's Cavern;DC Map/Comp
+Map & Compass in Fire Temple;Fire Map/Comp
+Map & Compass in Forest Temple;Forest Map/Comp
+Map & Compass in Ice Cavern;Ice Map/Comp
+Map & Compass in Jabu-Jabu;Jabu Map/Comp
+Map & Compass in Shadow Temple;Shadow Map/Comp
+Map & Compass in Spirit Temple;Spirit Map/Comp
+Map & Compass in Water Temple;Water Map/Comp
+Megaton Hammer;Hammer
+Milk;-
+Minuet of Forest;Minuet
+Mirror Shield;-
+Nayru's Love;-
+Obtain all 5 Small Keys in Forest Temple;5 Forest keys
+Obtain all 5 Small Keys in Shadow Temple;5 Shadow keys
+Obtain all 8 Small Keys in Fire Temple;8 Fire keys
+Plant bean in Death Mountain Crater;Plant DMC bean
+Quiver (40);Quiver 40
+Quiver (50);Quiver 50
+Requiem of Spirit;Requiem
+Ruto's Letter;-
+Saria's Song;-
+Shadow Temple Boss Key;Shadow BK
+Silver Gauntlets;-
+Silver Scale;-
+Spirit Temple Boss Key;Spirit BK
+Spooky Mask;-
+Stone of Agony;-
+Two Fairy Spells;2 Fairy Spells
+Water Medallion;-
+Water Temple Boss Key;Water BK
+Win Bombchu Bowling Prize;Bombchu Bowling
+Zora Tunic;Bad Tunic
