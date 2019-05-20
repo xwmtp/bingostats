@@ -4,7 +4,7 @@ import Utils
 
 #### GRAPH 1 - Ranks ####
 
-def get_ranks_graph(player, colors):
+def get_ranks_graph(player, layout):
     races = player.select_races()
     points = [Data_point(race) for race in races]
 
@@ -31,20 +31,7 @@ def get_ranks_graph(player, colors):
                 hoverinfo='text'
             )
         ],
-        'layout': go.Layout(
-            title={'text': 'Bingo results', 'font': {'color': colors['title']}},
-            plot_bgcolor=colors['background'],
-            paper_bgcolor=colors['background'],
-            font={
-                'color': colors['text']
-            },
-            xaxis={'title': 'Date', 'gridcolor' : '#222222', 'linecolor':'#333333'},
-            yaxis={'title': 'Time', 'gridcolor' : '#222222', 'linecolor':'#333333', 'tickformat': '%H:%M:%S'},
-            height = 650,
-            margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
-            legend={'x': 0, 'y': 1},
-            hovermode='closest'
-        )
+        'layout': layout
     }
 
     return figure

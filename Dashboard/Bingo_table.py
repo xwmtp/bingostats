@@ -4,7 +4,6 @@ import logging
 
 def get_bingo_table(player, colors):
 
-    logging.debug('Getting table for ' + player.name)
     df = player.get_pandas_table()
 
     table = dash_table.DataTable(

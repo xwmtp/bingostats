@@ -9,7 +9,7 @@ class Player:
         self.name = name
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
 
-        if name == '':
+        if name == '' or name == '-1':
             self.races = []
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)

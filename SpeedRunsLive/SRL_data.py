@@ -14,13 +14,22 @@ class SRL:
             'v9.3' : BingoVersion('v93')
         }
 
+        self.players = []
+
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
         self.label_dict = convert_to_dict('zl_labels.txt')
 
     def get_player(self, name, from_file=False):
 
         if name == '':
-            return Player('', None, None)
+            return Player('', None, None) # the 'empty' player
+
+        match = [player for player in self.players if name.lower() == player.name]
+        if len(match) > 0:
+            logging.info('Player ' + match[0].name + ' already loaded.')
+            return match[0]
+
+
 
         if from_file:
             json = readjson_file('./data/races_' + name + '.txt')
@@ -29,14 +38,14 @@ class SRL:
 
         if json:
             logging.info('Loading player ' + name)
-            return Player(name, json, self)
+            player = Player(name, json, self)
+            self.players.append(player)
+            return player
         else:
             json = readjson('https://www.speedrun.com/api/v1/users?lookup=' + name)
             if json['data'] != []:
-                logging.debug(json['data'])
                 new_name = json['data'][0]['names']['international']
                 if new_name.lower() != name.lower():
                     return self.get_player(new_name)
 
-        return Player('', None, None)
-
+        return Player('-1', None, None) # player not found

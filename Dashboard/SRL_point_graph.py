@@ -3,7 +3,7 @@ import plotly.graph_objs as go
 
 #### GRAPH 2 - SRL points ####
 
-def get_SRL_point_graph(player, colors):
+def get_SRL_point_graph(player, layout):
     races = player.select_races(sort='latest')
 
     dates          = [race.date   for race in races]
@@ -32,20 +32,7 @@ def get_SRL_point_graph(player, colors):
 
             )
         ],
-        'layout': go.Layout(
-            title={'text': 'SRL point progression', 'font': {'color': colors['title']}},
-            plot_bgcolor=colors['background'],
-            paper_bgcolor=colors['background'],
-            font={
-                'color': colors['text']
-            },
-            height=600,
-            xaxis={'title': 'Date', 'gridcolor' : '#222222', 'linecolor':'#333333'},
-            yaxis={'title': 'Points', 'gridcolor' : '#222222', 'linecolor':'#333333'},
-            margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
-            legend={'x': 0, 'y': 1},
-            hovermode='closest'
-        )
+        'layout': layout
     }
 
     return figure

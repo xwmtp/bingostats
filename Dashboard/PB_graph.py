@@ -6,7 +6,7 @@ import datetime as dt
 #### GRAPH 1 - Ranks ####
 
 
-def get_PB_graph(player, colors):
+def get_PB_graph(player, layout):
     races = player.select_races(sort='latest')
 
     PBs = get_PB_races(races)
@@ -41,20 +41,7 @@ def get_PB_graph(player, colors):
 
             )
         ],
-        'layout': go.Layout(
-            title = {'text' : 'PB progression', 'font' : {'color' : colors['title']}},
-            plot_bgcolor = colors['background'],
-            paper_bgcolor = colors['background'],
-            font={
-                'color' : colors['text']
-            },
-            height=600,
-            xaxis={'title': 'Date', 'gridcolor': '#222222', 'linecolor': '#333333'},
-            yaxis={'title': 'Times', 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': '%H:%M:%S'},
-            margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
-            legend={'x': 0, 'y': 1},
-            hovermode='closest'
-        )
+        'layout': layout
     }
 
     return figure
