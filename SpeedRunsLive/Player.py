@@ -100,12 +100,13 @@ class Player:
             'Type'    : [race.type for race in races],
             'Rank'    : [int(r.rank) for r in races],
             'Entrants': [int(r.total_players) for r in races],
-            'SRL-id'      : [race.id for race in races],
+            'SRL-id'  : [race.id for race in races],
         }
         # goals
         for i in range(5):
             goals = [self.short_goal_dict[r[i]].lower() if len(r) == 5 else '' for r in rows]
-            df_dict['Goal' + str(i+1)] = goals
+            if any([goal != '' for goal in goals]):
+                df_dict['Goal' + str(i+1)] = goals
 
         df_dict['Comment'] = [race.comment for race in races]
 

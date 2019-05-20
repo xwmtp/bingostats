@@ -84,7 +84,6 @@ def get_markers(times, dates, version, newest):
     diff_times = [abs(j - i) for i, j in zip(times[:-1], times[1:])]
 
     human_diff_times = [Utils.convert_to_human_readable_time(diff_time)[1] for diff_time in diff_times]
-    logging.debug(human_diff_times)
 
     diff_times = [''] + human_diff_times
     if version == newest:

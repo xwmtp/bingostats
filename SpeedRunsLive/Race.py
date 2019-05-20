@@ -1,3 +1,4 @@
+import logging
 from Definitions import VERSIONS, BLACKLIST
 from Utils import *
 import re
@@ -93,11 +94,11 @@ class Race:
     def get_row_id(self, comment):
 
         def extract_row(comment):
-            pattern = '((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr))'
+            pattern = r'(^|\s)((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr))($|\s)'
 
             match = re.search(pattern, comment, re.IGNORECASE)
             if match:
-                return match.group().lower()
+                return match.group().lower().strip()
             else:
                 return 'blank'
 
@@ -106,12 +107,16 @@ class Race:
         if regex_row == 'blank':
             return regex_row
 
-        digit = re.search(r'\d', regex_row)
-        if digit:
+        digit_match = re.search(r'\d', regex_row)
+        if digit_match:
+            digit = int(digit_match.group())
+            if digit < 1 or digit > 5:
+                logging.debug('FOUND WRONG ROW NUMBER IN COMMENT: ' + comment)
+                return 'blank'
             if regex_row.startswith('r'):
-                return 'row' + digit.group()
+                return 'row' + str(digit)
             else:
-                return 'col' + digit.group()
+                return 'col' + str(digit)
         # tlbr or bltr
         else:
             row = regex_row.replace('-', '').replace(' ', '')
