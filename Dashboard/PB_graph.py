@@ -1,13 +1,14 @@
-import dash_core_components as dcc
+from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 import Utils
 import datetime as dt
+import logging
 
 #### GRAPH 1 - Ranks ####
 
 
-def get_PB_graph(player, layout):
-    races = player.select_races(sort='latest')
+def get_PB_graph(player, layout, version):
+    races = player.select_races(sort='latest', type = version)
 
     PBs = get_PB_races(races)
 
@@ -63,6 +64,14 @@ def get_PB_races(races):
             PBs.append(best_race)
 
     return PBs
+
+def get_dropdown_options(player):
+        races = player.select_races(sort='latest')
+        versions = set([race.type for race in races])
+        versions = sorted([version for version in versions if version != 'v?'], reverse=True)
+        options = [{'label' : version, 'value' : version} for version in versions]
+        return options
+
 
 
 
