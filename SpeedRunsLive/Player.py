@@ -75,6 +75,20 @@ class Player:
         return goal_counts
 
 
+    def get_versions(self):
+        races = self.select_races(sort='latest')
+        versions = set([race.type for race in races])
+        versions = sorted([version for version in versions if version != 'v?'], reverse=True)
+        return versions
+
+    def get_latest_version(self):
+        versions = self.get_versions()
+        if versions == []:
+            return 'all'
+        else:
+            return versions[0]
+
+
 
     def get_pandas_table(self, type = 'bingo'):
         races = self.select_races(type = type)

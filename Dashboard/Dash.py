@@ -62,8 +62,8 @@ class Dashboard:
                             clearable=False,
                             placeholder = 'Select version.'
                         ),
-                    ], style = {'width' : 100, 'textAlign' : 'right', 'display': 'inline-block'})
-                ], style={'width': '49%','display': 'inline-block'}),
+                    ], style = {'width' : 100, 'textAlign' : 'left', 'display': 'inline-block'})
+                ], style={'width': '49%','display': 'inline-block', 'alignItems' : 'center'}),
 
             ]),
             html.Div('Bingo races table', style = {'textAlign' : 'center', 'color' : self.colors['title'], 'fontSize' : '20px'}),
@@ -103,7 +103,7 @@ class Dashboard:
             markdown         = get_stats_text      (player, input_value)
             ranks_graph      = get_ranks_graph     (player, self.graph_layout('Bingo races', 650, self.colors))
             srl_point_graph  = get_SRL_point_graph (player, self.graph_layout('SRL points progression', 600, self.colors, y_label='Points', tickformat=''))
-            PB_graph         = 'v9.3'
+            PB_graph         = player.get_latest_version()
             bingo_table      = get_bingo_table     (player, self.colors)
             versions_options = get_dropdown_options(player)
             logging.info('Loading complete.')

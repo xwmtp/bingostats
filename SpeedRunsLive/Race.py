@@ -1,22 +1,7 @@
+from Definitions import VERSIONS, BLACKLIST
 from Utils import *
 import re
 
-versions = {
-    'v9.3' : '09-06-2018',
-    'v9.2' : '08-10-2016',
-    'v9.1' : '02-07-2016',
-    'v9'   : '09-04-2016',
-    'v8.5' : '30-01-2016',
-    'v8.4' : '13-12-2014',
-    'v8.3' : '13-09-2014',
-    'v?'   : '01-06-2011',
-    'v2'   : '01-01-1990'
-}
-
-blacklist = [
-    '219509', # scara's wr Kappa
-    '100176'  # blackout ???
-]
 
 html_symbols = {
     '&quot;' : '"',
@@ -57,19 +42,12 @@ class Race:
             self.row = []
 
 
-    #def _get_row(self, id):
-    #    if (id == 'BLANK') or (self.board == None):
-    #        return []
-    #    else:
-    #        return self.board.row(id)
-
-
     def get_type(self, goal):
         self.is_bingo = False
 
         def get_version_date():
 
-            for version, date in versions.items():
+            for version, date in VERSIONS.items():
                 version_date = dt.datetime.strptime(date, '%d-%m-%Y').date()
                 if self.date >= version_date:
                     return version
@@ -77,7 +55,7 @@ class Race:
         def find_version():
             return re.search(r'v\d+(\.(\d)+)*', goal)
 
-        if self.id in blacklist:
+        if self.id in BLACKLIST:
             return 'blacklisted'
 
         if goal.startswith('http://www.speedrunslive.com/tools/oot-bingo'):
