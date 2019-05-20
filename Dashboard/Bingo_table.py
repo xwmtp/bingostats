@@ -1,13 +1,17 @@
 import dash_table
+import logging
+
 
 def get_bingo_table(player, colors):
 
     df = player.get_pandas_table()
 
     table = dash_table.DataTable(
-        id = 'table',
-        columns=[{"name": i, "id": i} for i in df.columns],
-        data=df.to_dict('records'),
+
+       # columns=[{}],
+        data = df.to_dict('records'),
+
+        columns = [{"name": i, "id": i} for i in df.columns],
 
         style_table = {
                 'maxHeight' : 500

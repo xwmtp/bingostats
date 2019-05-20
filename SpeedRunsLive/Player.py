@@ -9,8 +9,10 @@ class Player:
         self.name = name
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
 
-        results = self.get_races(json['pastraces'], SRL_data)
-        self.races = results
+        if name == '' or name == '-1':
+            self.races = []
+        else:
+            self.races = self.get_races(json['pastraces'], SRL_data)
 
 
     def get_races(self, json, SRL_data):
@@ -18,6 +20,7 @@ class Player:
         for race in json:
             for entrant in race['results']:
                 if entrant['player'].lower() == self.name.lower():
+                    self.name = entrant['player']
                     race_obj = Race(race, entrant, SRL_data)
                     results.append(race_obj)
         return [result for result in results if not result.dq]
