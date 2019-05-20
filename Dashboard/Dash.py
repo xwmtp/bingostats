@@ -30,6 +30,7 @@ class Dashboard:
     def run_dashboard(self):
 
         app = dash.Dash()
+        app.title = 'OoT Bingo Stats'
 
 
 
@@ -92,7 +93,7 @@ class Dashboard:
         app.run_server(debug=True)
 
 
-    def graph_layout(self, title, height, colors, y_label='Time', tickformat='%H:%M:%S'):
+    def graph_layout(self, title, height, colors, y_label='Time', tickformat='%-Hh%M'):
         return go.Layout(
             title={'text': title, 'font': {'color': colors['title']}},
             plot_bgcolor=colors['background'],
