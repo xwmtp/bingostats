@@ -56,8 +56,9 @@ class Dashboard:
                 ], style={'width': '49%', 'display': 'inline-block'}),
 
             ]),
+            html.Div('Bingo races table', style = {'textAlign' : 'center', 'color' : self.colors['title'], 'fontSize' : '20px'}),
             html.Div(
-            id = 'bingo-table', style = {'width': '75%', 'display': 'inline-block', 'virtualization' : 'True', 'pagination_mode' : 'False', 'padding' : '100px'})
+            id = 'bingo-table', style = {'width': '75%', 'display': 'inline-block', 'virtualization' : 'True', 'pagination_mode' : 'False', 'padding' : '30px'})
 
         ]
 
@@ -82,7 +83,7 @@ class Dashboard:
             player = self.srl.get_player(input_value)
             markdown        = get_stats_text     (player, input_value)
             ranks_graph     = get_ranks_graph    (player, self.graph_layout('Bingo races', 650, self.colors))
-            srl_point_graph = get_SRL_point_graph(player, self.graph_layout('SRL points progression', 600, self.colors))
+            srl_point_graph = get_SRL_point_graph(player, self.graph_layout('SRL points progression', 600, self.colors, y_label='Points', tickformat=''))
             PB_graph        = get_PB_graph       (player, self.graph_layout('PB progression', 600, self.colors))
             bingo_table     = get_bingo_table    (player, self.colors)
             logging.info('Loading complete.')
@@ -91,7 +92,7 @@ class Dashboard:
         app.run_server(debug=True)
 
 
-    def graph_layout(self, title, height, colors):
+    def graph_layout(self, title, height, colors, y_label='Time', tickformat='%H:%M:%S'):
         return go.Layout(
             title={'text': title, 'font': {'color': colors['title']}},
             plot_bgcolor=colors['background'],
@@ -101,7 +102,7 @@ class Dashboard:
             },
             height=height,
             xaxis={'title': 'Date', 'gridcolor': '#222222', 'linecolor': '#333333'},
-            yaxis={'title': 'Times', 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': '%H:%M:%S'},
+            yaxis={'title': y_label, 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': tickformat},
             margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
             legend={'x': 0, 'y': 1},
             hovermode='closest'
