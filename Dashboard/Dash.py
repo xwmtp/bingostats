@@ -30,6 +30,7 @@ class Dashboard:
     def run_dashboard(self):
 
         app = dash.Dash()
+        app.title =  'OoT Bingo Stats'
 
 
 
