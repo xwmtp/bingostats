@@ -116,7 +116,7 @@ class Race:
     def get_row_id(self, comment):
 
         def extract_row(comment):
-            pattern = r'((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr))'
+            pattern = r'(^|\s)((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr))($|\s)'
 
             match = re.search(pattern, comment, re.IGNORECASE)
             if match:
