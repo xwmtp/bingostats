@@ -23,6 +23,7 @@ class Race:
 
         self.seed = self.get_seed(self.goal)
         self.type = self.get_type(self.goal)
+
         self.total_players = race_json['numentrants']
 
         self.time = dt.timedelta(seconds=player_json['time'])
@@ -44,6 +45,7 @@ class Race:
 
 
     def get_type(self, goal):
+        goal = goal.lower()
         self.is_bingo = False
 
         def get_version_date():
@@ -59,24 +61,24 @@ class Race:
         if self.id in BLACKLIST:
             return 'blacklisted'
 
-        if goal.startswith('http://www.speedrunslive.com/tools/oot-bingo'):
-            if 'short' in goal:
-                return 'short'
-            if 'blackout' in goal:
-                return 'blackout'
+        if 'speedrunslive.com/tools/oot-bingo' in goal:
+            for mode in ['short', 'long', 'blackout', 'black out', '3x3', 'anti', 'double', 'bufferless', 'child', 'jp', 'japanese', 'bingo-j']:
+                if mode in goal.lower():
+                    return mode
             self.is_bingo = True
             found_version = find_version()
             if found_version:
                 return found_version.group()
             else:
-                return get_version_date()
+                type = get_version_date()
+                return type
 
         if goal.startswith('http://www.buzzplugg.com/bryan/v9.2NoSaria/'):
             return 'no-saria'
         for name in {'v4', 'v5', 'v6', 'v7', 'v8'}:
-            if name in goal.lower():
+            if name in goal:
                 return name.replace('.', '')
-        if 'series' or 'championship' in goal:
+        if 'series' in goal or 'championship' in goal:
             return 'ocs '
 
         return 'other'
@@ -94,11 +96,12 @@ class Race:
     def get_row_id(self, comment):
 
         def extract_row(comment):
-            pattern = r'(^|\s)((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr))($|\s)'
+            row_pattern = '((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr)){1}'
+            pattern = r'(?:^|\s|[^\w])' + row_pattern + '(?:$|[^\d])'
 
             match = re.search(pattern, comment, re.IGNORECASE)
             if match:
-                return match.group().lower().strip()
+                return match.groups()[0].lower().strip()
             else:
                 return 'blank'
 

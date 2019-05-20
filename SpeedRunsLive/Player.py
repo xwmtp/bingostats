@@ -1,6 +1,6 @@
 from SpeedRunsLive.Race import Race
 from Utils import *
-import numpy as np
+import logging
 
 
 class Player:
@@ -13,16 +13,29 @@ class Player:
             self.races = []
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
+        logging.debug('Total races found: ' + str(len(self.races)))
+        self.print_goals()
+
+
+    ### DEBUG TO DELETE
+    def print_goals(self):
+        for race in self.races:
+            if race.is_bingo:
+                logging.debug('Bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
+        for race in self.races:
+            if not race.is_bingo:
+                logging.debug('Non-bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
 
 
     def get_races(self, json, SRL_data):
         results = []
         for race in json:
-            for entrant in race['results']:
-                if entrant['player'].lower() == self.name.lower():
-                    self.name = entrant['player']
-                    race_obj = Race(race, entrant, SRL_data)
-                    results.append(race_obj)
+            if race['game']['abbrev'] == 'oot':
+                for entrant in race['results']:
+                    if entrant['player'].lower() == self.name.lower():
+                        self.name = entrant['player']
+                        race_obj = Race(race, entrant, SRL_data)
+                        results.append(race_obj)
         return [result for result in results if not result.dq]
 
 
