@@ -34,7 +34,7 @@ class SRL:
         if from_file:
             json = readjson_file('./data/races_' + name + '.txt')
         else:
-            json = readjson('http://api.speedrunslive.com/pastraces?player=' + name + '&pageSize=1000')
+            json = readjson('http://api.speedrunslive.com/pastraces?player=' + name + '&pageSize=1500')
 
         if json:
             logging.info('Loading player ' + name)
