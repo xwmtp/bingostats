@@ -3,6 +3,7 @@ __pycache__/
 notebooks/
 docs/
 dataframes/
+images/
 venv/
 logs/
 

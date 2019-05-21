@@ -10,6 +10,7 @@ import dash_html_components as html
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output, State
 import logging
+import base64
 
 
 
@@ -33,14 +34,16 @@ class Dashboard:
         app = dash.Dash()
         app.title = 'OoT Bingo Stats'
 
-
-
         components = [
-            html.H1('OoT Bingo Stats', style = {'textAlign' : 'center', 'color' : 'white', 'fontSize' : '65px'}),
             html.Div([
+                html.Div('By:', style={'color': 'white', 'textAlign' : 'center'}),
+                html.A(html.Img(src=app.get_asset_url('Logo.png')), href = 'https://www.twitch.tv/xwillmarktheplace'),
+            ], style = {'left' : 0, 'position' : 'absolute', 'margin-top' : '1px', 'display': 'inline-block'}),
+            html.Div([
+                html.H1('OoT Bingo Stats', style={'textAlign': 'center', 'color': 'white', 'fontSize': '65px'}),
                 html.Div('Enter SRL user name:', style={'color': 'white'}),
                 dcc.Input(id='input-field', value='', type='text')
-            ]),
+            ], style = {'float' : 'center', 'display': 'inline-block' }),
             html.Div(
                 id = 'stats', style = {'textAlign' : 'center', 'color' : 'white'}),
 
@@ -51,24 +54,26 @@ class Dashboard:
 
                 html.Div([
                     dcc.Graph(id='srl-point-graph', figure = {'layout' : self.graph_layout('SRL points progression', 600, self.colors)})
-                ], style={'width': '49%', 'display': 'inline-block'}),
+                ], style={'width': '49%', 'height' : '655px', 'display': 'inline-block'}),
 
                 html.Div([
                     dcc.Graph(id='PB-graph', figure = {'layout' : self.graph_layout('PB progression', 600, self.colors)}),
                     html.Div([
+                        html.Div('Show PBs for:', style={'color': 'white', 'float': 'right'}),
                         dcc.Dropdown(
                             id='dropdown',
                             options=[],
                             clearable=False,
-                            placeholder = 'Select version.'
-                        ),
-                    ], style = {'width' : 100, 'textAlign' : 'left', 'display': 'inline-block'})
-                ], style={'width': '49%','display': 'inline-block', 'alignItems' : 'center'}),
+                            placeholder = 'Version...',
+                            style = {'width' : 90, 'float': 'right'}
+                        )
+                    ], style = {'width' : 150, 'textAlign' : 'left', 'float': 'right', 'display': 'inline-block'})
+                ], style={'width': '49%','display': 'inline-block', 'alignItems' : 'right'}),
 
             ]),
-            html.Div('Bingo races table', style = {'textAlign' : 'center', 'color' : self.colors['title'], 'fontSize' : '20px'}),
+            html.Div('Bingo races table', style = {'textAlign' : 'center', 'color' : self.colors['title'], 'fontSize' : '20px', 'padding-top' : '45px'}),
             html.Div(
-            id = 'bingo-table', style = {'width': '75%', 'display': 'inline-block', 'virtualization' : 'True', 'pagination_mode' : 'False', 'padding' : '30px'})
+            id = 'bingo-table', style = {'width': '72%', 'display': 'inline-block', 'virtualization' : 'True', 'pagination_mode' : 'False', 'padding' : '30px'})
 
         ]
 
@@ -123,7 +128,7 @@ class Dashboard:
             height=height,
             xaxis={'title': 'Date', 'gridcolor': '#222222', 'linecolor': '#333333'},
             yaxis={'title': y_label, 'gridcolor': '#222222', 'linecolor': '#333333', 'tickformat': tickformat},
-            margin={'l': 75, 'b': 75, 't': 150, 'r': 10},
+            margin={'l': 75, 'b': 50, 't': 150, 'r': 10},
             legend={'x': 0, 'y': 1},
             hovermode='closest'
         )

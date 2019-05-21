@@ -18,5 +18,20 @@ def get_newest_version():
 # race IDs that should be ignored (for various reasons)
 BLACKLIST = [
     '219509', # scara's wr Kappa
-    '100176'  # blackout ???
+
+    # blackouts:
+    '100176',
+    '67638',
+    '91357',
+    '86393',
+    '108069',
+    '90718',
+    '128327',
+    '176483',
+
+    # double:
+    '18042',
+    '17667',
+    '18680',
+    '15910',
 ]

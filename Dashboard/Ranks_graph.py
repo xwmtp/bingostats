@@ -26,7 +26,7 @@ def get_ranks_graph(player, layout):
                     'size': 12,
                     'line': {'width': 0.5, 'color': 'black'},
                     'color': relative_ranks,
-                    'showscale':True
+                    'showscale':False
                 },
                 hoverinfo='text'
             )
