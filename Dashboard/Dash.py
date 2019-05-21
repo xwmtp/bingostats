@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Dashboard.Ranks_graph import get_ranks_graph
 from Dashboard.SRL_point_graph import get_SRL_point_graph
-from Dashboard.PB_graph import get_PB_graph
+from Dashboard.PB_graph import get_PB_graph, get_dropdown_options
 from Dashboard.Bingo_table import get_bingo_table
 from Dashboard.Stats_text import get_stats_text
 import dash
@@ -24,13 +24,14 @@ class Dashboard:
             'title' : '#e09456',
             'text' : '#bec7d2'
         }
+        self.current_player = srl.get_player('')
 
 
 
     def run_dashboard(self):
 
         app = dash.Dash()
-        app.title =  'OoT Bingo Stats'
+        app.title = 'OoT Bingo Stats'
 
 
 
@@ -49,12 +50,20 @@ class Dashboard:
             html.Div([
 
                 html.Div([
-                    dcc.Graph(id='srl-point-graph', figure = {'layout' : self.graph_layout('Bingo races', 600, self.colors)})
+                    dcc.Graph(id='srl-point-graph', figure = {'layout' : self.graph_layout('SRL points progression', 600, self.colors)})
                 ], style={'width': '49%', 'display': 'inline-block'}),
 
                 html.Div([
-                    dcc.Graph(id='PB-graph', figure = {'layout' : self.graph_layout('Bingo races', 600, self.colors)})
-                ], style={'width': '49%', 'display': 'inline-block'}),
+                    dcc.Graph(id='PB-graph', figure = {'layout' : self.graph_layout('PB progression', 600, self.colors)}),
+                    html.Div([
+                        dcc.Dropdown(
+                            id='dropdown',
+                            options=[],
+                            clearable=False,
+                            placeholder = 'Select version.'
+                        ),
+                    ], style = {'width' : 100, 'textAlign' : 'left', 'display': 'inline-block'})
+                ], style={'width': '49%','display': 'inline-block', 'alignItems' : 'center'}),
 
             ]),
             html.Div('Bingo races table', style = {'textAlign' : 'center', 'color' : self.colors['title'], 'fontSize' : '20px'}),
@@ -70,30 +79,40 @@ class Dashboard:
 
         app.layout = html.Div(style=style, children = components)
 
+        @app.callback(
+            Output('PB-graph', 'figure'),
+            [Input('dropdown', 'value')]
+        )
+        def update_version(version):
+            return get_PB_graph(self.current_player, self.graph_layout('PB progression', 600, self.colors), version)
+
         @app.callback([
              Output(component_id='stats', component_property='children'),
              Output(component_id='ranks-graph',     component_property='figure'),
              Output(component_id='srl-point-graph', component_property='figure'),
-             Output(component_id='PB-graph',        component_property='figure'),
-             Output(component_id='bingo-table', component_property='children')
+             Output(component_id='dropdown',        component_property='value'),
+             Output(component_id='bingo-table', component_property='children'),
+             Output(component_id='dropdown',    component_property='options')
             ],
             [Input(component_id='input-field', component_property='n_submit')],
             [State(component_id='input-field', component_property='value')]
         )
         def update_output_div(n_submit, input_value):
             player = self.srl.get_player(input_value)
-            markdown        = get_stats_text     (player, input_value)
-            ranks_graph     = get_ranks_graph    (player, self.graph_layout('Bingo races', 650, self.colors))
-            srl_point_graph = get_SRL_point_graph(player, self.graph_layout('SRL points progression', 600, self.colors, y_label='Points', tickformat=''))
-            PB_graph        = get_PB_graph       (player, self.graph_layout('PB progression', 600, self.colors))
-            bingo_table     = get_bingo_table    (player, self.colors)
+            self.current_player = player
+            markdown         = get_stats_text      (player, input_value)
+            ranks_graph      = get_ranks_graph     (player, self.graph_layout('Bingo races', 650, self.colors))
+            srl_point_graph  = get_SRL_point_graph (player, self.graph_layout('SRL points progression', 600, self.colors, y_label='Points', tickformat=''))
+            PB_graph         = player.get_latest_version()
+            bingo_table      = get_bingo_table     (player, self.colors)
+            versions_options = get_dropdown_options(player)
             logging.info('Loading complete.')
-            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table
+            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options
 
         app.run_server(debug=True)
 
 
-    def graph_layout(self, title, height, colors, y_label='Time', tickformat='%H:%M:%S'):
+    def graph_layout(self, title, height, colors, y_label='Time', tickformat='%-Hh%M'):
         return go.Layout(
             title={'text': title, 'font': {'color': colors['title']}},
             plot_bgcolor=colors['background'],
