@@ -14,7 +14,7 @@ class Player:
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
         logging.debug('Total races found: ' + str(len(self.races)))
-        self.print_goals()
+        #self.print_goals() #debug
 
 
     ### DEBUG TO DELETE

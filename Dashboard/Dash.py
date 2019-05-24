@@ -36,13 +36,13 @@ class Dashboard:
 
         components = [
             html.Div([
-                html.Div('By:', style={'color': 'white', 'textAlign' : 'center'}),
                 html.A(html.Img(src=app.get_asset_url('Logo.png')), href = 'https://www.twitch.tv/xwillmarktheplace'),
             ], style = {'left' : 0, 'position' : 'absolute', 'margin-top' : '1px', 'display': 'inline-block'}),
             html.Div([
                 html.H1('OoT Bingo Stats', style={'textAlign': 'center', 'color': 'white', 'fontSize': '65px'}),
                 html.Div('Enter SRL user name:', style={'color': 'white'}),
-                dcc.Input(id='input-field', value='', type='text')
+                dcc.Input(id='input-field', value='', type='text'),
+                html.Button('submit', id='button'),
             ], style = {'float' : 'center', 'display': 'inline-block' }),
             html.Div(
                 id = 'stats', style = {'textAlign' : 'center', 'color' : 'white'}),
@@ -99,10 +99,11 @@ class Dashboard:
              Output(component_id='bingo-table', component_property='children'),
              Output(component_id='dropdown',    component_property='options')
             ],
-            [Input(component_id='input-field', component_property='n_submit')],
+            [Input(component_id='input-field', component_property='n_submit'),
+             Input(component_id='button',      component_property='n_clicks')],
             [State(component_id='input-field', component_property='value')]
         )
-        def update_output_div(n_submit, input_value):
+        def update_output_div(n_submit, n_clicks, input_value):
             player = self.srl.get_player(input_value)
             self.current_player = player
             markdown         = get_stats_text      (player, input_value)
