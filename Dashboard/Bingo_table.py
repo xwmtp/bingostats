@@ -27,13 +27,11 @@ def get_bingo_table(player, colors):
                       'minWidth' : '100px',
                       'font-family': 'Calibri'
         },
-        style_cell_conditional=[
-            {
-                'if': {'column_id': c},
-                'minWidth': '70px'
-            } for c in ['Rank', 'Entrants']
+        style_cell_conditional =
+            [{'if': {'column_id': c}, 'minWidth' : '75px'} for c in ['Entrants']] +
+            [{'if': {'column_id': c}, 'minWidth' : '55px'} for c in ['Type', 'Rank']] +
+            [{'if': {'column_id': c}, 'minWidth' : '65px'} for c in ['Time', 'SRL-id']],
 
-        ],
 
         style_as_list_view=True,
 
