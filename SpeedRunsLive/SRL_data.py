@@ -24,7 +24,7 @@ class SRL:
         if name == '':
             return Player('', None, None) # the 'empty' player
 
-        match = [player for player in self.players if name.lower() == player.name]
+        match = [player for player in self.players if name.lower() == player.name.lower()]
         if len(match) > 0:
             logging.info('Player ' + match[0].name + ' already loaded.')
             return match[0]

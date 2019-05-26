@@ -1,7 +1,11 @@
+from Definitions import is_supported_version
 import dash_core_components as dcc
 import logging
 
 def get_stats_text(player, input):
+
+    def perc(small, big, decimals=1):
+        return round((small / big) * 100, decimals) if big > 0 else 0
 
     # overall stats
     all_races = player.select_races(type="bingo", forfeits=True)
@@ -11,8 +15,8 @@ def get_stats_text(player, input):
     num_forfeits = len([r for r in all_races if r.forfeit])
 
 
-    blank_perc   = round((num_blanks   / len(blank_races)) * 100, 1) if len(completed_races) > 0 else 0
-    forfeit_perc = round((num_forfeits / len(all_races))   * 100, 1) if len(all_races)       > 0 else 0
+    blank_perc   = perc(num_blanks, len(blank_races))
+    forfeit_perc = perc(num_forfeits, len(all_races))
 
     logging.debug('{} bingos, {} excl forfeits, {} bingos without v2/v3, {} of which were blanked.'.format(
         len(all_races), len(completed_races), len(blank_races), num_blanks
@@ -27,15 +31,30 @@ def get_stats_text(player, input):
     elif player.name == '':
         text = ''
     else:
-        text = '# ' + player.name + '\n\n' \
-               'Completed {} bingos.\n\n' \
-               'Blanked {} bingos ({}%).{}\n\n' \
-               'Forfeited {} bingos ({}%).{}\n\n'\
+        text = 'Completed {} bingos.\n\n' \
+               'Blanked {} bingos ({}%){}\n\n' \
+               'Forfeited {} bingos ({}%){}\n\n'\
                .format(len(completed_races),
                        num_blanks, blank_perc, blank_shame,
                        num_forfeits, forfeit_perc, forfeit_shame
                )
+    favorite_row  = player.get_favorite_row()
+    if favorite_row:
+        text = text + 'Most common row: ' + favorite_row + '\n\n'
 
-
+    versions = list(set([race.type for race in completed_races]))
+    versions = sorted(versions)
+    for version in versions:
+        version_races = [race for race in completed_races if race.type == version]
+        if is_supported_version(version):
+            favorite_goal = player.get_favorite_goal(version)
+            if favorite_goal:
+                count = len([race for race in version_races if favorite_goal in race.row])
+                text = text + 'Most common goal in {}: {} ({}%)\n\n'.format(version, player.short_goal_dict[favorite_goal], perc(count,len(version_races),1))
 
     return dcc.Markdown(text)
+
+
+
+
+

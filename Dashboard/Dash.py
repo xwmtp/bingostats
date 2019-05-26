@@ -25,8 +25,6 @@ class Dashboard:
             'title' : '#e09456',
             'text' : '#bec7d2'
         }
-        self.current_player = srl.get_player('')
-
 
 
     def run_dashboard(self):
@@ -44,8 +42,8 @@ class Dashboard:
                 dcc.Input(id='input-field', value='', type='text'),
                 html.Button('submit', id='button'),
             ], style = {'float' : 'center', 'display': 'inline-block' }),
-            html.Div(
-                id = 'stats', style = {'textAlign' : 'center', 'color' : 'white'}),
+            html.H1('', id='player-title', style={'textAlign': 'center', 'color': 'white', 'fontSize': '35px'}),
+            html.Div(id = 'stats', style = {'textAlign' : 'center', 'color' : 'white'}),
 
             html.Div([
                 dcc.Graph(id='ranks-graph', figure = {'layout' : self.graph_layout('Bingo races', 650, self.colors)})
@@ -86,10 +84,15 @@ class Dashboard:
 
         @app.callback(
             Output('PB-graph', 'figure'),
-            [Input('dropdown', 'value')]
+            [Input('dropdown', 'value'),
+             Input('player-title', 'children')]
         )
-        def update_version(version):
-            return get_PB_graph(self.current_player, self.graph_layout('PB progression', 600, self.colors), version)
+        def update_version(version, player_title):
+            if player_title == '':
+                return {'layout' : self.graph_layout('PB progression', 600, self.colors)}
+            else:
+                player = self.srl.get_player(player_title)
+                return get_PB_graph(player, self.graph_layout('PB progression', 600, self.colors), version)
 
         @app.callback([
              Output(component_id='stats', component_property='children'),
@@ -97,7 +100,8 @@ class Dashboard:
              Output(component_id='srl-point-graph', component_property='figure'),
              Output(component_id='dropdown',        component_property='value'),
              Output(component_id='bingo-table', component_property='children'),
-             Output(component_id='dropdown',    component_property='options')
+             Output(component_id='dropdown',    component_property='options'),
+             Output(component_id='player-title', component_property='children')
             ],
             [Input(component_id='input-field', component_property='n_submit'),
              Input(component_id='button',      component_property='n_clicks')],
@@ -105,15 +109,15 @@ class Dashboard:
         )
         def update_output_div(n_submit, n_clicks, input_value):
             player = self.srl.get_player(input_value)
-            self.current_player = player
             markdown         = get_stats_text      (player, input_value)
             ranks_graph      = get_ranks_graph     (player, self.graph_layout('Bingo races', 650, self.colors))
             srl_point_graph  = get_SRL_point_graph (player, self.graph_layout('SRL points progression', 600, self.colors, y_label='Points', tickformat=''))
             PB_graph         = player.get_latest_version()
             bingo_table      = get_bingo_table     (player, self.colors)
             versions_options = get_dropdown_options(player)
+            player_name      = player.name if player.name != '-1' else ''
             logging.info('Loading complete.')
-            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options
+            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options, player_name
 
         app.run_server(debug=True)
 

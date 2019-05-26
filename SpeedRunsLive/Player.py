@@ -17,7 +17,7 @@ class Player:
         #self.print_goals() #debug
 
 
-    ### DEBUG TO DELETE
+    ### DEBUG
     def print_goals(self):
         for race in self.races:
             if race.is_bingo:
@@ -101,7 +101,19 @@ class Player:
         else:
             return versions[0]
 
+    def get_favorite_row(self):
+        rows = [race.row_id for race in self.races if race.row_id != 'blank']
+        if rows != []:
+            return max(set(rows), key=rows.count)
 
+    def get_favorite_goal(self, version='bingo'):
+        if version=='bingo':
+            row_lists = [race.row for race in self.races]
+        else:
+            row_lists = [race.row for race in self.races if race.row if race.type==version]
+        rows = [goal for row in row_lists for goal in row]
+        if rows != []:
+            return max(set(rows), key=rows.count)
 
     def get_pandas_table(self, type = 'bingo'):
         races = self.select_races(type = type)

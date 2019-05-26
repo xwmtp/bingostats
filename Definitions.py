@@ -1,3 +1,4 @@
+import os
 
 # all bingo versions and their start dates (ordered from new to old)
 VERSIONS = {
@@ -14,6 +15,9 @@ VERSIONS = {
 
 def get_newest_version():
     return list(VERSIONS.keys())[0]
+
+def is_supported_version(version):
+    return os.path.isfile('BingoBoards/Versions/' + version.replace('.','') + '.bingo')
 
 # race IDs that should be ignored (for various reasons)
 BLACKLIST = [
