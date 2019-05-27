@@ -9,7 +9,7 @@ import sys
 if __name__ == '__main__':
 
     try:
-        log_level = sys.argv[3]
+        log_level = int(sys.argv[3])
     except IndexError:
         log_level = logging.INFO
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
         host = '127.0.0.1'
 
     try:
-        debug = sys.argv[2]
+        debug = sys.argv[2] == 'True'
     except IndexError:
         debug = True
 
