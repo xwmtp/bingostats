@@ -133,7 +133,7 @@ class Dashboard:
             player = self.srl.get_player(input_value)
             return player.name if player.name != '-1' else ''
 
-        app.run_server(debug=debug, host=host)
+        app.run_server(debug=debug, host=host, port=80)
 
 
 
