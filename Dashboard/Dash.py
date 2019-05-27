@@ -29,6 +29,7 @@ class Dashboard:
 
     def run_dashboard(self):
 
+        logging.info('Starting up Dash app...')
         app = dash.Dash()
         app.title = 'OoT Bingo Stats'
 
@@ -119,7 +120,7 @@ class Dashboard:
             logging.info('Loading complete.')
             return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options, player_name
 
-        app.run_server(debug=True)
+        app.run_server(debug=True, host = '0.0.0.0')
 
 
     def graph_layout(self, title, height, colors, y_label='Time', tickformat='%-Hh%M'):

@@ -7,9 +7,10 @@ import logging
 
 if __name__ == '__main__':
 
-    srl = SRL()
     Logger.initalize_logger()
+    logging.info('Starting BingoStats...')
 
+    srl = SRL()
 
     dashboard = Dashboard(srl)
     dashboard.run_dashboard()
