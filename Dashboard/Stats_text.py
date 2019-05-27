@@ -55,8 +55,9 @@ def get_stats_text(player, input):
                 count = len([race for race in version_races if favorite_goal in race.row])
                 rows_text = rows_text + 'Most common goal in {}: {} ({}%)\n\n'.format(version, player.short_goal_dict[favorite_goal], perc(count,len(version_races),1))
 
-    return html.Div([html.Div(dcc.Markdown(text),      style={'width': '49%', 'display': 'inline-block'}),
-                     html.Div(dcc.Markdown(rows_text), style={'width': '49%', 'display': 'inline-block'})])
+    style = {'width': '30%', 'display': 'inline-block', 'textAlign': 'center'}
+    return html.Div([html.Div(dcc.Markdown(text),      style=style),
+                     html.Div(dcc.Markdown(rows_text), style=style)])
 
 
 

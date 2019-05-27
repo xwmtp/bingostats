@@ -26,7 +26,7 @@ class SRL:
 
         match = [player for player in self.players if name.lower() == player.name.lower()]
         if len(match) > 0:
-            logging.info('Player ' + match[0].name + ' already loaded.')
+            logging.debug(f'Player {match[0].name} found in saved players.')
             return match[0]
 
 
@@ -37,7 +37,6 @@ class SRL:
             json = readjson('http://api.speedrunslive.com/pastraces?player=' + name + '&pageSize=1500')
 
         if json:
-            logging.info('Loading player ' + name)
             player = Player(name, json, self)
             self.players.append(player)
             return player
@@ -46,6 +45,7 @@ class SRL:
             if json['data'] != []:
                 new_name = json['data'][0]['names']['international']
                 if new_name.lower() != name.lower():
+                    logging.debug(f'Found alternative name {new_name}')
                     return self.get_player(new_name)
 
         return Player('-1', None, None) # player not found

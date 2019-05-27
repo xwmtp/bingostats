@@ -10,7 +10,6 @@ import dash_html_components as html
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output, State
 import logging
-import base64
 
 
 
@@ -85,15 +84,17 @@ class Dashboard:
 
         @app.callback(
             Output('PB-graph', 'figure'),
-            [Input('dropdown', 'value'),
-             Input('player-title', 'children')]
+            [Input('dropdown', 'value')],
+            [State('player-title', 'children')]
         )
         def update_version(version, player_title):
             if player_title == '':
                 return {'layout' : self.graph_layout('PB progression', 600, self.colors)}
             else:
                 player = self.srl.get_player(player_title)
-                return get_PB_graph(player, self.graph_layout('PB progression', 600, self.colors), version)
+                PB_graph = get_PB_graph(player, self.graph_layout('PB progression', 600, self.colors), version)
+                logging.info(f'Loaded {version} PB graph for player {player_title}.')
+                return PB_graph
 
         @app.callback([
              Output(component_id='stats', component_property='children'),
@@ -101,14 +102,11 @@ class Dashboard:
              Output(component_id='srl-point-graph', component_property='figure'),
              Output(component_id='dropdown',        component_property='value'),
              Output(component_id='bingo-table', component_property='children'),
-             Output(component_id='dropdown',    component_property='options'),
-             Output(component_id='player-title', component_property='children')
+             Output(component_id='dropdown',    component_property='options')
             ],
-            [Input(component_id='input-field', component_property='n_submit'),
-             Input(component_id='button',      component_property='n_clicks')],
-            [State(component_id='input-field', component_property='value')]
+            [Input(component_id='player-title', component_property='children')]
         )
-        def update_output_div(n_submit, n_clicks, input_value):
+        def update_output_div(input_value):
             player = self.srl.get_player(input_value)
             markdown         = get_stats_text      (player, input_value)
             ranks_graph      = get_ranks_graph     (player, self.graph_layout('Bingo races', 650, self.colors))
@@ -117,10 +115,32 @@ class Dashboard:
             bingo_table      = get_bingo_table     (player, self.colors)
             versions_options = get_dropdown_options(player)
             player_name      = player.name if player.name != '-1' else ''
-            logging.info('Loading complete.')
-            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options, player_name
+            logging.info('Loaded player ' + player.name + '.')
+            return markdown, ranks_graph, srl_point_graph, PB_graph, bingo_table, versions_options
+
+        @app.callback(
+             Output(component_id='player-title', component_property='children'),
+            [Input(component_id='input-field', component_property='n_submit'),
+             Input(component_id='button',      component_property='n_clicks')],
+            [State(component_id='input-field', component_property='value')]
+        )
+        def update_current_player(n_submit, n_clicks, input_value):
+            logging.info('Submitted ' + input_value + '.')
+            player = self.srl.get_player(input_value)
+            return player.name if player.name != '-1' else ''
 
         app.run_server(debug=debug, host=host)
+
+
+
+
+
+
+
+
+
+
+
 
 
     def graph_layout(self, title, height, colors, y_label='Time', tickformat='%-Hh%M'):

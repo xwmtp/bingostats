@@ -8,7 +8,12 @@ import sys
 
 if __name__ == '__main__':
 
-    Logger.initalize_logger()
+    try:
+        log_level = sys.argv[3]
+    except IndexError:
+        log_level = logging.INFO
+
+    Logger.initalize_logger(log_level)
     logging.info('Starting BingoStats...')
 
     srl = SRL()
