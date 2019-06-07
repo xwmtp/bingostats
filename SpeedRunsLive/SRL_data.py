@@ -19,13 +19,13 @@ class SRL:
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
         self.label_dict = convert_to_dict('zl_labels.txt')
 
-    def get_player(self, name, from_file=False):
+    def get_player(self, name, from_saved=False, from_file=False):
 
         if name == '':
             return Player('', None, None) # the 'empty' player
 
         match = [player for player in self.players if name.lower() == player.name.lower()]
-        if len(match) > 0:
+        if from_saved: # don't reload player if it has already been loaded before. Don't use this when running constantly on server
             logging.debug(f'Player {match[0].name} found in saved players.')
             return match[0]
 
