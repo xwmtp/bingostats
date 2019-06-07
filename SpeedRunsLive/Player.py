@@ -13,7 +13,6 @@ class Player:
             self.races = []
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
-            logging.info(f'Created new player {name}.')
         logging.debug('Total races found: ' + str(len(self.races)))
         #self.print_goals() #debug
 
