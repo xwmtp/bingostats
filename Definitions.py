@@ -2,6 +2,7 @@ import os
 
 # all bingo versions and their start dates (ordered from new to old)
 VERSIONS = {
+    'v9.4' : '21-09-2019',
     'v9.3' : '09-06-2018',
     'v9.2' : '08-10-2016',
     'v9.1' : '02-07-2016',

@@ -137,4 +137,5 @@ class Player:
 
         df = pd.DataFrame(df_dict)
         df = df[list(df_dict.keys())]
+        df = df.sort_values('Date', ascending=False)
         return df
