@@ -45,10 +45,12 @@
 7 Magic Beans;7 Beans
 7 Maps;-
 7 Songs;-
-8 Different Unused Keys in Gerudo Training Grounds;8 unused GTG keys
+8 Different Unused Keys in Gerudo Training Grounds;8 unused GTG key
 8 Hearts;-
+8 Hearts (no duping);8 Hearts
 8 Songs;-
 9 Hearts;-
+9 Hearts (no duping);9 Hearts
 9 Songs;-
 All 3 Elemental Arrows;3 Elem Arrows
 All 3 Kokiri Forest area Skulltulas;3 Kokiri skulls

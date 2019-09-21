@@ -13,7 +13,6 @@ class Player:
             self.races = []
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
-            logging.info(f'Created new player {name}.')
         logging.debug('Total races found: ' + str(len(self.races)))
         #self.print_goals() #debug
 
@@ -138,4 +137,5 @@ class Player:
 
         df = pd.DataFrame(df_dict)
         df = df[list(df_dict.keys())]
+        df = df.sort_values('Date', ascending=False)
         return df

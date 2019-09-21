@@ -48,30 +48,28 @@ class Race:
         goal = goal.lower()
         self.is_bingo = False
 
-        def get_version_date():
+        def get_version():
+            found_version = re.search(r'v\d+(\.(\d)+)*', goal)
+            if found_version:
+                return found_version.group()
 
             for version, date in VERSIONS.items():
                 version_date = dt.datetime.strptime(date, '%d-%m-%Y').date()
                 if self.date >= version_date:
                     return version
 
-        def find_version():
-            return re.search(r'v\d+(\.(\d)+)*', goal)
 
         if self.id in BLACKLIST:
             return 'blacklisted'
 
-        if 'speedrunslive.com/tools/oot-bingo' in goal:
+        version = get_version()
+
+        if 'speedrunslive.com/tools/oot-bingo' in goal or f'ootbingo.github.io/bingo/{version}/bingo.html' in goal:
             for mode in ['short', 'long', 'blackout', 'black out', '3x3', 'anti', 'double', 'bufferless', 'child', 'jp', 'japanese', 'bingo-j']:
                 if mode in goal.lower():
                     return mode
             self.is_bingo = True
-            found_version = find_version()
-            if found_version:
-                return found_version.group()
-            else:
-                type = get_version_date()
-                return type
+            return version
 
         if goal.startswith('http://www.buzzplugg.com/bryan/v9.2NoSaria/'):
             return 'no-saria'
