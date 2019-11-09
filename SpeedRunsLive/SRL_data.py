@@ -11,7 +11,8 @@ class SRL:
     def __init__(self):
         self.bingo_versions = {
             'v9.2' : BingoVersion('v92'),
-            'v9.3' : BingoVersion('v93')
+            'v9.3' : BingoVersion('v93'),
+            'v9.4' : BingoVersion('v94')
         }
 
         self.players = []

@@ -39,7 +39,6 @@ class Race:
             bingo_version = SRL_data.bingo_versions[self.type]
             if self.row_id != 'blank':
                 self.row = bingo_version.get_row(int(self.seed), self.row_id)
-            self.label = self._get_zl_label(SRL_data)
         else:
             self.row = []
 
@@ -130,6 +129,7 @@ class Race:
 
 
 
+    # currently not in use
     def _get_zl_label(self, SRL_data):
         labels = [SRL_data.label_dict[goal] for goal in self.row]
         if not labels:
