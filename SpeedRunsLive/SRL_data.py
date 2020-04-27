@@ -12,7 +12,8 @@ class SRL:
         self.bingo_versions = {
             'v9.2' : BingoVersion('v92'),
             'v9.3' : BingoVersion('v93'),
-            'v9.4' : BingoVersion('v94')
+            'v9.4' : BingoVersion('v94'),
+            'v9.5' : BingoVersion('v95')
         }
 
         self.players = []

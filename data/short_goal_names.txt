@@ -190,3 +190,21 @@ Water Medallion;-
 Water Temple Boss Key;Water BK
 Win Bombchu Bowling Prize;Bombchu Bowling
 Zora Tunic;Bad Tunic
+2 Lon Lon Ranch Area Skulltulas;2 Lon Lon Skulls
+Open 3 Gold Rupee Chests;3 Gold Rupees
+Open 5 Gold Rupee Chests;5 Gold Rupees
+Open 6 Gold Rupee Chests;6 Gold Rupees
+All 4 Adult Skulltulas in Zora's Domain;4 Adult Zora Skulls
+All 4 Child Skulltulas in Zora's Domain;4 Child Zora Skulls
+Clear 4 Silver Rupee Rooms;4 Rupee Rooms
+Clear 8 Silver Rupee Rooms;8 Rupee Rooms
+Clear 10 Silver Rupee Rooms;10 Rupee Rooms
+Plant 5 Magic Beans;Plant 5 Beans
+Open 2 Boss Key Doors;2 Boss Doors
+Open 3 Boss Key Doors;3 Boss Doors
+20 Different Skulltulas;20 Skulls
+30 Different Skulltulas;30 Skulls
+7 Different Bottled Contents;7 Bottle Contents
+Desert Colossus HP;Colossus HP
+Open 50 Rupee Chest in Wasteland;Wasteland 
+Both Rusty Switches in Spirit Temple;Spirit Rusty Switches
