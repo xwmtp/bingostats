@@ -6,12 +6,16 @@ dataframes/
 images/
 venv/
 logs/
+analysis/
+Versions/
+BingoBoards/bingo/
 
 BingoBoards/TEMP/
 
 Times.pyc
 
-
+favicon.ico
+Logo.png
 *.bingo
 
 # Mac OS X
