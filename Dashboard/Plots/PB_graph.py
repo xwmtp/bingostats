@@ -1,36 +1,34 @@
+from Dashboard.Plots.Layout import get_graph_layout
 import plotly.graph_objs as go
 import Utils
 import datetime as dt
-import logging
 from Definitions import get_newest_version
 
-#### GRAPH 1 - Ranks ####
 
+def get_PB_graph(player=None, version=None):
+    data = []
 
-def get_PB_graph(player, layout, version):
-    races = player.select_races(sort='latest', type = version)
+    if player and version:
+        races = player.select_races(sort='latest', type = version)
 
-    if len(races) == 0:
-        dates = []
-        times = []
-        markers = []
-    else:
+        if len(races) == 0:
+            dates = []
+            times = []
+            markers = []
+        else:
+            PBs = get_PB_races(races)
+            newest = get_newest_version()
 
-        PBs = get_PB_races(races)
-        newest = get_newest_version()
+            dates = [PB.date                 for PB in PBs]
+            times = [PB.time.total_seconds() for PB in PBs]
+            if version == newest:
+                dates.append(dt.date.today()) # pb still valid today
+                times.append(times[-1])  # need last elements twice
 
-        dates = [PB.date                 for PB in PBs]
-        times = [PB.time.total_seconds() for PB in PBs]
-        if version == newest:
-            dates.append(dt.date.today()) # pb still valid today
-            times.append(times[-1])  # need last elements twice
+            markers = get_markers(times, dates, version, newest)
+            times = [Utils.convert_to_human_readable_time(time)[0] for time in times]
 
-        markers = get_markers(times, dates, version, newest)
-        times = [Utils.convert_to_human_readable_time(time)[0] for time in times]
-
-    figure={
-        'data': [
-            go.Scatter(
+        data = [go.Scatter(
                 x=dates,
                 y=times,
                 mode='lines+markers',
@@ -45,9 +43,11 @@ def get_PB_graph(player, layout, version):
                 ),
                 hoverinfo='text'
 
-            )
-        ],
-        'layout': layout
+        )]
+
+    figure={
+        'data': data,
+        'layout': get_graph_layout(title='PB progression', height=600)
     }
 
     return figure
@@ -70,10 +70,13 @@ def get_PB_races(races):
 
     return PBs
 
-def get_dropdown_options(player):
+def get_dropdown_options(player=None):
+    if player:
         versions = player.get_versions()
-        options = [{'label' :  'all', 'value' : 'bingo'}] + [{'label': version, 'value': version} for version in versions]
-        return options
+    else:
+        versions = []
+    options = [{'label' : 'all', 'value' : 'bingo'}] + [{'label': version, 'value': version} for version in versions]
+    return options
 
 
 

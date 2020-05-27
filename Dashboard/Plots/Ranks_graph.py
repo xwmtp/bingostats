@@ -1,22 +1,22 @@
-import dash_core_components as dcc
+from Dashboard.Plots.Layout import get_graph_layout
 import plotly.graph_objs as go
 import Utils
 
 #### GRAPH 1 - Ranks ####
 
-def get_ranks_graph(player, layout):
-    races = player.select_races()
-    points = [Data_point(race) for race in races]
+def get_ranks_graph(player=None):
+    data = []
 
-    dates          = [point.date          for point in points]
-    times          = [point.scatter_time  for point in points]
-    relative_ranks = [point.relative_rank for point in points]
-    markers        = [point.marker        for point in points]
+    if player:
+        races = player.select_races()
+        points = [Data_point(race) for race in races]
 
+        dates          = [point.date          for point in points]
+        times          = [point.scatter_time  for point in points]
+        relative_ranks = [point.relative_rank for point in points]
+        markers        = [point.marker        for point in points]
 
-    figure={
-        'data': [
-            go.Scatter(
+        data = [go.Scatter(
                 x=dates,
                 y=times,
                 text=markers,
@@ -29,13 +29,13 @@ def get_ranks_graph(player, layout):
                     'showscale':False
                 },
                 hoverinfo='text'
-            )
-        ],
-        'layout': layout
+        )]
+
+
+    return {
+        'data': data,
+        'layout': get_graph_layout(title='Bingo races', height=650)
     }
-
-    return figure
-
 
 
 class Data_point:

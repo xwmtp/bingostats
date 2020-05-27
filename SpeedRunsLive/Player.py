@@ -14,17 +14,6 @@ class Player:
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
         logging.debug('Total races found: ' + str(len(self.races)))
-        #self.print_goals() #debug
-
-
-    ### DEBUG
-    def print_goals(self):
-        for race in self.races:
-            if race.is_bingo:
-                logging.debug('Bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
-        for race in self.races:
-            if not race.is_bingo:
-                logging.debug('Non-bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
 
 
     def get_races(self, json, SRL_data):
@@ -54,13 +43,11 @@ class Player:
         if not forfeits:
             races = [race for race in races if not race.forfeit]
 
-
         # sorting
         if sort == 'best':
             races = sorted(races, key=lambda r: r.time)
         elif sort == 'latest':
             races = sorted(races, key=lambda r: r.date, reverse=True)
-
 
         if n==-1:
             n = len(races)
@@ -123,8 +110,7 @@ class Player:
             'Time'    : [convert_to_human_readable_time(race.time.total_seconds())[1] for race in races],
             'Date'    : [race.date for race in races],
             'Type'    : [race.type for race in races],
-            'Rank'    : [int(r.rank) for r in races],
-            'Entrants': [int(r.total_players) for r in races],
+            'Rank'    : [f'{r.rank}/{r.total_players}' for r in races],
             'SRL-id'  : [race.id for race in races],
         }
         # goals
@@ -139,3 +125,12 @@ class Player:
         df = df[list(df_dict.keys())]
         df = df.sort_values('Date', ascending=False)
         return df
+
+    ### DEBUG
+    def print_goals(self):
+        for race in self.races:
+            if race.is_bingo:
+                logging.debug('Bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
+        for race in self.races:
+            if not race.is_bingo:
+                logging.debug('Non-bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)

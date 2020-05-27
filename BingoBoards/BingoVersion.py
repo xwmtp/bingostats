@@ -28,10 +28,10 @@ class BingoVersion:
         with zipfile.ZipFile('BingoBoards/Versions/' + version + '.bingo', 'a') as zip_file:
             zip_file.extractall('BingoBoards')
 
-        self.goal_list = np.load(TEMPORARY_DIR + '/goal_list.npy').item()
+        self.goal_list = np.load(TEMPORARY_DIR + '/goal_list.npy', allow_pickle=True).item()
         board_string = reader.file_to_string(TEMPORARY_DIR + '/boards.txt')
 
-        dir.rm(TEMPORARY_DIR)
+        #dir.rm(TEMPORARY_DIR)
 
         self.boards = board_string.split('\n')
 

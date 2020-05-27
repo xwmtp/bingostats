@@ -21,17 +21,16 @@ class SRL:
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
         self.label_dict = convert_to_dict('zl_labels.txt')
 
+
     def get_player(self, name, from_saved=False, from_file=False):
 
         if name == '':
-            return Player('', None, None) # the 'empty' player
+            return
 
         match = [player for player in self.players if name.lower() == player.name.lower()]
         if from_saved: # don't reload player if it has already been loaded before. Don't use this when running constantly on server
             logging.debug(f'Player {match[0].name} found in saved players.')
             return match[0]
-
-
 
         if from_file:
             json = readjson_file('./data/races_' + name + '.txt')
@@ -43,11 +42,14 @@ class SRL:
             self.players.append(player)
             return player
         else:
+            print('looking on src')
             json = readjson('https://www.speedrun.com/api/v1/users?lookup=' + name)
+            print('test')
             if json['data'] != []:
                 new_name = json['data'][0]['names']['international']
                 if new_name.lower() != name.lower():
                     logging.debug(f'Found alternative name {new_name}')
                     return self.get_player(new_name)
 
-        return Player('-1', None, None) # player not found
+        # player not found
+        return Player('-1', None, None)

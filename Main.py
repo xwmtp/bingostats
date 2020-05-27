@@ -5,7 +5,7 @@ import logging
 import sys
 
 
-
+# python main.py host debug log_level
 if __name__ == '__main__':
 
     try:
