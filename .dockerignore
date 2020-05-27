@@ -1,0 +1,6 @@
+/env
+/logs
+/BingoBoards/TEMP
+/BingoBoards/bingo
+.gitignore
+README.md
