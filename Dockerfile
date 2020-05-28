@@ -9,4 +9,4 @@ VOLUME ["/etc/BingoStats/logs"]
 EXPOSE 80
 
 WORKDIR /etc/BingoStats
-CMD ["python", "Main.py"]
+CMD ["python", "Main.py", "0.0.0.0", "False"]
