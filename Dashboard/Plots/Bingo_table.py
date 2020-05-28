@@ -30,11 +30,10 @@ def get_bingo_table(player=None):
                       'font-family': 'Calibri'
         },
         style_cell_conditional =
-            #[{'if': {'column_id': c}, 'minWidth' : '75px', 'width' : '75px', 'maxWidth' : '75px'} for c in ['Entrants']] +
-            [{'if': {'column_id': c}, 'minWidth' : '90px', 'width': '90px', 'maxWidth': '90px'} for c in ['Date']] +
-            [{'if': {'column_id': c}, 'minWidth' : '55px', 'width' : '55px', 'maxWidth' : '55px'} for c in ['Type', 'Rank']] +
-            #[{'if': {'column_id': c}, 'minWidth': '300px', 'maxWidth' : '300px'} for c in ['Comment']] +
-            [{'if': {'column_id': c}, 'minWidth' : '65px', 'width' : '75px', 'maxWidth' : '65px'} for c in ['Time', 'SRL-id']],
+            [{'if': {'column_id': c}, 'minWidth' : '90px', 'width' : '90px', 'maxWidth' : '90px'} for c in ['Date']] +
+            [{'if': {'column_id': c}, 'minWidth' : '75px', 'width' : '75px', 'maxWidth' : '75px'} for c in ['Type']] +
+            [{'if': {'column_id': c}, 'minWidth' : '55px', 'width' : '55px', 'maxWidth' : '55px'} for c in ['Rank']] +
+            [{'if': {'column_id': c}, 'minWidth' : '65px', 'width' : '65px', 'maxWidth' : '65px'} for c in ['Time', 'SRL-id']],
 
         sort_action = 'native',
 

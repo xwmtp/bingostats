@@ -75,6 +75,7 @@ def get_dropdown_options(player=None):
         versions = player.get_versions()
     else:
         versions = []
+    versions = [v.replace('beta', 'b') for v in versions]
     options = [{'label' : 'all', 'value' : 'bingo'}] + [{'label': version, 'value': version} for version in versions]
     return options
 

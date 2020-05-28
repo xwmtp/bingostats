@@ -11,8 +11,20 @@ def get_html():
             html.Div([
                 html.H1('OoT Bingo Stats'),
                 html.Div('Enter SRL user name:'),
-                dcc.Input(id='input-field', value='', type='text'),
-                html.Button('submit', id='button')
+                dcc.Input(id='input-field', value='', type='text', maxLength=50, spellCheck=False),
+                html.Button('submit', id='button'),
+                html.Div([
+                    dcc.Checklist(id='beta-checkbox',
+                                  className='no-display',
+                                  options=[{
+                                      'label': 'Include beta versions',
+                                      'value': 'use_betas'
+                                  }],
+                                  value=[]
+                                  ),
+                    #html.Span("Goals of rows done on beta versions will not be displayed", className='tooltiptext')
+                ], id='beta-checkbox-div', className='tooltip'),
+
             ]),
             html.H2('', id='player-title'),
             html.Div(id = 'stats'),
@@ -42,7 +54,11 @@ def get_html():
 
             html.H3('Bingo races table'),
             html.Div(id = 'bingo-table'),
+
+            # divs only used to store dash information, not displayed
             html.Div('', id='current-player', className='no-display'),
+            html.Div('', id='use-betas', className='no-display'),
+            html.Div('', id='current-version', className='no-display'),
 
             html.A([
                 html.Div('by xwillmarktheplace', id='footer-text'),

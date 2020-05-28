@@ -22,8 +22,7 @@ class SRL:
         self.label_dict = convert_to_dict('zl_labels.txt')
 
 
-    def get_player(self, name, from_saved=False, from_file=False):
-
+    def get_player(self, name, include_betas=False, from_saved=False, from_file=False):
         if name == '':
             return
 
@@ -38,17 +37,13 @@ class SRL:
             json = readjson(f'http://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
 
         if json:
-            player = Player(name, json, self)
+            player = Player(name, json, self, include_betas)
             self.players.append(player)
             return player
-        #else:
-        #    json = readjson(f'https://www.speedrun.com/api/v1/users?lookup={name}')
-        #    if json['data'] != []:
-        #        new_name = json['data'][0]['names']['international']
-        #        if new_name.lower() != name.lower():
-        #            logging.debug(f'Found alternative name {new_name}')
-        #            return self.get_player(new_name)
-
-        # player not found
-
-        #return Player('-1', None, None)
+        else:
+            json = readjson(f'https://www.speedrun.com/api/v1/users?lookup={name}')
+            if json['data'] != []:
+                new_name = json['data'][0]['names']['international']
+                if new_name.lower() != name.lower():
+                    logging.debug(f'Found alternative name {new_name}')
+                    return self.get_player(new_name)

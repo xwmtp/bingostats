@@ -43,6 +43,34 @@ button {
   display: none;
 }
 
+.display {
+  display: block;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 400px;
+  top: -5px;
+  left: 50%;
+  margin-left: -200px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 
 /* Statstics text block */
 #stats {
@@ -94,7 +122,7 @@ button {
 
 #dropdown {
   color: black;
-  width: 90px;
+  width: 100px;
 }
 
 

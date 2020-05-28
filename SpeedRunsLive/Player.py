@@ -5,25 +5,25 @@ import logging
 
 class Player:
 
-    def __init__(self, name, json, SRL_data):
+    def __init__(self, name, json, SRL_data, include_betas=False):
         self.name = name
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
 
         if name == '' or name == '-1':
             self.races = []
         else:
-            self.races = self.get_races(json['pastraces'], SRL_data)
+            self.races = self.parse_races(json['pastraces'], SRL_data, include_betas=include_betas)
         logging.debug(f'Total races found: {str(len(self.races))}')
 
 
-    def get_races(self, json, SRL_data):
+    def parse_races(self, json, SRL_data, include_betas):
         results = []
         for race in json:
             if race['game']['abbrev'] == 'oot':
                 for entrant in race['results']:
                     if entrant['player'].lower() == self.name.lower():
                         self.name = entrant['player']
-                        race_obj = Race(race, entrant, SRL_data)
+                        race_obj = Race(race, entrant, SRL_data, include_betas)
                         results.append(race_obj)
         return [result for result in results if not result.dq]
 
@@ -109,7 +109,7 @@ class Player:
         df_dict = {
             'Time'    : [convert_to_human_readable_time(race.time.total_seconds())[1] for race in races],
             'Date'    : [race.date for race in races],
-            'Type'    : [race.type for race in races],
+            'Type'    : [race.type.replace('beta', 'b') for race in races],
             'Rank'    : [f'{r.rank}/{r.total_players}' for r in races],
             'SRL-id'  : [race.id for race in races],
         }

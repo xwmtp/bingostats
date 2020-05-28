@@ -14,6 +14,7 @@ def get_stats_divs(player, input):
                      html.Div(dcc.Markdown(row_stats_text), className = 'stats-block')]
     elif input:
         divs = [html.Div(f"User '{input}' not found.", className = 'user-not-found')] # a non-empty name was submitted
+        logging.info(f"Submitted user name '{input}' was not found")
 
     return divs
 
@@ -21,6 +22,7 @@ def get_stats_divs(player, input):
 def _get_general_stats_string(player):
     all_races = player.select_races(type="bingo", forfeits=True)
     completed_races = player.select_races(type="bingo", forfeits=False)
+
     blank_races = [r for r in completed_races if
                    r.type != 'v2' and r.type != 'v3']  # posting rows was not really a thing in v2/3
     num_blanks = len([r for r in blank_races if r.row_id == 'blank'])
@@ -51,10 +53,11 @@ def _get_rows_stats_string(player):
         version_races = [race for race in completed_races if race.type == version]
         if is_supported_version(version):
             favorite_goal = player.get_favorite_goal(version)
-            fav_goal = player.short_goal_dict[favorite_goal]
-            count = len([race for race in version_races if favorite_goal in race.row])
-            fav_goal_perc = perc(count, len(version_races), 1)
-            rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({fav_goal_perc}%)\n\n'
+            if favorite_goal:
+                fav_goal = player.short_goal_dict[favorite_goal]
+                count = len([race for race in version_races if favorite_goal in race.row])
+                fav_goal_perc = perc(count, len(version_races), 1)
+                rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({fav_goal_perc}%)\n\n'
     return rows_text
 
 

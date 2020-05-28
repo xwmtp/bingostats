@@ -1,6 +1,7 @@
 import os
 
 # all bingo versions and their start dates (ordered from new to old)
+# only needed for bingo urls from before the switch to ootbingo.github
 VERSIONS = {
     'v9.4' : '21-09-2019',
     'v9.3' : '09-06-2018',
