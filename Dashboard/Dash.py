@@ -62,13 +62,9 @@ class Dashboard:
             [State(component_id='input-field', component_property='value')]
         )
         def update_current_player(n_submit, n_clicks, input_value):
-            try:
-                logging.info(f"Submitted: '{input_value}'")
-                return input_value
-            except UnicodeEncodeError as e:
-                print('error!!!!!!!!!!')
-                logging.info(e)
-                return ''
+            logging.info(f"Submitted: '{input_value}'")
+            return input_value
+
 
 
         # Upon changing the bingo version in the dropdown

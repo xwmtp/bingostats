@@ -5,17 +5,17 @@ import logging
 
 def get_stats_divs(player, input):
 
-    general_stats_text = ''
-    row_stats_text = ''
+    divs = []
 
     if player:
         general_stats_text = _get_general_stats_string(player)
         row_stats_text = _get_rows_stats_string(player)
-    elif input:
-        general_stats_text = "User '" + input + "' not found."  # a non-empty name was submitted
-
-    return [html.Div(dcc.Markdown(general_stats_text), className = 'stats-block'),
+        divs = [html.Div(dcc.Markdown(general_stats_text), className = 'stats-block'),
                      html.Div(dcc.Markdown(row_stats_text), className = 'stats-block')]
+    elif input:
+        divs = [html.Div(f"User '{input}' not found.", className = 'user-not-found')] # a non-empty name was submitted
+
+    return divs
 
 
 def _get_general_stats_string(player):

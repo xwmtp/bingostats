@@ -41,15 +41,14 @@ class SRL:
             player = Player(name, json, self)
             self.players.append(player)
             return player
-        else:
-            print('looking on src')
-            json = readjson('https://www.speedrun.com/api/v1/users?lookup=' + name)
-            print('test')
-            if json['data'] != []:
-                new_name = json['data'][0]['names']['international']
-                if new_name.lower() != name.lower():
-                    logging.debug(f'Found alternative name {new_name}')
-                    return self.get_player(new_name)
+        #else:
+        #    json = readjson('https://www.speedrun.com/api/v1/users?lookup=' + name)
+        #    if json['data'] != []:
+        #        new_name = json['data'][0]['names']['international']
+        #        if new_name.lower() != name.lower():
+        #            logging.debug(f'Found alternative name {new_name}')
+        #            return self.get_player(new_name)
 
         # player not found
-        return Player('-1', None, None)
+
+        #return Player('-1', None, None)

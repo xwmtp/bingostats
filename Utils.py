@@ -4,6 +4,7 @@ import math
 import csv
 import json
 import requests
+import logging
 
 
 def readjson(url, text_only=False, tries=5):
@@ -21,8 +22,7 @@ def readjson(url, text_only=False, tries=5):
         if status == 404:
             return
 
-    error_message = "Error in accessing api:", status, "(after", tries, "tries)"
-    print(error_message)
+    logging.error("Error in accessing api:", status, "(after", tries, "tries)")
 
 
 def readjson_file(file):
