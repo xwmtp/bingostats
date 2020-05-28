@@ -13,7 +13,7 @@ class Player:
             self.races = []
         else:
             self.races = self.get_races(json['pastraces'], SRL_data)
-        logging.debug('Total races found: ' + str(len(self.races)))
+        logging.debug(f'Total races found: {str(len(self.races))}')
 
 
     def get_races(self, json, SRL_data):
@@ -130,7 +130,7 @@ class Player:
     def print_goals(self):
         for race in self.races:
             if race.is_bingo:
-                logging.debug('Bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
+                logging.debug(f'Bingo goal: {race.goal} | Type: {race.type} | id: {race.id}')
         for race in self.races:
             if not race.is_bingo:
-                logging.debug('Non-bingo goal: ' + race.goal + ' | Type: ' + race.type + ' | id: ' + race.id)
+                logging.debug(f'Non-bingo goal: {race.goal} | Type: {race.type} | id: {race.id}')

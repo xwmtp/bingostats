@@ -36,18 +36,14 @@ def _get_general_stats_string(player):
     blank_shame = ' .shame' if blank_perc > 25 else ''
     forfeit_shame = ' .shame' if forfeit_perc > 25 else ''
 
-    return 'Completed {} bingos\n\n' \
-           'Blanked {} bingos ({}%){}\n\n' \
-           'Forfeited {} bingos ({}%){}\n\n' \
-        .format(len(completed_races),
-                num_blanks, blank_perc, blank_shame,
-                num_forfeits, forfeit_perc, forfeit_shame
-        )
+    return f'Completed {len(completed_races)} bingos\n\n' \
+           f'Blanked {num_blanks} bingos ({blank_perc}%){blank_shame}\n\n' \
+           f'Forfeited {num_forfeits} bingos ({forfeit_perc}%){forfeit_shame}\n\n'
 
 def _get_rows_stats_string(player):
     completed_races = player.select_races(type="bingo", forfeits=False)
     favorite_row = player.get_favorite_row()
-    rows_text = 'Most common row: ' + favorite_row + '\n\n'
+    rows_text = f'Most common row: {favorite_row}\n\n'
 
     versions = list(set([race.type for race in completed_races]))
     versions = sorted(versions)
@@ -55,10 +51,10 @@ def _get_rows_stats_string(player):
         version_races = [race for race in completed_races if race.type == version]
         if is_supported_version(version):
             favorite_goal = player.get_favorite_goal(version)
+            fav_goal = player.short_goal_dict[favorite_goal]
             count = len([race for race in version_races if favorite_goal in race.row])
-            rows_text = rows_text + 'Most common goal in {}: {} ({}%)\n\n'.format(version,
-                                                                                  player.short_goal_dict[favorite_goal],
-                                                                                  perc(count, len(version_races), 1))
+            fav_goal_perc = perc(count, len(version_races), 1)
+            rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({fav_goal_perc}%)\n\n'
     return rows_text
 
 

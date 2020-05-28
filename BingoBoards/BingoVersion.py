@@ -20,12 +20,12 @@ class BingoVersion:
 
     def __init__(self, version):
 
-        if not os.path.isfile('BingoBoards/Versions/' + version + '.bingo'):
-            raise ValueError("'" + version + "' is not a supported version.")
+        if not os.path.isfile(f'BingoBoards/Versions/{version}.bingo'):
+            raise ValueError(f"'{version}' is not a supported version.")
 
         reader = FileReader()
 
-        with zipfile.ZipFile('BingoBoards/Versions/' + version + '.bingo', 'a') as zip_file:
+        with zipfile.ZipFile(f'BingoBoards/Versions/{version}.bingo', 'a') as zip_file:
             zip_file.extractall('BingoBoards')
 
         self.goal_list = np.load(TEMPORARY_DIR + '/goal_list.npy', allow_pickle=True).item()
@@ -38,7 +38,7 @@ class BingoVersion:
     def get_board(self, seed):
 
         if seed < 0 or seed > 1e6 or not isinstance(seed, int):
-            raise ValueError("'" + str(seed) + "' is not a valid seed.")
+            raise ValueError(f"'{str(seed)}' is not a valid seed.")
 
         board = self.boards[seed].split(' ')
 
@@ -49,7 +49,7 @@ class BingoVersion:
 
     def get_row(self, seed, row_id):
         if row_id not in ROW_IDS:
-            raise ValueError("'" + row_id + "' is not a valid Row ID.")
+            raise ValueError(f"'{row_id}' is not a valid Row ID.")
 
         row_ids = ROW_INDICES[row_id]
         board = self.get_board(seed)

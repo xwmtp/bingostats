@@ -33,16 +33,16 @@ class SRL:
             return match[0]
 
         if from_file:
-            json = readjson_file('./data/races_' + name + '.txt')
+            json = readjson_file(f'./data/races_{name}.txt')
         else:
-            json = readjson('http://api.speedrunslive.com/pastraces?player=' + name + '&pageSize=1500')
+            json = readjson(f'http://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
 
         if json:
             player = Player(name, json, self)
             self.players.append(player)
             return player
         #else:
-        #    json = readjson('https://www.speedrun.com/api/v1/users?lookup=' + name)
+        #    json = readjson(f'https://www.speedrun.com/api/v1/users?lookup={name}')
         #    if json['data'] != []:
         #        new_name = json['data'][0]['names']['international']
         #        if new_name.lower() != name.lower():

@@ -94,7 +94,7 @@ class Race:
 
         def extract_row(comment):
             row_pattern = '((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr)){1}'
-            pattern = r'(?:^|\s|[^\w])' + row_pattern + '(?:$|[^\d])'
+            pattern = rf'(?:^|\s|[^\w]){row_pattern}(?:$|[^\d])'
 
             match = re.search(pattern, comment, re.IGNORECASE)
             if match:
@@ -111,7 +111,7 @@ class Race:
         if digit_match:
             digit = int(digit_match.group())
             if digit < 1 or digit > 5:
-                logging.debug('FOUND WRONG ROW NUMBER IN COMMENT: ' + comment)
+                logging.debug(f'FOUND WRONG ROW NUMBER IN COMMENT: {comment}')
                 return 'blank'
             if regex_row.startswith('r'):
                 return 'row' + str(digit)
