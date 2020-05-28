@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  bingostats:
+    build:
+      context: .
+    image: bingostats
+    volumes:
+      - /bingostats/volume/logs:/etc/BingoStats/logs
+      - /bingostats/volume/versions:/etc/BingoStats/BingoBoards/Versions
+    ports:
+      - "14443:80"
+    restart: unless-stopped
