@@ -35,11 +35,11 @@ button {
 
 /* General classes */
 .no-display {
-  visibility: hidden;
+  display: none;
 }
 
 .display {
-  visibility: visible;
+  display: flex;
 }
 
 
@@ -53,9 +53,15 @@ button {
 
 #graphs {
   width: 100%;
-  display: flex;
   flex-flow: column;
+  justify-content: center;
   align-items: center;
+
+}
+
+#beta-checkbox-div {
+  display: flex;
+  justify-content: center;
 }
 
 
