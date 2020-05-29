@@ -8,7 +8,7 @@ colors = {
 
 def get_graph_layout(title, height, y_label='Time', tickformat='%-Hh%M'):
     return go.Layout(
-        title={'text': title, 'font': {'color': colors['title']}},
+        title={'text': title, 'font': {'size':20,'color': colors['title']}},
         plot_bgcolor=colors['background'],
         paper_bgcolor=colors['background'],
         font={

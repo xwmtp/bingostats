@@ -33,8 +33,8 @@ class Dashboard:
         @app.callback([
             Output(component_id='beta-checkbox', component_property='className'),
             Output(component_id='stats', component_property='children'),
-            Output(component_id='ranks-graph', component_property='figure'),
-            Output(component_id='srl-point-graph', component_property='figure'),
+            Output(component_id='ranks-graph', component_property='children'),
+            Output(component_id='srl-point-graph', component_property='children'),
             Output(component_id='bingo-table', component_property='children'),
             Output(component_id='dropdown', component_property='value'),
             Output(component_id='dropdown', component_property='options'),
@@ -61,15 +61,20 @@ class Dashboard:
 
         # Upon entering a different name in the field
         @app.callback(
-            Output(component_id='current-player', component_property='children'),
+            [Output(component_id='current-player', component_property='children'),
+             Output(component_id='graphs', component_property='className')
+             ]
+             ,
             [Input(component_id='input-field', component_property='n_submit'),
              Input(component_id='button', component_property='n_clicks')],
             [State(component_id='input-field', component_property='value')]
         )
         def update_current_player(n_submit, n_clicks, input_value):
+            display_graphs = 'no-display'
             if input_value:
                 logging.info(f"Submitted user name '{input_value}'")
-            return input_value
+                display_graphs = 'display'
+            return input_value, display_graphs
 
 
         # Upon checking/unchecking beta-version checkbox
@@ -88,7 +93,7 @@ class Dashboard:
 
         # Upon changing the bingo version in the dropdown
         @app.callback(
-            [Output('pb-graph', 'figure'),
+            [Output('pb-graph', 'children'),
             Output('current-version', 'children')],
             [Input('dropdown', 'value')],
             [State('current-player', 'children'),

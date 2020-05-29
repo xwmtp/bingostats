@@ -1,4 +1,5 @@
 from Dashboard.Plots.Layout import get_graph_layout
+import dash_core_components as dcc
 import plotly.graph_objs as go
 import Utils
 import datetime as dt
@@ -6,10 +7,10 @@ from Definitions import get_newest_version
 
 
 def get_PB_graph(player=None, version=None):
-    data = []
+    graph = []
 
     if player and version:
-        races = player.select_races(sort='latest', type = version)
+        races = player.select_races(sort='latest', type=version)
 
         if len(races) == 0:
             dates = []
@@ -19,46 +20,47 @@ def get_PB_graph(player=None, version=None):
             PBs = get_PB_races(races)
             newest = get_newest_version()
 
-            dates = [PB.date                 for PB in PBs]
+            dates = [PB.date for PB in PBs]
             times = [PB.time.total_seconds() for PB in PBs]
             if version == newest:
-                dates.append(dt.date.today()) # pb still valid today
+                dates.append(dt.date.today())  # pb still valid today
                 times.append(times[-1])  # need last elements twice
 
             markers = get_markers(times, dates, version, newest)
             times = [Utils.convert_to_human_readable_time(time)[0] for time in times]
 
         data = [go.Scatter(
-                x=dates,
-                y=times,
-                mode='lines+markers',
-                text=markers,
-                marker={
-                    'size': 9,
-                    'line': {'width': 0.5, 'color': 'black'},
-                    'color':'lightgreen'
-                },
-                line=dict(
-                    shape='hv'
-                ),
-                hoverinfo='text'
+            x=dates,
+            y=times,
+            mode='lines+markers',
+            text=markers,
+            marker={
+                'size': 9,
+                'line': {'width': 0.5, 'color': 'black'},
+                'color': 'lightgreen'
+            },
+            line=dict(
+                shape='hv'
+            ),
+            hoverinfo='text'
 
         )]
 
-    figure={
-        'data': data,
-        'layout': get_graph_layout(title='PB progression', height=600)
-    }
+        graph = [dcc.Graph(
+            figure={
+                'data': data,
+                'layout': get_graph_layout(title='PB progression', height=600)
+            }
+        )]
 
-    return figure
-
+    return graph
 
 
 def get_PB_races(races):
     if len(races) < 1:
         return []
 
-    races = races[::-1] # reverse the latest races to look from first to last
+    races = races[::-1]  # reverse the latest races to look from first to last
 
     best_race = races[0]
     PBs = [best_race]
@@ -70,16 +72,15 @@ def get_PB_races(races):
 
     return PBs
 
+
 def get_dropdown_options(player=None):
     if player:
         versions = player.get_versions()
     else:
         versions = []
     versions = [v.replace('beta', 'b') for v in versions]
-    options = [{'label' : 'all', 'value' : 'bingo'}] + [{'label': version, 'value': version} for version in versions]
+    options = [{'label': 'all', 'value': 'bingo'}] + [{'label': version, 'value': version} for version in versions]
     return options
-
-
 
 
 def get_markers(times, dates, version, newest):
@@ -97,6 +98,7 @@ def get_markers(times, dates, version, newest):
                zip(dates, human_times, diff_times)]
     markers[0] = markers[0].replace('<br>-', '<br>First ' + version + ' race')  # different marker for first 'pb' time
     if version == newest:
-        markers[-1] = markers[-1].replace('<br>-', '<br>Current ' + version + ' PB')  # different marker for first 'pb' time
+        markers[-1] = markers[-1].replace('<br>-',
+                                          '<br>Current ' + version + ' PB')  # different marker for first 'pb' time
 
     return markers

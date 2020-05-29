@@ -15,7 +15,7 @@ body {
 }
 
 h1 {
-    font-size: 65px;
+  font-size: 65px;
 }
 
 h2 {
@@ -26,49 +26,45 @@ h3 {
   color: var(--title-color);
   font-size: 25px;
   padding-top: 45px;
+  font-weight: normal;
 }
 
 button {
   float : center
 }
 
+/* General classes */
+.no-display {
+  visibility: hidden;
+}
+
+.display {
+  visibility: visible;
+}
+
+
+/* Whole page */
 #page {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#graphs {
+  width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
 }
 
 
-.no-display {
-  display: none;
-}
 
-.display {
-  display: block;
-}
-
-.tooltip {
-  position: relative;
-}
-
-.tooltiptext {
-  visibility: hidden;
-  width: 400px;
-  top: -5px;
-  left: 50%;
-  margin-left: -200px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
+#stats-ranks-graph {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 
@@ -81,11 +77,14 @@ button {
   align-items: flex-start
 }
 
+#stats-ranks-loading-block {
+  width: 90%;
+  display: block;
+}
 .stats-block {
   width: 40%;
   margin: 0px 20px;
 }
-
 
 
 /* All races graph*/
@@ -94,15 +93,20 @@ button {
 }
 
 
-#smaller-graphs-div {
-  width: 90%;
+#smaller-graphs {
+  width: 100%;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
 
+#smaller-graphs-loading-block {
+  width: 90%;
+  display: block;
+}
+
 /* SRL points graph */
-#srl-point-div {
+#srl-point-graph {
   width: 49%;
   height: 600px;
 }
@@ -127,10 +131,23 @@ button {
 
 
 /* Data table */
+#bingo-table-div {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #bingo-table {
   width: 72%;
   padding: 30px;
 }
+
+#bingo-table-loading-block {
+  width: 100%;
+  display: block;
+}
+
 
 
 /* Footer */
