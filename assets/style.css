@@ -4,11 +4,12 @@
 body {
   --text-color: #bec7d2;
   --title-color: #e09456;
+  --bg-color: #111111;
 	margin: 0;
   padding: 100;
   color:var(--text-color);
   text-align: center;
-  background-color: #111111;
+  background-color: var(--bg-color);
 }
 ._dash-undo-redo {
   display: none;
@@ -43,6 +44,12 @@ button {
 .display {
   display: flex;
 }
+
+
+table.cell-table {
+  --hover: var(--bg-color) !important;
+}
+
 
 
 /* Whole page */
@@ -158,12 +165,12 @@ button {
 }
 
 #bingo-table {
-  width: 72%;
+  width: 100%;
   padding: 30px;
 }
 
 #bingo-table-loading-block {
-  width: 100%;
+  width: 80%;
   display: block;
 }
 
