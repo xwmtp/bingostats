@@ -21,8 +21,6 @@ def get_bingo_table(player=None):
                 'overflowX' : 'auto'
         },
 
-        #fixed_rows={'headers': True},
-
         style_cell = {'backgroundColor' : colors['background'],
                       'color' : colors['text'],
                       'textAlign' : 'left',
