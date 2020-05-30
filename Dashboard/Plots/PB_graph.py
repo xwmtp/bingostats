@@ -1,12 +1,13 @@
 from Dashboard.Plots.Layout import get_graph_layout
 import dash_core_components as dcc
+import dash_html_components as html
 import plotly.graph_objs as go
 import Utils
 import datetime as dt
 from Definitions import get_newest_version
 
 
-def get_PB_graph(player=None, version=None):
+def get_PB_graph(player=None, version=None, player_update=False):
     graph = []
 
     if player and version:
@@ -52,6 +53,9 @@ def get_PB_graph(player=None, version=None):
                 'layout': get_graph_layout(title='PB progression', height=600)
             }
         )]
+
+    if player_update:
+        graph = html.Div(graph, id='pb-graph-2')
 
     return graph
 

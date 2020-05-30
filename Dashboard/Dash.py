@@ -36,16 +36,16 @@ class Dashboard:
             Output(component_id='srl-point-graph', component_property='children'),
             Output(component_id='bingo-table', component_property='children'),
             Output(component_id='pb-graph', component_property='children'),
+            Output(component_id='dropdown', component_property='value'),
             Output(component_id='dropdown', component_property='options'),
             Output(component_id='player-title', component_property='children'),
         ],
             [Input(component_id='current-player', component_property='children'),
              Input(component_id='use-betas', component_property='children'),
-             Input(component_id='dropdown', component_property='value'),
 
              ],
         )
-        def update_output_div(input_name, include_betas, new_version):
+        def update_output_div(input_name, include_betas):
             player = self.srl.get_player(input_name, include_betas)
             markdown = get_stats_divs(player, input_name)
             ranks_graph = get_ranks_graph(player)
@@ -53,11 +53,11 @@ class Dashboard:
             bingo_table = get_bingo_table(player) if player else []
             current_version = player.get_latest_version() if player else ''
             versions_options = get_dropdown_options(player)
-            PB_graph = get_PB_graph(player, new_version)
+            PB_graph = get_PB_graph(player, current_version, True)
             player_name = player.name if player else ''
             if player and player.name:
                 logging.info(f"Loaded player '{player_name}'")
-            return markdown, ranks_graph, srl_point_graph, bingo_table, PB_graph, versions_options, player_name
+            return markdown, ranks_graph, srl_point_graph, bingo_table, PB_graph, current_version, versions_options, player_name
 
 
         # Upon entering a different name in the field
@@ -92,19 +92,20 @@ class Dashboard:
             return beta_value
 
 
-        # # Upon changing the bingo version in the dropdown
-        # @app.callback(
-        #     [Output('pb-graph', 'children'),
-        #     Output('current-version', 'children')],
-        #     [Input('dropdown', 'value')],
-        #     [State('current-player', 'children'),
-        #      State('current-version', 'children'),
-        #      ]
-        # )
-        # def update_pb_version(new_version, player_title, current_version):
-        #     player = self.srl.get_player(player_title)
-        #     PB_graph = get_PB_graph(player, new_version)
-        #     value_was_changed = current_version != '' and new_version != current_version
-        #     if player and value_was_changed:
-        #         logging.info(f"Set PB graph version to '{new_version}'")
-        #     return PB_graph, new_version
+        # Upon changing the bingo version in the dropdown
+        @app.callback(
+            [Output('pb-graph-2', 'children'),
+            Output('current-version', 'children')],
+            [Input('dropdown', 'value')],
+            [State('current-player', 'children'),
+             State('current-version', 'children'),
+             ]
+        )
+        def update_pb_version(new_version, player_title, current_version):
+            logging.info(f'Changing to version {new_version}')
+            player = self.srl.get_player(player_title)
+            PB_graph = get_PB_graph(player, new_version)
+            value_was_changed = current_version != '' and new_version != current_version
+            if player and value_was_changed:
+                logging.info(f"Set PB graph version to '{new_version}'")
+            return PB_graph, new_version

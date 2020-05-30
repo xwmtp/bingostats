@@ -53,7 +53,7 @@ def get_html():
                 html.Div([
                     html.Div([
                         dcc.Loading([
-                            html.Div(get_PB_graph(), id='pb-graph'),
+                            html.Div(html.Div(id='pb-graph-2'), id='pb-graph'),
                         ], color=colors['title'])
                     ], id='pb-graph-loading-block'),
                     html.Div([
