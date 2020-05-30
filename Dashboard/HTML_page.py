@@ -1,6 +1,3 @@
-from Dashboard.Plots.Ranks_graph import get_ranks_graph
-from Dashboard.Plots.SRL_point_graph import get_SRL_point_graph
-from Dashboard.Plots.PB_graph import get_PB_graph
 from Dashboard.Plots.Layout import colors
 import dash_html_components as html
 import dash_core_components as dcc
@@ -25,7 +22,6 @@ def get_html():
                               value=[],
                               labelStyle={'display': 'flex', 'alignItems': 'center', 'justify-content': 'center'}
                               ),
-                # html.Span("Goals of rows done on beta versions will not be displayed", className='tooltiptext')
             ], id='beta-checkbox-div'),
 
         ]),

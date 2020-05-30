@@ -1,4 +1,3 @@
-import logging
 from Definitions import VERSIONS, BLACKLIST
 from Utils import *
 import re

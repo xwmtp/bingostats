@@ -1,4 +1,3 @@
-import logging
 from Utils import *
 from SpeedRunsLive.Player import Player
 from BingoBoards.BingoVersion import BingoVersion

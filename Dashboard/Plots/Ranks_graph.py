@@ -1,10 +1,7 @@
-from Dashboard.Plots.Layout import get_graph_layout, colors
+from Dashboard.Plots.Layout import get_graph_layout
 import dash_core_components as dcc
 import plotly.graph_objs as go
 import Utils
-
-
-#### GRAPH 1 - Ranks ####
 
 def get_ranks_graph(player=None):
     graph = []
