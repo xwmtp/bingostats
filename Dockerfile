@@ -4,7 +4,7 @@ COPY ./ /etc/BingoStats
 
 RUN pip install dash dash_core_components pandas requests
 
-VOLUME ["/etc/BingoStats/logs"]
+VOLUME ["/etc/BingoStats/logs", "/etc/BingoStats/BingoBoards/Versions"]
 
 EXPOSE 80
 
