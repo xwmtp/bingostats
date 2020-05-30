@@ -18,7 +18,6 @@ def get_html():
 
             html.Div([
                 dcc.Checklist(id='beta-checkbox',
-                              className='no-display',
                               options=[{
                                   'label': 'Include beta versions',
                                   'value': 'use_betas'
@@ -27,7 +26,7 @@ def get_html():
                               labelStyle={'display': 'flex', 'alignItems': 'center', 'justify-content': 'center'}
                               ),
                 # html.Span("Goals of rows done on beta versions will not be displayed", className='tooltiptext')
-            ], id='beta-checkbox-div', className='tooltip'),
+            ], id='beta-checkbox-div'),
 
         ]),
 

@@ -24,7 +24,7 @@ def get_bingo_table(player=None):
         #fixed_rows={'headers': True},
 
         style_cell = {'backgroundColor' : colors['background'],
-                      'color' : 'white',
+                      'color' : colors['text'],
                       'textAlign' : 'left',
                       'minWidth' : '130px',
                       'font-family': 'Calibri'

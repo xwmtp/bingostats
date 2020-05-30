@@ -31,7 +31,6 @@ class Dashboard:
 
         # Upon changing the current player
         @app.callback([
-            Output(component_id='beta-checkbox', component_property='className'),
             Output(component_id='stats', component_property='children'),
             Output(component_id='ranks-graph', component_property='children'),
             Output(component_id='srl-point-graph', component_property='children'),
@@ -46,7 +45,6 @@ class Dashboard:
         )
         def update_output_div(input_name, include_betas):
             player = self.srl.get_player(input_name, include_betas)
-            beta_checkbox = 'display' if player else 'no-display'
             markdown = get_stats_divs(player, input_name)
             ranks_graph = get_ranks_graph(player)
             srl_point_graph = get_SRL_point_graph(player)
@@ -56,7 +54,7 @@ class Dashboard:
             player_name = player.name if player else ''
             if player and player.name:
                 logging.info(f"Loaded player '{player_name}'")
-            return beta_checkbox, markdown, ranks_graph, srl_point_graph, bingo_table, current_version, versions_options, player_name
+            return markdown, ranks_graph, srl_point_graph, bingo_table, current_version, versions_options, player_name
 
 
         # Upon entering a different name in the field

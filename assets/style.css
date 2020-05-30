@@ -6,7 +6,7 @@ body {
   --title-color: #e09456;
 	margin: 0;
   padding: 100;
-  color: white;
+  color:var(--text-color);
   text-align: center;
   background-color: #111111;
 }
@@ -15,10 +15,12 @@ body {
 }
 
 h1 {
+  color: white;
   font-size: 65px;
 }
 
 h2 {
+  color: white;
   font-size: 35px;
 }
 
@@ -175,8 +177,4 @@ button {
 #footer-text {
   color: var(--text-color);
   margin: 0px 8px;
-}
-
-#footer-text:hover {
-  color: white;
 }
