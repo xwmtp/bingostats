@@ -10,6 +10,7 @@ def get_ranks_graph(player=None):
     graph = []
 
     if player:
+        print(player.include_betas)
         races = player.select_races()
         points = [Data_point(race) for race in races]
 

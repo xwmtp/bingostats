@@ -15,14 +15,14 @@ html_symbols = {
 class Race:
 
 
-    def __init__(self, race_json, player_json, SRL_data, include_betas=False, generate_board=True):
+    def __init__(self, race_json, player_json, SRL_data, generate_board=True):
 
         self.id = race_json['id']
         self.goal = race_json['goal']
         self.date = dt.datetime.fromtimestamp(int(race_json['date'])).date()
 
         self.seed = self.get_seed(self.goal)
-        self.type = self.get_type(self.goal, include_betas)
+        self.type = self.get_type(self.goal)
 
         self.total_players = race_json['numentrants']
 
@@ -43,10 +43,11 @@ class Race:
             self.row = []
 
 
-    def get_type(self, goal, include_betas):
+    def get_type(self, goal):
         goal = goal.lower()
         # 'normal' bingo
         self.is_bingo = False
+        self.is_beta = False
 
         def get_version():
             found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
@@ -68,9 +69,10 @@ class Race:
             for mode in ['short', 'long', 'blackout', 'black out', '3x3', 'anti', 'double', 'bufferless', 'child', 'jp', 'japanese', 'bingo-j']:
                 if mode in goal.lower():
                     return mode
-            # only mark betas as 'bingo' when include_betas is true
-            if (include_betas or not 'beta' in version):
-                self.is_bingo = True
+            self.is_bingo = True
+            if 'beta' in version:
+                self.is_beta = True
+
             return version
 
         if 'http://www.buzzplugg.com/bryan/v9.2nosaria/' in goal:

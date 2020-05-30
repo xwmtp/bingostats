@@ -14,6 +14,8 @@ class Dashboard:
 
     def __init__(self, srl):
         self.srl = srl
+        self.current_player = None
+        self.include_betas = False
 
 
     def run_dashboard(self, host, debug=False):
@@ -41,11 +43,20 @@ class Dashboard:
             Output(component_id='player-title', component_property='children'),
         ],
             [Input(component_id='current-player', component_property='children'),
-             Input(component_id='use-betas', component_property='children'),
+             Input(component_id='beta-checkbox', component_property='value'),
              ],
         )
         def update_output_div(input_name, include_betas):
-            player = self.srl.get_player(input_name, include_betas)
+            logging.info(dash.callback_context.triggered)
+            for changed_prop in dash.callback_context.triggered:
+                if ('prop_id', 'current-player.children') in changed_prop.items():
+                    self.update_current_player(input_name)
+                if ('prop_id', 'beta-checkbox.value') in changed_prop.items():
+                    self.update_use_betas(include_betas)
+
+
+
+            player = self.current_player
             beta_checkbox = 'display' if player else 'no-display'
             markdown = get_stats_divs(player, input_name)
             ranks_graph = get_ranks_graph(player)
@@ -54,9 +65,8 @@ class Dashboard:
             current_version = player.get_latest_version() if player else ''
             versions_options = get_dropdown_options(player)
             player_name = player.name if player else ''
-            if player and player.name:
-                logging.info(f"Loaded player '{player_name}'")
             return beta_checkbox, markdown, ranks_graph, srl_point_graph, bingo_table, current_version, versions_options, player_name
+
 
 
         # Upon entering a different name in the field
@@ -77,20 +87,6 @@ class Dashboard:
             return input_value, display_graphs
 
 
-        # Upon checking/unchecking beta-version checkbox
-        @app.callback(
-            Output('use-betas', 'children'),
-            [Input('beta-checkbox', 'value')],
-            [State('use-betas', 'children')]
-        )
-        def update_version(beta_values, current_value):
-            beta_value = len(beta_values) > 0 # when checkbox is checked, use_betas list is non-empty
-            value_was_changed = current_value != '' and beta_value != current_value
-            if value_was_changed:
-                logging.info(f"Set 'use betas' to '{beta_value}'")
-            return beta_value
-
-
         # Upon changing the bingo version in the dropdown
         @app.callback(
             [Output('pb-graph', 'children'),
@@ -107,3 +103,21 @@ class Dashboard:
             if player and value_was_changed:
                 logging.info(f"Set PB graph version to '{new_version}'")
             return PB_graph, new_version
+
+
+    def update_current_player(self, input_name):
+        if input_name:
+            logging.info(f'Trying to load {input_name}')
+            self.current_player = self.srl.get_player(input_name)
+            self.current_player.set_include_betas(self.include_betas)
+            if self.current_player:
+                logging.info(f"Loaded player '{self.current_player.name}'")
+
+    def update_use_betas(self, checkbox_values):
+        include_betas = len(checkbox_values) > 0
+        logging.info(include_betas)
+        logging.info(self.current_player.include_betas)
+        self.include_betas = include_betas
+        if self.current_player:
+            self.current_player.set_include_betas(include_betas)
+            logging.info(f"Set 'use betas' to '{include_betas}'")

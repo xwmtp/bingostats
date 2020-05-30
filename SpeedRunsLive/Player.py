@@ -5,33 +5,37 @@ import logging
 
 class Player:
 
-    def __init__(self, name, json, SRL_data, include_betas=False):
+    def __init__(self, name, json, SRL_data):
         self.name = name
         self.short_goal_dict = convert_to_dict('short_goal_names.txt')
+        self.include_betas = False
 
         if name == '' or name == '-1':
             self.races = []
         else:
-            self.races = self.parse_races(json['pastraces'], SRL_data, include_betas=include_betas)
+            self.races = self.parse_races(json['pastraces'], SRL_data)
         logging.debug(f'Total races found: {str(len(self.races))}')
 
 
-    def parse_races(self, json, SRL_data, include_betas):
+    def parse_races(self, json, SRL_data):
         results = []
         for race in json:
             if race['game']['abbrev'] == 'oot':
                 for entrant in race['results']:
                     if entrant['player'].lower() == self.name.lower():
                         self.name = entrant['player']
-                        race_obj = Race(race, entrant, SRL_data, include_betas)
+                        race_obj = Race(race, entrant, SRL_data)
                         results.append(race_obj)
         return [result for result in results if not result.dq]
+
+    def set_include_betas(self, bool):
+        self.include_betas = bool
 
 
     def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, span = None):
         # type
         if type == 'bingo':
-            races = [race for race in self.races if race.is_bingo]
+            races = [race for race in self.races if race.is_bingo and (not race.is_beta or self.include_betas)]
         else:
             races = [race for race in self.races if race.type == type]
 
