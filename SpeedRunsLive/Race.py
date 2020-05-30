@@ -50,7 +50,7 @@ class Race:
         def get_version():
             found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
             if found_version:
-                return found_version.group()
+                return found_version.group().replace('beta', 'b')
 
             for version, date in VERSIONS.items():
                 version_date = dt.datetime.strptime(date, '%d-%m-%Y').date()

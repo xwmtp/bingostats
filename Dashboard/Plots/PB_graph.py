@@ -11,7 +11,6 @@ def get_PB_graph(player=None, version=None, player_update=False):
     graph = []
 
     if player and version:
-        version = version.replace('b', 'beta')
         races = player.select_races(sort='latest', type=version)
 
         if len(races) == 0:
@@ -83,7 +82,6 @@ def get_dropdown_options(player=None):
     if player:
         versions = player.get_versions()
 
-        versions = [v.replace('beta', 'b') for v in versions]
         options = [{'label': 'all', 'value': 'bingo'}] + [{'label': version, 'value': version} for version in versions]
     return options
 
