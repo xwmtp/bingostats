@@ -143,6 +143,11 @@ button {
   width: 100px;
 }
 
+#pb-dropdown {
+  flex-flow: column;
+  align-items: right;
+}
+
 
 /* Data table */
 #bingo-table-div {

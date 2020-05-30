@@ -36,6 +36,7 @@ class Dashboard:
             Output(component_id='srl-point-graph', component_property='children'),
             Output(component_id='bingo-table', component_property='children'),
             Output(component_id='pb-graph', component_property='children'),
+            Output(component_id='pb-dropdown', component_property='className'),
             Output(component_id='dropdown', component_property='value'),
             Output(component_id='dropdown', component_property='options'),
             Output(component_id='player-title', component_property='children'),
@@ -54,10 +55,11 @@ class Dashboard:
             current_version = player.get_latest_version() if player else ''
             versions_options = get_dropdown_options(player)
             PB_graph = get_PB_graph(player, current_version, True)
+            dropdown_visibility = 'display' if player else 'no-display'
             player_name = player.name if player else ''
             if player and player.name:
                 logging.info(f"Loaded player '{player_name}'")
-            return markdown, ranks_graph, srl_point_graph, bingo_table, PB_graph, current_version, versions_options, player_name
+            return markdown, ranks_graph, srl_point_graph, bingo_table, PB_graph, dropdown_visibility, current_version, versions_options, player_name
 
 
         # Upon entering a different name in the field
@@ -71,11 +73,11 @@ class Dashboard:
             [State(component_id='input-field', component_property='value')]
         )
         def update_current_player(n_submit, n_clicks, input_value):
-            display_graphs = 'no-display'
+            display = 'no-display'
             if input_value:
                 logging.info(f"Submitted user name '{input_value}'")
-                display_graphs = 'display'
-            return input_value, display_graphs
+                display = 'display'
+            return input_value, display
 
 
         # Upon checking/unchecking beta-version checkbox
@@ -102,7 +104,6 @@ class Dashboard:
              ]
         )
         def update_pb_version(new_version, player_title, current_version):
-            logging.info(f'Changing to version {new_version}')
             player = self.srl.get_player(player_title)
             PB_graph = get_PB_graph(player, new_version)
             value_was_changed = current_version != '' and new_version != current_version

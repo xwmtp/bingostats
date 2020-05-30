@@ -65,7 +65,7 @@ def get_html():
                             searchable=False,
                             placeholder='Version...'
                         )
-                    ], id='pb-dropdown')
+                    ], id='pb-dropdown', className='no-display')
                 ], id='pb-graph-div'),
             ], id='smaller-graphs'),
 
