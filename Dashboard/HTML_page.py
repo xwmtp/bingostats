@@ -43,46 +43,51 @@ def get_html():
             ], id='stats-ranks-loading-block'),
 
             html.Div([
-                dcc.Loading([
-                    html.Div([
-                        html.Div(id='srl-point-graph'),
 
-                        html.Div([
+                html.Div([
+                    dcc.Loading([
+                        html.Div(id='srl-point-graph')
+                    ], color=colors['title']),
+                ], id='srl-point-graph-loading-block'),
+
+                html.Div([
+                    html.Div([
+                        dcc.Loading([
                             html.Div(get_PB_graph(), id='pb-graph'),
-                            html.Div([
-                                html.Div('Show PBs for:', id='pb-dropdown-title'),
-                                dcc.Dropdown(
-                                    id='dropdown',
-                                    options=[],
-                                    clearable=False,
-                                    searchable=False,
-                                    placeholder='Version...'
-                                )
-                            ], id='pb-dropdown')
-                        ], id='pb-graph-div'),
-                    ], id='smaller-graphs'),
-                ], color=colors['title']),
-            ], id='smaller-graphs-loading-block'),
-
-            html.Div([
-                dcc.Loading([
+                        ], color=colors['title'])
+                    ], id='pb-graph-loading-block'),
                     html.Div([
-                        html.H3('Bingo races table'),
-                        html.Div(id='bingo-table'),
-                    ], id='bingo-table-div')
-                ], color=colors['title'])
-            ], id='bingo-table-loading-block'),
+                        html.Div('Show PBs for:', id='pb-dropdown-title'),
+                        dcc.Dropdown(
+                            id='dropdown',
+                            options=[],
+                            clearable=False,
+                            searchable=False,
+                            placeholder='Version...'
+                        )
+                    ], id='pb-dropdown')
+                ], id='pb-graph-div'),
+            ], id='smaller-graphs'),
 
-            # divs only used to store dash information, not displayed
-            html.Div('', id='current-player', className='no-display'),
-            html.Div('', id='use-betas', className='no-display'),
-            html.Div('', id='current-version', className='no-display'),
+    html.Div([
+        dcc.Loading([
+            html.Div([
+                html.H3('Bingo races table'),
+                html.Div(id='bingo-table'),
+            ], id='bingo-table-div')
+        ], color=colors['title'])
+    ], id='bingo-table-loading-block'),
 
-        ], id='graphs', className='no-display'),
+    # divs only used to store dash information, not displayed
+    html.Div('', id='current-player', className='no-display'),
+    html.Div('', id='use-betas', className='no-display'),
+    html.Div('', id='current-version', className='no-display'),
 
-        html.A([
-            html.Div('by xwillmarktheplace', id='footer-text'),
-            html.Img(id='twitch-logo', src="/assets/TwitchGlitchWhite.png")
-        ], id='footer', href="https://twitch.tv/xwillmarktheplace", target='_blank'),
+], id = 'graphs', className = 'no-display'),
 
-    ], id='page')
+html.A([
+html.Div('by xwillmarktheplace', id='footer-text'),
+html.Img(id='twitch-logo', src="/assets/TwitchGlitchWhite.png")
+], id = 'footer', href = "https://twitch.tv/xwillmarktheplace", target = '_blank'),
+
+], id = 'page')

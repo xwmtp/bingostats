@@ -102,21 +102,22 @@ button {
 
 
 #smaller-graphs {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
 
-#smaller-graphs-loading-block {
-  width: 90%;
-  display: block;
-}
 
 /* SRL points graph */
 #srl-point-graph {
-  width: 49%;
+  width: 100%;
   height: 600px;
+}
+
+#srl-point-graph-loading-block {
+  width: 49%;
+  display: block;
 }
 
 /* PB progression graph*/
@@ -130,6 +131,11 @@ button {
   display: inline-flex;
   flex-flow: column;
   align-items: flex-end;
+}
+
+#pb-graph-loading-block {
+  width: 100%;
+  display: block;
 }
 
 #dropdown {
