@@ -50,7 +50,7 @@ class Race:
         def get_version():
             found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
             if found_version:
-                return found_version.group().replace('beta', 'b')
+                return found_version.group()
 
             for version, date in VERSIONS.items():
                 version_date = dt.datetime.strptime(date, '%d-%m-%Y').date()
@@ -70,6 +70,7 @@ class Race:
             # only mark betas as 'bingo' when include_betas is true
             if (include_betas or not 'beta' in version):
                 self.is_bingo = True
+            version = version.replace('beta', 'b')
             return version
 
         if 'http://www.buzzplugg.com/bryan/v9.2nosaria/' in goal:
