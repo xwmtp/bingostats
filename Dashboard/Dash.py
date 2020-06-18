@@ -5,15 +5,13 @@ from Dashboard.Plots.PB_graph import get_PB_graph, get_dropdown_options
 from Dashboard.Plots.Bingo_table import get_bingo_table
 from Dashboard.Stats_text import get_stats_divs
 from Dashboard.HTML_page import get_html
+from RaceData.RaceData import get_player
 import dash
 from dash.dependencies import Input, Output, State
 import logging
 
 
 class Dashboard:
-
-    def __init__(self, srl):
-        self.srl = srl
 
     def run_dashboard(self, host, debug=False):
 
@@ -45,7 +43,7 @@ class Dashboard:
              ],
         )
         def update_output_div(input_name, include_betas):
-            player = self.srl.get_player(input_name, include_betas)
+            player = get_player(input_name, include_betas)
             markdown = get_stats_divs(player, input_name)
             ranks_graph = get_ranks_graph(player)
             srl_point_graph = get_SRL_point_graph(player)
@@ -100,7 +98,7 @@ class Dashboard:
              ]
         )
         def update_pb_version(new_version, player_title, current_version, include_betas):
-            player = self.srl.get_player(player_title, include_betas)
+            player = get_player(player_title, include_betas)
             PB_graph = get_PB_graph(player, new_version)
             value_was_changed = current_version != '' and new_version != current_version
             if player and value_was_changed:

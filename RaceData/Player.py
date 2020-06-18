@@ -1,32 +1,13 @@
-from SpeedRunsLive.Race import Race
 from Utils import *
 import logging
 
+SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt')
 
 class Player:
 
-    def __init__(self, name, json, SRL_data, include_betas=False):
+    def __init__(self, name):
         self.name = name
-        self.short_goal_dict = convert_to_dict('short_goal_names.txt')
-
-        if name == '' or name == '-1':
-            self.races = []
-        else:
-            self.races = self.parse_races(json['pastraces'], SRL_data, include_betas=include_betas)
-        logging.debug(f'Total races found: {str(len(self.races))}')
-
-
-    def parse_races(self, json, SRL_data, include_betas):
-        results = []
-        for race in json:
-            if race['game']['abbrev'] == 'oot':
-                for entrant in race['results']:
-                    if entrant['player'].lower() == self.name.lower():
-                        self.name = entrant['player']
-                        race_obj = Race(race, entrant, SRL_data, include_betas)
-                        results.append(race_obj)
-        return [result for result in results if not result.dq]
-
+        self.races = []
 
     def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, span = None):
         # type
@@ -34,21 +15,17 @@ class Player:
             races = [race for race in self.races if race.is_bingo]
         else:
             races = [race for race in self.races if race.type == type]
-
         # time span
         if span != None:
             races = [race for race in races if (race.date >= span.start) and (race.date <= span.end)]
-
         # forfeits
         if not forfeits:
             races = [race for race in races if not race.forfeit]
-
         # sorting
         if sort == 'best':
             races = sorted(races, key=lambda r: r.time)
         elif sort == 'latest':
             races = sorted(races, key=lambda r: r.date, reverse=True)
-
         if n==-1:
             n = len(races)
         return races[:n]
@@ -115,7 +92,7 @@ class Player:
         }
         # goals
         for i in range(5):
-            goals = [self.short_goal_dict[r[i]].lower() if len(r) == 5 else '' for r in rows]
+            goals = [SHORT_GOAL_NAMES[r[i]].lower() if len(r) == 5 else '' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 

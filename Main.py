@@ -1,5 +1,4 @@
 from Dashboard.Dash import Dashboard
-from SpeedRunsLive.SRL_data import SRL
 import Logger
 import logging
 import sys
@@ -16,8 +15,6 @@ if __name__ == '__main__':
     Logger.initalize_logger(log_level)
     logging.info('Starting BingoStats...')
 
-    srl = SRL()
-
     try:
         host = sys.argv[1]
     except IndexError:
@@ -28,5 +25,5 @@ if __name__ == '__main__':
     except IndexError:
         debug = True
 
-    dashboard = Dashboard(srl)
+    dashboard = Dashboard()
     dashboard.run_dashboard(host, debug)
