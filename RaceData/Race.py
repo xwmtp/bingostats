@@ -12,7 +12,7 @@ html_symbols = {
 
 class Race:
 
-    def __init__(self, race_info, include_betas=False):
+    def __init__(self, race_info):
         self.id = race_info['id']
         self.goal = race_info['goal']
         self.total_players = race_info['num_entrants']
@@ -20,7 +20,7 @@ class Race:
         self.time = race_info['time']
 
         self.seed = self.parse_seed(self.goal)
-        self.type = self.parse_type(self.goal, include_betas)
+        self.type = self.parse_type(self.goal)
 
         self.rank = race_info['rank']
         self.points = int(race_info['points'])
@@ -39,10 +39,10 @@ class Race:
             self.row = []
 
 
-    def parse_type(self, goal, include_betas):
+    def parse_type(self, goal):
         goal = goal.lower()
-        # 'normal' bingo
         self.is_bingo = False
+        self.is_beta = False
 
         def parse_version():
             found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
@@ -63,9 +63,11 @@ class Race:
             for mode in ['short', 'long', 'blackout', 'black out', '3x3', 'anti', 'double', 'bufferless', 'child', 'jp', 'japanese', 'bingo-j']:
                 if mode in goal.lower():
                     return mode
+            self.is_bingo = True
             # only mark betas as 'bingo' when include_betas is true
-            if (include_betas or not 'beta' in version): #todo get rid of include_betas here
-                self.is_bingo = True
+            if 'beta' in version:
+                self.is_beta = True
+
             version = version.replace('beta', 'b')
             return version
 

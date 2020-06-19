@@ -24,11 +24,11 @@ def get_player(name, include_betas=False):
 
     racetime_user_id = find_racetime_user_id(name, racetime_user_json['results'])
     if srl_json or racetime_user_json:
-        player = Player(name)
+        player = Player(name, include_betas)
         if srl_json:
-            player.races += parse_srl_races(name, srl_json, include_betas)
+            player.races += parse_srl_races(name, srl_json)
         if racetime_user_id:
-            player.races += parse_racetime_races(name, racetime_user_id, include_betas)
+            player.races += parse_racetime_races(name, racetime_user_id)
 
         return player
 
@@ -45,20 +45,20 @@ def get_player(name, include_betas=False):
     #             logging.debug(f'Found alternative name {new_name}')
     #             return self.get_player(new_name)
 
-def parse_srl_races(name, json, include_betas):
+def parse_srl_races(name, json):
     results = []
     for race in json['pastraces']:
         if race['game']['abbrev'] == 'oot':
             for entrant in race['results']:
                 if entrant['player'].lower() == name.lower():
                     race_info = srl_race_json_to_dict(race,entrant)
-                    race_obj = Race(race_info, include_betas) #todo make it not necessary for Race to get include_betas
+                    race_obj = Race(race_info)
                     results.append(race_obj)
     races = [result for result in results if not result.dq and result.recordable]
     logging.debug(f'Parsed {len(races)} SRL races')
     return races
 
-def parse_racetime_races(name, id, include_betas):
+def parse_racetime_races(name, id):
     results = []
     page = 1
     num_pages = math.inf
@@ -69,13 +69,13 @@ def parse_racetime_races(name, id, include_betas):
                 for entrant in race['entrants']:
                     if entrant['user']['name'].lower() == name.lower():
                         race_info = racetime_race_json_to_dict(race, entrant)
-                        race_obj = Race(race_info, include_betas)
+                        race_obj = Race(race_info)
                         #debug (add copies of races with different rows)
                         #from BingoBoards.BingoVersion import ROW_IDS
                         #if race_obj.type == 'v9.5' or race_obj.type == 'v9.3':
                         #    for r in ROW_IDS:
                         #        race_info['comment'] = r
-                        #        results.append(Race(race_info, include_betas))
+                        #        results.append(Race(race_info))
                         results.append(race_obj)
         page += 1
         num_pages = json['num_pages']

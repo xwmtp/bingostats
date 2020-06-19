@@ -5,8 +5,9 @@ SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt', to_lower=True)
 
 class Player:
 
-    def __init__(self, name):
+    def __init__(self, name, include_betas=False):
         self.name = name
+        self.include_betas = include_betas
         self.races = []
 
     def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, span = None):
@@ -15,6 +16,9 @@ class Player:
             races = [race for race in self.races if race.is_bingo]
         else:
             races = [race for race in self.races if race.type == type]
+        # betas
+        if not self.include_betas:
+            races = [race for race in races if not race.is_beta]
         # time span
         if span != None:
             races = [race for race in races if (race.date >= span.start) and (race.date <= span.end)]
