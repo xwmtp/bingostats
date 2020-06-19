@@ -55,7 +55,7 @@ def _get_rows_stats_string(player):
         if is_supported_version(version):
             favorite_goal = player.get_favorite_goal(version)
             if favorite_goal:
-                fav_goal = SHORT_GOAL_NAMES[favorite_goal]
+                fav_goal = SHORT_GOAL_NAMES[favorite_goal.lower()]
                 count = len([race for race in version_races if favorite_goal in race.row])
                 fav_goal_perc = perc(count, len(version_races), 1)
                 rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({fav_goal_perc}%)\n\n'

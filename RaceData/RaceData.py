@@ -1,7 +1,9 @@
 from Utils import *
 from RaceData.Player import Player
 from RaceData.Race import Race
-import dateutil.parser as dp
+import datetime as dt
+import isodate
+import math
 
 
 
@@ -26,10 +28,8 @@ def get_player(name, include_betas=False):
         if srl_json:
             player.races += parse_srl_races(name, srl_json, include_betas)
         if racetime_user_id:
-            racetime_json = readjson(f'http://localhost:8000/user/{racetime_user_id}/races/data?show_entrants=true')
-            player.races += parse_racetime_races(name, racetime_json, include_betas)
+            player.races += parse_racetime_races(name, racetime_user_id, include_betas)
 
-        player.print_goals()
         return player
 
 
@@ -54,35 +54,45 @@ def parse_srl_races(name, json, include_betas):
                     race_info = srl_race_json_to_dict(race,entrant)
                     race_obj = Race(race_info, include_betas) #todo make it not necessary for Race to get include_betas
                     results.append(race_obj)
-    races = [result for result in results if not result.dq]
+    races = [result for result in results if not result.dq and result.recordable]
     logging.debug(f'Parsed {len(races)} SRL races')
     return races
 
-def parse_racetime_races(name, json, include_betas):
+def parse_racetime_races(name, id, include_betas):
     results = []
-    for race in json['races']:
-        if race['name'].split('/')[0] == 'oot':
-            for entrant in race['entrants']:
-                if entrant['user']['name'].lower() == name.lower():
-                    race_info = racetime_race_json_to_dict(race, entrant)
-                    race_obj = Race(race_info, include_betas)
-                    results.append(race_obj)
-    races = [result for result in results if not result.dq]
+    page = 1
+    num_pages = math.inf
+    while page <= num_pages:
+        json = readjson(f'http://localhost:8000/user/{id}/races/data?show_entrants=true&page={page}')
+        for race in json['races']:
+            if race['name'].split('/')[0] == 'oot':
+                for entrant in race['entrants']:
+                    if entrant['user']['name'].lower() == name.lower():
+                        race_info = racetime_race_json_to_dict(race, entrant)
+                        race_obj = Race(race_info, include_betas)
+                        #debug (add copies of races with different rows)
+                        #from BingoBoards.BingoVersion import ROW_IDS
+                        #if race_obj.type == 'v9.5' or race_obj.type == 'v9.3':
+                        #    for r in ROW_IDS:
+                        #        race_info['comment'] = r
+                        #        results.append(Race(race_info, include_betas))
+                        results.append(race_obj)
+        page += 1
+        num_pages = json['num_pages']
+    races = [result for result in results if not result.dq and result.recordable]
     logging.debug(f'Parsed {len(races)} racetime.gg races')
     return races
-
 
 def srl_race_json_to_dict(race, entrant):
     dict = {}
     dict['id'] = race['id']
     dict['goal'] = race['goal']
-    dict['date'] = race['date']
-    dict['goal'] = race['goal']
+    dict['date'] = dt.datetime.fromtimestamp(int(race['date'])).date()
     dict['num_entrants'] = race['numentrants']
     dict['recordable'] = True
-    dict['time'] = entrant['time']
-    dict['forfeit'] = dict['time'] == -1
-    dict['dq'] = dict['time'] == -2
+    dict['time'] = dt.timedelta(seconds=entrant['time'])
+    dict['forfeit'] = entrant['time'] == -1
+    dict['dq'] = entrant['time'] == -2
     dict['rank'] = entrant['place']
     dict['points'] = entrant['newtrueskill']
     dict['comment'] = entrant['message']
@@ -90,13 +100,13 @@ def srl_race_json_to_dict(race, entrant):
 
 def racetime_race_json_to_dict(race, entrant):
     dict = {}
-    dict['id'] = race['name']
+    dict['id'] = race['name'].replace('oot/','')
     dict['goal'] = race['goal']
     dict['date'] = race['ended_at']
     if dict['date']:
-        dict['date'] = '1541293253'#str(dp.parse(dict['date']).strftime('%s')) # from iso to unix
+        dict['date'] = isodate.parse_date(dict['date'])
     else:
-        dict['date'] = '0'
+        dict['date'] = dt.date(1970, 1, 1)
     dict['goal'] = race['goal']['name']
     dict['num_entrants'] = race['entrants_count']
     if race['info']:
@@ -104,12 +114,12 @@ def racetime_race_json_to_dict(race, entrant):
     dict['recordable'] = race['recordable']
     dict['time'] = entrant['finish_time']
     if dict['time']:
-        dict['time'] = '11325'#str(dp.parse(dict['time']).strftime('%s')) # from iso to unix
+        dict['time'] = isodate.parse_duration(dict['time'])
     else:
-        dict['time'] = '0'
+        dict['time'] = dt.timedelta(seconds=0)
     dict['forfeit'] = entrant['status']['value'] == 'dnf'
     dict['dq'] = entrant['status']['value'] == 'dq'
     dict['rank'] = entrant['place']
     dict['points'] = entrant['score'] if entrant['score'] else 0
-    dict['comment'] = entrant['comment'] if entrant['comment'] else 0
+    dict['comment'] = entrant['comment'] if entrant['comment'] else ''
     return dict

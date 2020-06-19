@@ -29,14 +29,19 @@ def readjson_file(file):
     return json.load(open(file))
 
 
-def convert_to_dict(name):
+def convert_to_dict(name, to_lower=False):
     dict = {}
     with open('./data/' + name, 'r+') as file:
         reader = csv.reader(file, delimiter=';')
         for row in reader:
             if row[1] == "-":
                 row[1] = row[0]
-            dict[row[0]] = row[1]
+            key = row[0]
+            val = row[1]
+            if to_lower:
+                key = key.lower()
+                val = val.lower()
+            dict[key] = val
     return dict
 
 

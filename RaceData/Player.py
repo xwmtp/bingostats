@@ -1,7 +1,7 @@
 from Utils import *
 import logging
 
-SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt')
+SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt', to_lower=True)
 
 class Player:
 
@@ -92,7 +92,7 @@ class Player:
         }
         # goals
         for i in range(5):
-            goals = [SHORT_GOAL_NAMES[r[i]].lower() if len(r) == 5 else '' for r in rows]
+            goals = [SHORT_GOAL_NAMES[r[i].lower()] if len(r) == 5 else '' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 

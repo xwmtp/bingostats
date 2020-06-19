@@ -16,8 +16,8 @@ class Race:
         self.id = race_info['id']
         self.goal = race_info['goal']
         self.total_players = race_info['num_entrants']
-        self.date = dt.datetime.fromtimestamp(int(race_info['date'])).date()
-        self.time = dt.timedelta(seconds=int(race_info['time']))
+        self.date = race_info['date']
+        self.time = race_info['time']
 
         self.seed = self.parse_seed(self.goal)
         self.type = self.parse_type(self.goal, include_betas)
@@ -27,8 +27,8 @@ class Race:
         self.comment = self.parse_comment(race_info['comment'])
         self.forfeit = race_info['forfeit']
         self.dq = race_info['dq']
+        self.recordable = race_info['recordable']
         self.finished = not self.forfeit and not self.dq
-
         self.row_id = self.parse_row_id(self.comment)
 
         if self.type in BINGO_VERSIONS.keys() and self.row_id != 'blank':
@@ -79,7 +79,6 @@ class Race:
 
         return 'other'
 
-
     def parse_seed(self,url):
         seed = re.search('seed=(\d)+', url)
         if seed:
@@ -126,7 +125,6 @@ class Race:
         for name, symbol in html_symbols.items():
             comment = comment.replace(name, symbol)
         return comment
-
 
 
     # currently not in use

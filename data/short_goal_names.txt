@@ -73,6 +73,7 @@ All 5 Skulltulas in Water Temple;5 Water skulls
 All 8 Death Mountain area Skulltulas;8 DM skulls
 All 8 Kakariko area Skulltulas;8 Kakariko skulls
 All 8 Zora's Domain area Skulltulas;8 Zora skulls
+All 8 Zora Domain area Skulltulas;8 Zora skulls
 Beat Dodongo's Cavern;Beat DC
 Beat Jabu-Jabu's Belly;Beat Jabu
 Beat the Deku Tree;Beat Deku
@@ -173,7 +174,7 @@ Nayru's Love;-
 Obtain all 5 Small Keys in Forest Temple;5 Forest keys
 Obtain all 5 Small Keys in Shadow Temple;5 Shadow keys
 Obtain all 8 Small Keys in Fire Temple;8 Fire keys
-Plant bean in Death Mountain Crater;Plant DMC bean
+Plant Bean in Death Mountain Crater;Plant DMC bean
 Quiver (40);Quiver 40
 Quiver (50);Quiver 50
 Requiem of Spirit;Requiem
@@ -194,6 +195,7 @@ Zora Tunic;Bad Tunic
 Open 3 Gold Rupee Chests;3 Gold Rupees
 Open 5 Gold Rupee Chests;5 Gold Rupees
 Open 6 Gold Rupee Chests;6 Gold Rupees
+Open All 6 Gold Rupee Chests;6 Gold Rupees
 All 4 Adult Skulltulas in Zora's Domain;4 Adult Zora Skulls
 All 4 Child Skulltulas in Zora's Domain;4 Child Zora Skulls
 Clear 4 Silver Rupee Rooms;4 Rupee Rooms
@@ -206,5 +208,5 @@ Open 3 Boss Key Doors;3 Boss Doors
 30 Different Skulltulas;30 Skulls
 7 Different Bottled Contents;7 Bottle Contents
 Desert Colossus HP;Colossus HP
-Open 50 Rupee Chest in Wasteland;Wasteland 
+Open 50 Rupee Chest in Wasteland;50r Wasteland 
 Both Rusty Switches in Spirit Temple;Spirit Rusty Switches
