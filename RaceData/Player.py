@@ -92,7 +92,7 @@ class Player:
             'Date'    : [race.date for race in races],
             'Type'    : [race.type.replace('beta', 'b') for race in races],
             'Rank'    : [f'{r.rank}/{r.total_players}' for r in races],
-            'SRL-id'  : [race.id for race in races],
+            'Race-id'  : [race.id for race in races],
         }
         # goals
         for i in range(5):

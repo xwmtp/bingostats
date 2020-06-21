@@ -13,6 +13,7 @@ html_symbols = {
 class Race:
 
     def __init__(self, race_info):
+        self.platform = race_info['platform']
         self.id = race_info['id']
         self.goal = race_info['goal']
         self.total_players = race_info['num_entrants']

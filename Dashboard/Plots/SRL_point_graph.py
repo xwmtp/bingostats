@@ -7,6 +7,7 @@ def get_SRL_point_graph(player=None):
 
     if player:
         races = player.select_races(sort='latest')
+        races = [race for race in races if race.platform == 'srl']
 
         dates = [race.date for race in races]
         points = [race.points for race in races]

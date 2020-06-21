@@ -13,7 +13,7 @@ def get_player(name, include_betas=False):
         return
 
     srl_json = readjson(f'http://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
-    racetime_user_json = readjson(f'http://localhost:8000/autocomplete/user?term={name}')
+    racetime_user_json = readjson(f'http://racetime.gg/autocomplete/user?term={name}')
     def find_racetime_user_id(name, results):
         for user in results:
             if name.lower() == user['name'].lower():
@@ -63,7 +63,7 @@ def parse_racetime_races(name, id):
     page = 1
     num_pages = math.inf
     while page <= num_pages:
-        json = readjson(f'http://localhost:8000/user/{id}/races/data?show_entrants=true&page={page}')
+        json = readjson(f'http://racetime.gg/user/{id}/races/data?show_entrants=true&page={page}')
         for race in json['races']:
             if race['name'].split('/')[0] == 'oot':
                 for entrant in race['entrants']:
@@ -85,6 +85,7 @@ def parse_racetime_races(name, id):
 
 def srl_race_json_to_dict(race, entrant):
     dict = {}
+    dict['platform'] = 'srl'
     dict['id'] = race['id']
     dict['goal'] = race['goal']
     dict['date'] = dt.datetime.fromtimestamp(int(race['date'])).date()
@@ -100,6 +101,7 @@ def srl_race_json_to_dict(race, entrant):
 
 def racetime_race_json_to_dict(race, entrant):
     dict = {}
+    dict['platform'] = 'racetime'
     dict['id'] = race['name'].replace('oot/','')
     dict['goal'] = race['goal']
     dict['date'] = race['ended_at']
