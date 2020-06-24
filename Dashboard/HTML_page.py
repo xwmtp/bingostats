@@ -19,7 +19,7 @@ def get_html():
                                   'label': 'Include beta versions',
                                   'value': 'use_betas'
                               }],
-                              value=[],
+                              value=['use_betas'],
                               labelStyle={'display': 'flex', 'alignItems': 'center', 'justify-content': 'center'}
                               ),
             ], id='beta-checkbox-div'),
