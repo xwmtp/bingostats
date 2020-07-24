@@ -9,7 +9,7 @@ def get_html():
         html.Div([
 
             html.H1('OoT Bingo Stats'),
-            html.Div('Enter SRL user name:'),
+            html.Div('Enter Racetime/SRL user name:'),
             dcc.Input(id='input-field', value='', type='text', maxLength=50, spellCheck=False),
             html.Button('submit', id='button'),
 
