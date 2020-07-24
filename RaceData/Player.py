@@ -24,7 +24,9 @@ class Player:
             races = [race for race in races if (race.date >= span.start) and (race.date <= span.end)]
         # forfeits
         if not forfeits:
-            races = [race for race in races if not race.forfeit]
+            races = [race for race in races if race.finished]
+        else:
+            races = [race for race in races if not race.dq]
         # sorting
         if sort == 'best':
             races = sorted(races, key=lambda r: r.time)
@@ -82,6 +84,46 @@ class Player:
         rows = [goal for row in row_lists for goal in row]
         if rows != []:
             return max(set(rows), key=rows.count)
+
+    def get_average(self, type = 'bingo'):
+        latest_races = self.select_races(n=10, sort='latest', type = type)
+        times = [r.time for r in latest_races]
+        forfeits = self.get_forfeit_count(10, type, latest_races)
+        if len(times) > 0:
+            logging.debug([str(time) for time in times])
+            return sum(times, dt.timedelta(0)) / len(times), forfeits
+        else:
+            return '-', 0
+
+    def get_median(self, type = 'bingo'):
+        latest_races = self.select_races(n=10, sort='latest', type = type)
+        times = [r.time for r in latest_races]
+        forfeits = self.get_forfeit_count(10, type, latest_races)
+        if len(times) > 0:
+            times = sorted(times)
+            mid = int(len(times) / 2)
+            if len(times) % 2 == 0:
+                median = (times[mid - 1] + times[mid]) / 2
+            else:
+                median = times[mid]
+            return median, forfeits
+        else:
+            return '-', 0
+
+    def get_forfeit_count(self, n, type, races):
+        """Get the amount of forfeits in a list of races that happened in the last n. Assumes races is sorted by latest date."""
+        if races == []:
+            return 0
+        oldest_race = races[-1]
+        all_races = self.select_races(-1, type, sort='latest', forfeits=True)
+        forfeits = 0
+        for race in all_races:
+            if race.forfeit:
+                forfeits += 1
+            if race.id == oldest_race.id:
+                return forfeits
+        logging.warning(f'Never foud race with id {race.id} for get_forfeit_count!')
+        return forfeits
 
     def get_pandas_table(self, type = 'bingo'):
         races = self.select_races(type = type)

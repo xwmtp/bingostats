@@ -39,9 +39,17 @@ def _get_general_stats_string(player):
     blank_shame = ' .shame' if blank_perc > 25 else ''
     forfeit_shame = ' .shame' if forfeit_perc > 25 else ''
 
+    average, avg_forfeits = player.get_average()
+    average_str = str(average).split('.')[0]
+    median, med_forfeits = player.get_median()
+    median_str = str(median).split('.')[0]
+    forfeits_str = 'forfeit' if avg_forfeits == 1 else 'forfeits'
+
     return f'Completed {len(completed_races)} bingos\n\n' \
            f'Blanked {num_blanks} bingos ({blank_perc}%){blank_shame}\n\n' \
-           f'Forfeited {num_forfeits} bingos ({forfeit_perc}%){forfeit_shame}\n\n'
+           f'Forfeited {num_forfeits} bingos ({forfeit_perc}%){forfeit_shame}\n\n' \
+           f'Average over last 10 races: {average_str} ({avg_forfeits} {forfeits_str})\n\n' \
+           f'Median over last 10 races: {median_str} ({med_forfeits} {forfeits_str})'
 
 def _get_rows_stats_string(player):
     completed_races = player.select_races(type="bingo", forfeits=False)

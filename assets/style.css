@@ -85,7 +85,7 @@ table.cell-table {
 
 /* Statstics text block */
 #stats {
-  width: 65%;
+  width: 75%;
   display: flex;
   flex-flow: row;
   justify-content: center;
@@ -97,8 +97,8 @@ table.cell-table {
   display: block;
 }
 .stats-block {
-  width: 40%;
-  margin: 0px 20px;
+  min-width: 350px;
+  margin: 0px 50px;
 }
 
 
