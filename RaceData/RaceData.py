@@ -30,9 +30,9 @@ def get_player(name, include_betas=False):
         if racetime_user_id:
             player.races += parse_racetime_races(name, racetime_user_id)
 
+        add_goals(player.races)
+
         return player
-
-
 
 
 
@@ -44,6 +44,36 @@ def get_player(name, include_betas=False):
     #         if new_name.lower() != name.lower():
     #             logging.debug(f'Found alternative name {new_name}')
     #             return self.get_player(new_name)
+
+def add_goals(races):
+    bingos = [r for r in races if r.is_bingo]
+    versions = set([r.type for r in bingos])
+    for version in versions:
+        version_bingos = [r for r in bingos if r.type == version]
+        logging.debug(f'Looking up {len(version_bingos)} boards for version {version}')
+        seeds = [r.seed for r in version_bingos]
+        goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b','beta')}&seeds={','.join(seeds)}&mode=normal")
+        if goal_data:
+            boards = goal_data['boards']
+            for i in range(len(version_bingos)):
+                bingo = version_bingos[i]
+                if bingo.row_id != 'blank':
+                    bingo.row = board_to_row(boards[i], bingo.row_id)
+
+def board_to_row(board, row_id):
+    row_indices = {'row1': [0, 1, 2, 3, 4], 'row2': [5, 6, 7, 8, 9], 'row3': [10, 11, 12, 13, 14],
+     'row4': [15, 16, 17, 18, 19], 'row5': [20, 21, 22, 23, 24], 'col1': [0, 5, 10, 15, 20],
+     'col2': [1, 6, 11, 16, 21], 'col3': [2, 7, 12, 17, 22], 'col4': [3, 8, 13, 18, 23],
+     'col5': [4, 9, 14, 19, 24], 'tlbr': [0, 6, 12, 18, 24], 'bltr': [4, 8, 12, 16, 20]}
+    indices = row_indices[row_id]
+    return [board['goals'][i] for i in indices]
+
+
+
+
+
+
+
 
 def parse_srl_races(name, json):
     results = []

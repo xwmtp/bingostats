@@ -1,5 +1,4 @@
 from Definitions import VERSIONS, BLACKLIST
-from BingoBoards.BingoVersions import BINGO_VERSIONS
 from Utils import *
 import re
 
@@ -31,13 +30,7 @@ class Race:
         self.recordable = race_info['recordable']
         self.finished = not self.forfeit and not self.dq
         self.row_id = self.parse_row_id(self.comment)
-
-        if self.type in BINGO_VERSIONS.keys() and self.row_id != 'blank':
-            bingo_version = BINGO_VERSIONS[self.type]
-            if self.row_id != 'blank':
-                self.row = bingo_version.get_row(int(self.seed), self.row_id)
-        else:
-            self.row = []
+        self.row = [] # gets filled later
 
 
     def parse_type(self, goal):

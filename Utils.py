@@ -11,7 +11,6 @@ def readjson(url, text_only=False, tries=5):
 
     for i in range(tries):
         response = requests.get(url)
-
         status = response.status_code
 
         if status == 200:

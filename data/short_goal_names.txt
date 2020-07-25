@@ -1,9 +1,11 @@
 1 Skulltula from each Adult Dungeon;Skull from each AD
 1 Skulltula from each Child Dungeon;Skull from each CD
 1 Unused Small Key in each Adult Dungeon;Key from each AD
+1 Unused Key in each Adult Dungeon;Key from each AD
 10 Songs;10 Songs
 15 Different Skulltulas;15 skulls
 2 Boss Keys;2 BKs
+2 Lon-Lon Ranch Area Skulltulas;2 Lon Lon Skulls
 3 Boots;3 Boots
 3 Boss Keys;3 BKs
 3 Lake Hylia Skulltulas;3 Lake skulls
@@ -21,6 +23,7 @@
 3 Unused Keys in Gerudo Training Grounds;3 GTG keys
 30 Deku Nuts;30 Nuts
 37th Heart Piece (Child Fortress);37th HP
+37th HP (Child Fortress);37th HP
 4 Compasses;-
 4 Maps;-
 4 Skulltulas in Shadow Temple;4 Shadow skulls
@@ -49,8 +52,10 @@
 8 Hearts;-
 8 Hearts (No Duping);8 Hearts
 8 Songs;-
+9 Different Unused Keys in Gerudo Training Grounds;9 unused GTG key
 9 Hearts;-
 9 Hearts (No Duping);9 Hearts
+9 Magic Beans;9 Beans
 9 Songs;-
 All 3 Elemental Arrows;3 Elem Arrows
 All 3 Kokiri Forest area Skulltulas;3 Kokiri skulls
@@ -74,6 +79,7 @@ All 8 Death Mountain area Skulltulas;8 DM skulls
 All 8 Kakariko area Skulltulas;8 Kakariko skulls
 All 8 Zora's Domain area Skulltulas;8 Zora skulls
 All 8 Zora Domain area Skulltulas;8 Zora skulls
+At least 9 songs;9 Songs
 Beat Dodongo's Cavern;Beat DC
 Beat Jabu-Jabu's Belly;Beat Jabu
 Beat the Deku Tree;Beat Deku
@@ -91,6 +97,7 @@ Boomerang;-
 Both Gerudo Valley HPs;Both Valley HPs
 Both Gerudo's Fortress area Skulltulas;Both GTG skulls
 Both HPs in Death Mountain Crater;Both DMC HPs
+Both Heart Pieces in Death Mountain Crater;Both DMC HPs
 Both HPs in Lost Woods;Both LW HPs
 Both Hyrule Field area Skulltulas;Both Field skulls
 Bottled Fairy;-
@@ -99,6 +106,7 @@ Bullet Bag (40);Bullet Bag 40
 Bullet Bag (50);Bullet Bag 50
 Cow in House;-
 Defeat 4 Different Iron Knuckles;Defeat 4 Knuckles
+Defeat 4 Iron Knuckles;Defeat 4 Knuckles
 Defeat a Skull Kid;Defeat Skull Kid
 Defeat a White Wolfos;Defeat Wolfos
 Defeat all Lizalfos in Dodongo's Cavern;Defeat DC Lizalfos
@@ -121,12 +129,15 @@ Double Defense;-
 Double Magic;-
 Epona's Song;-
 Exactly 20 Deku Sticks;20 Sticks
+20 Deku Sticks;20 Sticks
 Exactly 30 Deku Sticks;30 Sticks
+30 Deku Sticks;30 Sticks
 Fairy Bow;-
 Fairy Slingshot;Slingshot
 Farore's Wind;-
 Fill all 4 Bottle Slots;Fill Bottle Slots
 Fire Arrows;-
+Fire Arrow;Fire Arrows
 Fire Medallion;-
 Fire Temple Boss Key;Fire BK
 Forest Medallion;-
@@ -172,8 +183,11 @@ Minuet of Forest;Minuet
 Mirror Shield;-
 Nayru's Love;-
 Obtain all 5 Small Keys in Forest Temple;5 Forest keys
+Open all 5 Small Key chests in Forest Temple;5 Forest keys
 Obtain all 5 Small Keys in Shadow Temple;5 Shadow keys
+Open all 5 Small Key chests in Shadow temple;5 Shadow Keys
 Obtain all 8 Small Keys in Fire Temple;8 Fire keys
+Open all 8 Small Key chests in Fire Temple;8 Fire keys
 Plant Bean in Death Mountain Crater;Plant DMC bean
 Quiver (40);Quiver 40
 Quiver (50);Quiver 50

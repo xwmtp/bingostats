@@ -138,7 +138,14 @@ class Player:
         }
         # goals
         for i in range(5):
-            goals = [SHORT_GOAL_NAMES[r[i].lower()] if len(r) == 5 else '' for r in rows]
+            try:
+                goals = [SHORT_GOAL_NAMES[r[i].lower()] if len(r) == 5 else '' for r in rows]
+            except Exception:
+                try:
+                    goals = [SHORT_GOAL_NAMES[r[i].lower().replace('at least ','').replace('heart piece','hp').replace('unique','different')] if len(r) == 5 else '' for r in rows]
+                except KeyError as k:
+                    print(k.args[0])
+                    goals = ['' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 
