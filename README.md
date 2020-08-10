@@ -1,6 +1,6 @@
 # Bingo Stats
 
-An online dashboard tool for The Legend of Zelda: Ocarina of Time [Bingo](http://www.speedrunslive.com/tools/oot-bingo/). Get insights in your progress with interactive graphs and a table summarizing all your past results.
+An online dashboard tool for The Legend of Zelda: Ocarina of Time [Bingo](https://ootbingo.github.io/bingo/latest-version.html). Get insights in your progress with interactive graphs and a table summarizing all your past results.
 
 Find Bingo Stats [here](http://bit.ly/bingostats).
 
