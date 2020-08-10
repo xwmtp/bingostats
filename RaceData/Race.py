@@ -65,7 +65,6 @@ class Race:
                 if mode in goal.lower():
                     return mode
             self.is_bingo = True
-            # only mark betas as 'bingo' when include_betas is true
             if 'beta' in version:
                 self.is_beta = True
 

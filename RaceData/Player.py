@@ -151,9 +151,17 @@ class Player:
             'Rank'    : [f'{r.rank}/{r.total_players}' for r in races],
             'Race-id'  : [race.id for race in races],
         }
-        # goals
+
+
+        def shorten_goal(goal):
+            try:
+                return SHORT_GOAL_NAMES[goal]
+            except KeyError:
+                return goal[:19]
+
+                 # goals
         for i in range(5):
-            goals = [SHORT_GOAL_NAMES[r[i].lower()] if len(r) == 5 else '' for r in rows]
+            goals = [shorten_goal(r[i].lower()) if len(r) == 5 else '' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 

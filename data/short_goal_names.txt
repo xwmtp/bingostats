@@ -210,4 +210,4 @@ Open 3 Boss Key Doors;3 Boss Doors
 7 Different Bottled Contents;7 Bottle Contents
 Desert Colossus HP;Colossus HP
 Open 50 Rupee Chest in Wasteland;50r Wasteland 
-Both Rusty Switches in Spirit Temple;Spirit Rusty Switches
+Both Rusty Switches in Spirit Temple;Both Rusty Switches
