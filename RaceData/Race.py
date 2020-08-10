@@ -121,6 +121,19 @@ class Race:
             comment = comment.replace(name, symbol)
         return comment
 
+    def is_type(self, type):
+        if self.type == type:
+            return True
+        if self.is_beta and self.type.startswith(type):
+            return True
+        return False
+
+    def get_type(self, shorten_betas=False):
+        type = self.type
+        if shorten_betas and self.is_beta:
+            type = '.'.join(self.type.split('.')[:3])
+        return type
+
 
     # currently not in use
     def _get_zl_label(self, SRL_data):

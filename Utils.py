@@ -72,6 +72,9 @@ def convert_to_human_readable_time(time):
 
     return new_time, human_readable_time
 
+def parse_date(date_str):
+    return dt.datetime.strptime(date_str, '%d-%m-%Y').date()
+
 
 
 class Range:

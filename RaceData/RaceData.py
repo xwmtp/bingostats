@@ -1,6 +1,8 @@
 from Utils import *
 from RaceData.Player import Player
 from RaceData.Race import Race
+from BingoBoards.BingoVersions import BINGO_VERSIONS
+from Definitions import is_api_supported_version, is_pregenerated_version
 import datetime as dt
 import isodate
 import math
@@ -40,15 +42,24 @@ def add_goals(races):
     versions = set([r.type for r in bingos])
     for version in versions:
         version_bingos = [r for r in bingos if r.type == version]
-        logging.debug(f'Looking up {len(version_bingos)} boards for version {version}')
-        seeds = [r.seed for r in version_bingos]
-        goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b','beta')}&seeds={','.join(seeds)}&mode=normal")
-        if goal_data:
-            boards = goal_data['boards']
-            for i in range(len(version_bingos)):
-                bingo = version_bingos[i]
+        # version has been pre generated
+        if is_pregenerated_version(version):
+            logging.debug(f'Using {len(version_bingos)} pre-generated boards for version {version}')
+            version_boards = BINGO_VERSIONS[version]
+            for bingo in version_bingos:
                 if bingo.row_id != 'blank':
-                    bingo.row = board_to_row(boards[i], bingo.row_id)
+                    bingo.row = version_boards.get_row(int(bingo.seed), bingo.row_id)
+        # use api
+        elif is_api_supported_version(version):
+            logging.debug(f'Looking up {len(version_bingos)} boards for version {version}')
+            seeds = [r.seed for r in version_bingos]
+            goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b','beta')}&seeds={','.join(seeds)}&mode=normal")
+            if goal_data:
+                boards = goal_data['boards']
+                for i in range(len(version_bingos)):
+                    bingo = version_bingos[i]
+                    if bingo.row_id != 'blank':
+                        bingo.row = board_to_row(boards[i], bingo.row_id)
 
 def board_to_row(board, row_id):
     row_indices = {'row1': [0, 1, 2, 3, 4], 'row2': [5, 6, 7, 8, 9], 'row3': [10, 11, 12, 13, 14],

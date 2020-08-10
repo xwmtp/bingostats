@@ -1,5 +1,6 @@
 from Utils import *
 import logging
+from Definitions import is_supported_version
 
 SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt', to_lower=True)
 
@@ -15,7 +16,7 @@ class Player:
         if type == 'bingo':
             races = [race for race in self.races if race.is_bingo]
         else:
-            races = [race for race in self.races if race.type == type]
+            races = [race for race in self.races if race.is_type(type)]
         # betas
         if not self.include_betas:
             races = [race for race in races if not race.is_beta]
@@ -64,6 +65,26 @@ class Player:
         versions = sorted([version for version in versions if version != 'v?'], reverse=True)
         return versions
 
+    def get_supported_versions(self, shorten_betas=False):
+        races = self.select_races(type='bingo')
+        all_versions = set([race.get_type(shorten_betas=shorten_betas) for race in races])
+        return [v for v in all_versions if is_supported_version(v)]
+
+    def sort_versions(self, versions):
+
+        def version_to_float(v):
+            for t in ['b0.', 'v', '-j']:
+                v = v.replace(t, '')
+            num = float('.'.join(v.split('.')[0:2]))
+            try:
+                num = float(str(num) + '0.0' + v.split('.')[3])
+            except:
+                pass
+            return num
+
+        return sorted(versions, key=lambda v: version_to_float(v))
+
+
     def get_latest_version(self):
         versions = self.get_versions()
         if versions == []:
@@ -80,7 +101,7 @@ class Player:
         if version=='bingo':
             row_lists = [race.row for race in self.races]
         else:
-            row_lists = [race.row for race in self.races if race.row if race.type==version]
+            row_lists = [race.row for race in self.races if race.row if race.is_type(version)]
         rows = [goal for row in row_lists for goal in row]
         if rows != []:
             return max(set(rows), key=rows.count)
@@ -99,13 +120,11 @@ class Player:
         latest_races = self.select_races(n=n, sort='latest', type = type)
         times = [r.time for r in latest_races]
         forfeits = self.get_forfeit_count(n, type, latest_races)
-        print('normal med:')
         return self.calc_median(times), forfeits
 
     def calc_median(self, times):
         if len(times) > 0:
             times = sorted(times)
-            print([str(t) for t in times])
             mid = int(len(times) / 2)
             if len(times) % 2 == 0:
                 median = (times[mid - 1] + times[mid]) / 2
@@ -121,7 +140,6 @@ class Player:
         forfeits = len([r for r in all_latest_races if r.forfeit])
         plain_median, _ = self.get_median(n=(len(all_latest_races) - forfeits))
         times = [plain_median * 1.25 if r.forfeit else r.time for r in all_latest_races]
-        print('effective med:')
         effective_median = self.calc_median(times)
         return effective_median
 
@@ -140,6 +158,18 @@ class Player:
         logging.warning(f'Never foud race with id {race.id} for get_forfeit_count!')
         return forfeits
 
+    def shorten_goal(self, goal):
+        goal = goal.lower()
+        try:
+            return SHORT_GOAL_NAMES[goal]
+        except KeyError:
+            try:
+                return SHORT_GOAL_NAMES[
+                    goal.replace('at least ', '').replace('heart piece', 'hp').replace('unique', 'different')]
+            except KeyError:
+                return goal[:19]
+
+
     def get_pandas_table(self, type = 'bingo'):
         races = self.select_races(type = type)
         rows = [race.row for race in races]
@@ -152,17 +182,8 @@ class Player:
             'Race-id'  : [race.id for race in races],
         }
 
-        def shorten_goal(goal):
-            try:
-                return SHORT_GOAL_NAMES[goal]
-            except KeyError:
-                try:
-                    return SHORT_GOAL_NAMES[goal.replace('at least ','').replace('heart piece','hp').replace('unique','different')]
-                except KeyError:
-                    return goal[:19]
-
         for i in range(5):
-            goals = [shorten_goal(r[i].lower()) if len(r) == 5 else '' for r in rows]
+            goals = [self.shorten_goal(r[i]) if len(r) == 5 else '' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 

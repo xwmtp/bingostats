@@ -22,8 +22,22 @@ VERSIONS = {
 def get_newest_version():
     return list(VERSIONS.keys())[0]
 
-def is_supported_version(version):
+def is_pregenerated_version(version):
     return os.path.isfile(f"BingoBoards/Versions/{version.replace('.','')}.bingo")
+
+def is_api_supported_version(version):
+    if 'b' in version:
+        return True
+    try:
+        num = version.replace('v','')
+        return int(num.split('.')[0]) >= 9
+    except Exception:
+        return False
+
+# has goals in the table
+def is_supported_version(version):
+    return is_pregenerated_version(version) or is_api_supported_version(version)
+
 
 # race IDs that should be ignored (for various reasons)
 BLACKLIST = [
