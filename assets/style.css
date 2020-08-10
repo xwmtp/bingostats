@@ -99,6 +99,7 @@ table.cell-table {
 .stats-block {
   min-width: 350px;
   margin: 0px 50px;
+  text-align: center;
 }
 
 

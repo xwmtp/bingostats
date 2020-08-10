@@ -206,6 +206,7 @@ Water Temple Boss Key;Water BK
 Win Bombchu Bowling Prize;Bombchu Bowling
 Zora Tunic;Bad Tunic
 2 Lon Lon Ranch Area Skulltulas;2 Lon Lon Skulls
+2 Skulltulas in Lon Lon Ranch;2 Lon Lon Skulls
 Open 3 Gold Rupee Chests;3 Gold Rupees
 Open 5 Gold Rupee Chests;5 Gold Rupees
 Open 6 Gold Rupee Chests;6 Gold Rupees
@@ -223,4 +224,4 @@ Open 3 Boss Key Doors;3 Boss Doors
 7 Different Bottled Contents;7 Bottle Contents
 Desert Colossus HP;Colossus HP
 Open 50 Rupee Chest in Wasteland;50r Wasteland 
-Both Rusty Switches in Spirit Temple;Spirit Rusty Switches
+Both Rusty Switches in Spirit Temple;Both Rusty Switches

@@ -44,4 +44,7 @@ BLACKLIST = [
     '17667',
     '18680',
     '15910',
+    
+    # incorrect finish time on rt.gg:
+    'priceless-gerudo-6509',
 ]

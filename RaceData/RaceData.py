@@ -12,8 +12,8 @@ def get_player(name, include_betas=False):
     if name == '':
         return
 
-    srl_json = readjson(f'http://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
-    racetime_user_json = readjson(f'http://racetime.gg/autocomplete/user?term={name}')
+    srl_json = readjson(f'https://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
+    racetime_user_json = readjson(f'https://racetime.gg/autocomplete/user?term={name}')
     def find_racetime_user_id(name, results):
         for user in results:
             if name.lower() == user['name'].lower():
@@ -34,16 +34,6 @@ def get_player(name, include_betas=False):
 
         return player
 
-
-
-
-    # else:
-    #     json = readjson(f'https://www.speedrun.com/api/v1/users?lookup={name}')
-    #     if json['data'] != []:
-    #         new_name = json['data'][0]['names']['international']
-    #         if new_name.lower() != name.lower():
-    #             logging.debug(f'Found alternative name {new_name}')
-    #             return self.get_player(new_name)
 
 def add_goals(races):
     bingos = [r for r in races if r.is_bingo]
@@ -93,7 +83,7 @@ def parse_racetime_races(name, id):
     page = 1
     num_pages = math.inf
     while page <= num_pages:
-        json = readjson(f'http://racetime.gg/user/{id}/races/data?show_entrants=true&page={page}')
+        json = readjson(f'https://racetime.gg/user/{id}/races/data?show_entrants=true&page={page}')
         for race in json['races']:
             if race['name'].split('/')[0] == 'oot':
                 for entrant in race['entrants']:

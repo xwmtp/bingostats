@@ -85,30 +85,45 @@ class Player:
         if rows != []:
             return max(set(rows), key=rows.count)
 
-    def get_average(self, type = 'bingo'):
-        latest_races = self.select_races(n=10, sort='latest', type = type)
+    def get_average(self, n=10, type = 'bingo'):
+        latest_races = self.select_races(n=n, sort='latest', type = type)
         times = [r.time for r in latest_races]
-        forfeits = self.get_forfeit_count(10, type, latest_races)
+        forfeits = self.get_forfeit_count(n, type, latest_races)
         if len(times) > 0:
             logging.debug([str(time) for time in times])
             return sum(times, dt.timedelta(0)) / len(times), forfeits
         else:
             return '-', 0
 
-    def get_median(self, type = 'bingo'):
-        latest_races = self.select_races(n=10, sort='latest', type = type)
+    def get_median(self, n=10, type = 'bingo'):
+        latest_races = self.select_races(n=n, sort='latest', type = type)
         times = [r.time for r in latest_races]
-        forfeits = self.get_forfeit_count(10, type, latest_races)
+        forfeits = self.get_forfeit_count(n, type, latest_races)
+        print('normal med:')
+        return self.calc_median(times), forfeits
+
+    def calc_median(self, times):
         if len(times) > 0:
             times = sorted(times)
+            print([str(t) for t in times])
             mid = int(len(times) / 2)
             if len(times) % 2 == 0:
                 median = (times[mid - 1] + times[mid]) / 2
             else:
                 median = times[mid]
-            return median, forfeits
+            return median
         else:
-            return '-', 0
+            return '-'
+
+    # penalizes forfeits
+    def get_effective_median(self, n=10):
+        all_latest_races = self.select_races(n=n, sort='latest', forfeits=True, type='bingo')
+        forfeits = len([r for r in all_latest_races if r.forfeit])
+        plain_median, _ = self.get_median(n=(len(all_latest_races) - forfeits))
+        times = [plain_median * 1.25 if r.forfeit else r.time for r in all_latest_races]
+        print('effective med:')
+        effective_median = self.calc_median(times)
+        return effective_median
 
     def get_forfeit_count(self, n, type, races):
         """Get the amount of forfeits in a list of races that happened in the last n. Assumes races is sorted by latest date."""
@@ -136,16 +151,18 @@ class Player:
             'Rank'    : [f'{r.rank}/{r.total_players}' for r in races],
             'Race-id'  : [race.id for race in races],
         }
-        # goals
-        for i in range(5):
+
+        def shorten_goal(goal):
             try:
-                goals = [SHORT_GOAL_NAMES[r[i].lower()] if len(r) == 5 else '' for r in rows]
-            except Exception:
+                return SHORT_GOAL_NAMES[goal]
+            except KeyError:
                 try:
-                    goals = [SHORT_GOAL_NAMES[r[i].lower().replace('at least ','').replace('heart piece','hp').replace('unique','different')] if len(r) == 5 else '' for r in rows]
-                except KeyError as k:
-                    print(k.args[0])
-                    goals = ['' for r in rows]
+                    return SHORT_GOAL_NAMES[goal.replace('at least ','').replace('heart piece','hp').replace('unique','different')]
+                except KeyError:
+                    return goal[:19]
+
+        for i in range(5):
+            goals = [shorten_goal(r[i].lower()) if len(r) == 5 else '' for r in rows]
             if any([goal != '' for goal in goals]):
                 df_dict['Goal' + str(i+1)] = goals
 
