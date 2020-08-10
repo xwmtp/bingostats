@@ -32,19 +32,6 @@ def get_player(name, include_betas=False):
 
         return player
 
-
-
-
-
-
-    # else:
-    #     json = readjson(f'https://www.speedrun.com/api/v1/users?lookup={name}')
-    #     if json['data'] != []:
-    #         new_name = json['data'][0]['names']['international']
-    #         if new_name.lower() != name.lower():
-    #             logging.debug(f'Found alternative name {new_name}')
-    #             return self.get_player(new_name)
-
 def parse_srl_races(name, json):
     results = []
     for race in json['pastraces']:

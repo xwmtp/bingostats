@@ -192,6 +192,7 @@ Water Temple Boss Key;Water BK
 Win Bombchu Bowling Prize;Bombchu Bowling
 Zora Tunic;Bad Tunic
 2 Lon Lon Ranch Area Skulltulas;2 Lon Lon Skulls
+2 Skulltulas in Lon Lon Ranch;2 Lon Lon Skulls
 Open 3 Gold Rupee Chests;3 Gold Rupees
 Open 5 Gold Rupee Chests;5 Gold Rupees
 Open 6 Gold Rupee Chests;6 Gold Rupees

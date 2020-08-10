@@ -39,17 +39,21 @@ def _get_general_stats_string(player):
     blank_shame = ' .shame' if blank_perc > 25 else ''
     forfeit_shame = ' .shame' if forfeit_perc > 25 else ''
 
-    average, avg_forfeits = player.get_average()
+    N = 10
+    average, avg_forfeits = player.get_average(N)
     average_str = str(average).split('.')[0]
-    median, med_forfeits = player.get_median()
+    median, med_forfeits = player.get_median(N)
     median_str = str(median).split('.')[0]
-    forfeits_str = 'forfeit' if avg_forfeits == 1 else 'forfeits'
+    forfeits_str = 'forfeit' if med_forfeits == 1 else 'forfeits'
+    eff_median = player.get_effective_median(N)
+    eff_median_str = str(eff_median).split('.')[0]
 
     return f'Completed {len(completed_races)} bingos\n\n' \
            f'Blanked {num_blanks} bingos ({blank_perc}%){blank_shame}\n\n' \
            f'Forfeited {num_forfeits} bingos ({forfeit_perc}%){forfeit_shame}\n\n' \
-           f'Average over last 10 races: {average_str} ({avg_forfeits} {forfeits_str})\n\n' \
-           f'Median over last 10 races: {median_str} ({med_forfeits} {forfeits_str})'
+           f'Average over last {N} completed bingos: {average_str}\n\n' \
+           f'Median over last {N} completed bingos: {median_str}\n\n' \
+           f'Effective median over last {N} bingos: {eff_median_str} (incl {med_forfeits} {forfeits_str})'
 
 def _get_rows_stats_string(player):
     completed_races = player.select_races(type="bingo", forfeits=False)
