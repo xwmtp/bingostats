@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Dashboard.Plots.Ranks_graph import get_ranks_graph
-from Dashboard.Plots.SRL_point_graph import get_SRL_point_graph
+from Dashboard.Plots.Race_point_graph import get_race_point_graph
 from Dashboard.Plots.PB_graph import get_PB_graph, get_dropdown_options
 from Dashboard.Plots.Bingo_table import get_bingo_table
 from Dashboard.Stats_text import get_stats_divs
@@ -46,7 +46,7 @@ class Dashboard:
             player = get_player(input_name, include_betas)
             markdown = get_stats_divs(player, input_name)
             ranks_graph = get_ranks_graph(player)
-            srl_point_graph = get_SRL_point_graph(player)
+            srl_point_graph = get_race_point_graph(player)
             bingo_table = get_bingo_table(player) if player else []
             current_version = player.get_latest_version() if player else ''
             versions_options = get_dropdown_options(player)

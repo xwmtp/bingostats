@@ -62,3 +62,16 @@ BLACKLIST = [
     # incorrect finish time on rt.gg:
     'priceless-gerudo-6509',
 ]
+
+# Racetime.gg name, SRL name
+ALIASES = [
+    ['Titou', 'TitouKay'],
+    ['Fleush', 'Kintefleush'],
+    ['Bonooruu', 'Bonooru'],
+    ['Condor', 'condor6425'],
+    ['Chris7', 'Chris7M'],
+    ['CoffeePot', 'CoffeeRunner1'],
+    ['the__consultant','the_consultant'],
+    ['Countdown', 'countdown42'],
+    ['laserbeeam', 'laser']
+]

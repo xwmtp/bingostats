@@ -2,12 +2,22 @@ from Dashboard.Plots.Layout import get_graph_layout
 import dash_core_components as dcc
 import plotly.graph_objs as go
 
-def get_SRL_point_graph(player=None):
+def get_race_point_graph(player=None):
     graph = []
 
     if player:
         races = player.select_races(sort='latest')
-        races = [race for race in races if race.platform == 'srl']
+
+
+        srl_races = [race for race in races if race.platform == 'srl']
+        rt_races = [race for race in races if race.platform == 'racetime']
+
+        if len(rt_races) > 20 or len(rt_races) > len(srl_races):
+            races = rt_races
+            platform = 'Racetime'
+        else:
+            races = srl_races
+            platform = 'SRL'
 
         dates = [race.date for race in races]
         points = [race.points for race in races]
@@ -31,7 +41,7 @@ def get_SRL_point_graph(player=None):
 
         graph = [dcc.Graph(
                       figure={'data': data,
-                              'layout': get_graph_layout(title='SRL points progression', height=600, y_label='Points', tickformat='')
+                              'layout': get_graph_layout(title=f'{platform} points progression', height=600, y_label='Points', tickformat='')
                               }
                       )]
 

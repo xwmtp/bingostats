@@ -2,20 +2,31 @@ from Utils import *
 from RaceData.Player import Player
 from RaceData.Race import Race
 from BingoBoards.BingoVersions import BINGO_VERSIONS
-from Definitions import is_api_supported_version, is_pregenerated_version
+from BingoBoards.BingoVersion import ROW_INDICES
+from Definitions import ALIASES, is_api_supported_version, is_pregenerated_version
 import datetime as dt
 import isodate
 import math
 
 
 
-
+# name to look up, possible to add an existing player to add the races to
 def get_player(name, include_betas=False):
     if name == '':
         return
+    player = lookup_player(name, include_betas)
+    for aliases in ALIASES:
+        if any(a for a in aliases if a.lower() == name.lower()):
+            lookup_names = [a for a in aliases if a.lower() != name.lower()]
+            for alias in lookup_names:
+                player = lookup_player(alias, include_betas=include_betas, player=player)
+    return player
 
+def lookup_player(name, include_betas=False, player=None):
+    logging.debug(f"Looking up name {name}...")
     srl_json = readjson(f'https://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
     racetime_user_json = readjson(f'https://racetime.gg/autocomplete/user?term={name}')
+
     def find_racetime_user_id(name, results):
         for user in results:
             if name.lower() == user['name'].lower():
@@ -26,15 +37,16 @@ def get_player(name, include_betas=False):
 
     racetime_user_id = find_racetime_user_id(name, racetime_user_json['results'])
     if srl_json or racetime_user_json:
-        player = Player(name, include_betas)
+        if not player:
+            logging.debug(f'Creating now player object for name {name}')
+            player = Player(name, include_betas)
         if srl_json:
             player.races += parse_srl_races(name, srl_json)
         if racetime_user_id:
             player.races += parse_racetime_races(name, racetime_user_id)
 
         add_goals(player.races)
-
-        return player
+    return player
 
 
 def add_goals(races):
@@ -44,32 +56,29 @@ def add_goals(races):
         version_bingos = [r for r in bingos if r.type == version]
         # version has been pre generated
         if is_pregenerated_version(version):
-            logging.debug(f'Using {len(version_bingos)} pre-generated boards for version {version}')
-            version_boards = BINGO_VERSIONS[version]
-            for bingo in version_bingos:
-                if bingo.row_id != 'blank':
-                    bingo.row = version_boards.get_row(int(bingo.seed), bingo.row_id)
+            add_pregenerated_goals(version, version_bingos)
         # use api
         elif is_api_supported_version(version):
-            logging.debug(f'Looking up {len(version_bingos)} boards for version {version}')
-            seeds = [r.seed for r in version_bingos]
-            goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b','beta')}&seeds={','.join(seeds)}&mode=normal")
-            if goal_data:
-                boards = goal_data['boards']
-                for i in range(len(version_bingos)):
-                    bingo = version_bingos[i]
-                    if bingo.row_id != 'blank':
-                        bingo.row = board_to_row(boards[i], bingo.row_id)
+            add_api_goals(version, version_bingos)
 
-def board_to_row(board, row_id):
-    row_indices = {'row1': [0, 1, 2, 3, 4], 'row2': [5, 6, 7, 8, 9], 'row3': [10, 11, 12, 13, 14],
-     'row4': [15, 16, 17, 18, 19], 'row5': [20, 21, 22, 23, 24], 'col1': [0, 5, 10, 15, 20],
-     'col2': [1, 6, 11, 16, 21], 'col3': [2, 7, 12, 17, 22], 'col4': [3, 8, 13, 18, 23],
-     'col5': [4, 9, 14, 19, 24], 'tlbr': [0, 6, 12, 18, 24], 'bltr': [4, 8, 12, 16, 20]}
-    indices = row_indices[row_id]
-    return [board['goals'][i] for i in indices]
+def add_pregenerated_goals(version, races):
+    logging.debug(f'Using {len(races)} pre-generated boards for version {version}')
+    version_boards = BINGO_VERSIONS[version]
+    for bingo in races:
+        if bingo.row_id != 'blank':
+            bingo.row = version_boards.get_row(int(bingo.seed), bingo.row_id)
 
-
+def add_api_goals(version, races):
+    logging.debug(f'Looking up {len(races)} boards for version {version}')
+    seeds = [r.seed for r in races]
+    goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b', 'beta')}&seeds={','.join(seeds)}&mode=normal")
+    if goal_data:
+        boards = goal_data['boards']
+        for i in range(len(races)):
+            bingo = races[i]
+            if bingo.row_id != 'blank':
+                indices = ROW_INDICES[bingo.row_id]
+                bingo.row = [boards[i]['goals'][j] for j in indices]
 
 
 

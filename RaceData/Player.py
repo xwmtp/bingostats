@@ -79,9 +79,8 @@ class Player:
             num = float('.'.join(v.split('.')[0:2]))
             try:
                 num = num + (float(v.split('.')[2]) / 100)
-            except Exception as e:
-                print(e)
-            print(v, num)
+            except IndexError:
+                pass
             return num
 
         return sorted(versions, key=lambda v: version_to_float(v), reverse=True)
