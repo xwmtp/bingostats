@@ -62,27 +62,29 @@ class Player:
     def get_versions(self):
         races = self.select_races(sort='latest')
         versions = set([race.type for race in races])
-        versions = sorted([version for version in versions if version != 'v?'], reverse=True)
+        versions = self.sort_versions([version for version in versions if version != 'v?'])
         return versions
 
     def get_supported_versions(self, shorten_betas=False):
         races = self.select_races(type='bingo')
         all_versions = set([race.get_type(shorten_betas=shorten_betas) for race in races])
-        return [v for v in all_versions if is_supported_version(v)]
+        supported_versions = [v for v in all_versions if is_supported_version(v)]
+        return self.sort_versions(supported_versions)
 
     def sort_versions(self, versions):
 
         def version_to_float(v):
-            for t in ['b0.', 'v', '-j']:
-                v = v.replace(t, '')
+            for t in ['b0.', 'v', '-j',]:
+                v = v.replace(t, '').replace('?', '0')
             num = float('.'.join(v.split('.')[0:2]))
             try:
-                num = float(str(num) + '0.0' + v.split('.')[3])
-            except:
-                pass
+                num = num + (float(v.split('.')[2]) / 100)
+            except Exception as e:
+                print(e)
+            print(v, num)
             return num
 
-        return sorted(versions, key=lambda v: version_to_float(v))
+        return sorted(versions, key=lambda v: version_to_float(v), reverse=True)
 
 
     def get_latest_version(self):

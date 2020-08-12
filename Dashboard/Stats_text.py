@@ -59,7 +59,7 @@ def _get_rows_stats_string(player):
     favorite_row = player.get_favorite_row()
     rows_text = f'Most common row: {favorite_row}\n\n'
 
-    versions = reversed(player.sort_versions(player.get_supported_versions(shorten_betas=True)))
+    versions = player.get_supported_versions(shorten_betas=True)
     for version in versions:
         if is_supported_version(version):
             version_races = player.select_races(type=version)

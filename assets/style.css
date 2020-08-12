@@ -90,7 +90,7 @@ table.cell-table {
   display: flex;
   flex-flow: row;
   justify-content: center;
-  align-items: flex-start
+  align-items: flex-start;
 }
 
 #stats-ranks-loading-block {
@@ -100,7 +100,7 @@ table.cell-table {
 .stats-block {
   min-width: 400px;
   margin: 0px 50px;
-  text-align: center;
+  text-align: left;
 }
 
 
