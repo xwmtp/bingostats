@@ -73,5 +73,6 @@ ALIASES = [
     ['CoffeePot', 'CoffeeRunner1'],
     ['the__consultant','the_consultant'],
     ['Countdown', 'countdown42'],
-    ['laserbeeam', 'laser']
+    ['laserbeeam', 'laser'],
+    ['adef', 'adefgames']
 ]
