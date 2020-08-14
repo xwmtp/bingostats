@@ -74,5 +74,6 @@ ALIASES = [
     ['the__consultant','the_consultant'],
     ['Countdown', 'countdown42'],
     ['laserbeeam', 'laser'],
-    ['adef', 'adefgames']
+    ['adef', 'adefgames'],
+    ['Myelin', 'luigidude851']
 ]
