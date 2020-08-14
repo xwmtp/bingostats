@@ -56,18 +56,20 @@ def _get_general_stats_string(player):
            f'Effective median over last {N} bingos: {eff_median_str} (incl {med_forfeits} {forfeits_str})'
 
 def _get_rows_stats_string(player):
-    favorite_row = player.get_favorite_row()
-    rows_text = f'Most common row: {favorite_row}\n\n'
+    favorite_row, fav_row_count, fav_row_total = player.get_favorite_row()
+
+    rows_text = f'Most common row: {favorite_row} ({round(fav_row_count/fav_row_total*100,1)}%)\n\n'
 
     versions = player.get_supported_versions(shorten_betas=True)
-    for version in versions:
+    for version in versions + ['bingo']:
         if is_supported_version(version):
-            version_races = player.select_races(type=version)
+            version_races = player.select_races(type=version, blanks=False)
             favorite_goal = player.get_favorite_goal(version)
             if favorite_goal:
                 fav_goal = player.shorten_goal(favorite_goal)
                 count = len([race for race in version_races if favorite_goal in race.row])
-                rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({count}/{len(version_races)})\n\n'
+                if count > 1:
+                    rows_text = rows_text + f'Most common goal in {version}: {fav_goal} ({count}/{len(version_races)})\n\n'
     return rows_text
 
 

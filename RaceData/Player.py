@@ -11,7 +11,7 @@ class Player:
         self.include_betas = include_betas
         self.races = []
 
-    def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, span = None):
+    def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, blanks=True, span = None):
         # type
         if type == 'bingo':
             races = [race for race in self.races if race.is_bingo]
@@ -28,6 +28,8 @@ class Player:
             races = [race for race in races if race.finished]
         else:
             races = [race for race in races if not race.dq]
+        if not blanks:
+            races = [race for race in races if race.row_id != 'blank']
         # sorting
         if sort == 'best':
             races = sorted(races, key=lambda r: r.time)
@@ -94,15 +96,18 @@ class Player:
             return versions[0]
 
     def get_favorite_row(self):
-        rows = [race.row_id for race in self.races if race.row_id != 'blank']
+        bingos = self.select_races(type='bingo', blanks=False)
+        rows = [race.row_id for race in bingos if race.row]
         if rows != []:
-            return max(set(rows), key=rows.count)
+            fav_row =  max(set(rows), key=rows.count)
+            count = len([r for r in bingos if r.row_id==fav_row])
+            return fav_row, count, len(bingos)
 
     def get_favorite_goal(self, version='bingo'):
         if version=='bingo':
-            row_lists = [race.row for race in self.races]
+            row_lists = [race.row for race in self.races if race.row]
         else:
-            row_lists = [race.row for race in self.races if race.row if race.is_type(version)]
+            row_lists = [race.row for race in self.races if race.row and race.is_type(version)]
         rows = [goal for row in row_lists for goal in row]
         if rows != []:
             return max(set(rows), key=rows.count)
