@@ -32,9 +32,7 @@ def _get_general_stats_string(player):
     blank_perc = perc(num_blanks, len(blank_races))
     forfeit_perc = perc(num_forfeits, len(all_races))
 
-    logging.debug('{} bingos, {} excl forfeits, {} bingos without v2/v3, {} of which were blanked.'.format(
-        len(all_races), len(completed_races), len(blank_races), num_blanks
-    ))
+    logging.debug(f'{len(all_races)} bingos, {len(completed_races)} excl forfeits, {len(blank_races)} bingos without v2/v3, {num_blanks} of which were blanked.')
 
     blank_shame = ' .shame' if blank_perc > 25 else ''
     forfeit_shame = ' .shame' if forfeit_perc > 25 else ''
@@ -56,6 +54,8 @@ def _get_general_stats_string(player):
            f'Effective median over last {N} bingos: {eff_median_str} (incl {med_forfeits} {forfeits_str})'
 
 def _get_rows_stats_string(player):
+    if len(player.select_races(type="bingo")) == 0:
+        return ''
     favorite_row, fav_row_count, fav_row_total = player.get_favorite_row()
 
     rows_text = f'Most common row: {favorite_row} ({round(fav_row_count/fav_row_total*100,1)}%)\n\n'

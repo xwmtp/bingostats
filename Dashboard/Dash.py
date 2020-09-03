@@ -5,7 +5,7 @@ from Dashboard.Plots.PB_graph import get_PB_graph, get_dropdown_options
 from Dashboard.Plots.Bingo_table import get_bingo_table
 from Dashboard.Stats_text import get_stats_divs
 from Dashboard.HTML_page import get_html
-from RaceData.RaceData import get_player
+from RaceData.RaceData import get_player, load_player_data
 import dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -26,6 +26,22 @@ class Dashboard:
 
     def setup_app_callbacks(self, app):
 
+        @app.callback(Output('storage', 'data'),
+                      [Input(component_id='current-player', component_property='children'),
+                       Input(component_id='use-betas', component_property='children'),
+                       ])
+        def update_player_data(input_name, include_betas):
+            if input_name is '':
+                # prevent the None callbacks is important with the store component.
+                # you don't want to update the store for nothing.
+                print('load_player_data: prevent update!')
+                raise PreventUpdate
+            print('loading data')
+            player_data = load_player_data(input_name, include_betas) or {}
+            print(player_data)
+            return player_data
+
+
         @app.callback([
             Output(component_id='stats', component_property='children'),
             Output(component_id='ranks-graph', component_property='children'),
@@ -37,14 +53,17 @@ class Dashboard:
             Output(component_id='dropdown', component_property='options'),
             Output(component_id='player-title', component_property='children'),
         ],
-            [Input(component_id='current-player', component_property='children'),
-             Input(component_id='use-betas', component_property='children'),
-
-             ],
+            [Input('storage', 'modified_timestamp')],
+            [State('storage', 'data')]
         )
-        def update_output_div(input_name, include_betas):
-            player = get_player(input_name, include_betas)
-            markdown = get_stats_divs(player, input_name)
+        def update_output_div(ts, data):
+            if ts is None or data is None:
+                print('update_output_div: prevent update!')
+                raise PreventUpdate
+            print('updating outputs')
+
+            player = get_player(data)
+            markdown = get_stats_divs(player, player.name)
             ranks_graph = get_ranks_graph(player)
             srl_point_graph = get_race_point_graph(player)
             bingo_table = get_bingo_table(player) if player else []
@@ -94,11 +113,12 @@ class Dashboard:
             [Input('dropdown', 'value')],
             [State('current-player', 'children'),
              State('current-version', 'children'),
-             State('use-betas', 'children')
+             State('use-betas', 'children'),
+             State('storage', 'data')
              ]
         )
-        def update_pb_version(new_version, player_title, current_version, include_betas):
-            player = get_player(player_title, include_betas)
+        def update_pb_version(new_version, player_title, current_version, include_betas, data):
+            player = get_player(data)
             PB_graph = get_PB_graph(player, new_version)
             value_was_changed = current_version != '' and new_version != current_version
             if player and value_was_changed:

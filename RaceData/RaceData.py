@@ -8,12 +8,10 @@ import math
 
 
 
-def get_player(name, include_betas=False):
-    player_data = load_player_data(name, include_betas=include_betas)
+def get_player(player_data):
     if player_data:
-        player =  Player(player_data['name'], player_data['races'], include_betas)
+        player =  Player(player_data['name'], player_data['races'], player_data['include_betas'])
         return player
-
 
 # name to look up, possible to add an existing player to add the races to
 def load_player_data(name, include_betas=False):
@@ -35,7 +33,7 @@ def lookup_player_data(name, include_betas=False, player_data=None):
     racetime_user_id = find_racetime_user_id(name, racetime_user_json['results'])
     if srl_json or racetime_user_json:
         if not player_data:
-            logging.debug(f'Creating now player data for name {name}')
+            logging.debug(f'Creating new player data for name {name}')
             player_data = {'name' : name, 'include_betas' : include_betas, 'races' : []}
         if srl_json:
             player_data['races'] += parse_srl_races(name, srl_json)
@@ -62,8 +60,7 @@ def parse_srl_races(name, json):
         if race['game']['abbrev'] == 'oot':
             for entrant in race['results']:
                 if entrant['player'].lower() == name.lower():
-                    race_dict = parse_srl_race(race, entrant)
-                    results.append(race_dict)
+                    results.append(parse_srl_race(race, entrant))
     races = [r for r in results if not r['dq'] and r['recordable']]
     logging.debug(f'Parsed {len(races)} SRL races')
     return races

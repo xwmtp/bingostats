@@ -1,4 +1,4 @@
-
+import datetime as dt
 
 class Race:
 
@@ -7,22 +7,23 @@ class Race:
         self.id = race_info['id']
         self.goal = race_info['goal']
         self.total_players = race_info['num_entrants']
-        self.date = race_info['date']
-        self.time = race_info['time']
+        self.date = dt.datetime.strptime(race_info['date'], '%Y-%m-%d').date()
+        self.time = dt.timedelta(seconds=race_info['time'])
 
         self.seed = race_info['seed']
         self.type = race_info['type']
 
         self.is_bingo = race_info['bingo']
         self.is_beta = race_info['beta']
+        self.forfeit = race_info['forfeit']
+        self.dq = race_info['dq'] == 'True'
+        self.recordable = race_info['recordable']
+        self.finished = not self.forfeit and not self.dq
 
         self.rank = race_info['rank']
         self.points = int(race_info['points'])
         self.comment = race_info['comment']
-        self.forfeit = race_info['forfeit']
-        self.dq = race_info['dq']
-        self.recordable = race_info['recordable']
-        self.finished = not self.forfeit and not self.dq
+
         self.row_id = race_info['row_id']
         self.row = [] # gets filled later
 

@@ -8,6 +8,7 @@ def get_html():
 
         html.Div([
 
+            dcc.Store(id='storage', storage_type='memory'),
             html.H1('OoT Bingo Stats'),
             html.Div('Enter Racetime/SRL user name:'),
             dcc.Input(id='input-field', value='', type='text', maxLength=50, spellCheck=False),

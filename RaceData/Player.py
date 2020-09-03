@@ -162,7 +162,7 @@ class Player:
                 forfeits += 1
             if race.id == oldest_race.id:
                 return forfeits
-        logging.warning(f'Never foud race with id {race.id} for get_forfeit_count!')
+        logging.warning(f'Never found race with id {race.id} for get_forfeit_count!')
         return forfeits
 
     def shorten_goal(self, goal):

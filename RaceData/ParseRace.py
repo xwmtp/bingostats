@@ -11,10 +11,10 @@ def parse_srl_race(race, entrant):
     dict['platform'] = 'srl'
     dict['id'] = race['id']
     dict['goal'] = race['goal']
-    dict['date'] = dt.datetime.fromtimestamp(int(race['date'])).date()
+    dict['date'] = str(dt.datetime.fromtimestamp(int(race['date'])).date())
     dict['num_entrants'] = race['numentrants']
-    dict['recordable'] = True
-    dict['time'] = dt.timedelta(seconds=entrant['time'])
+    dict['recordable'] = 'True'
+    dict['time'] = entrant['time'] #seconds
     dict['forfeit'] = entrant['time'] == -1
     dict['dq'] = entrant['time'] == -2
     dict['rank'] = entrant['place']
@@ -29,9 +29,9 @@ def parse_racetime_race(race, entrant):
     dict['goal'] = race['goal']
     dict['date'] = race['ended_at']
     if dict['date']:
-        dict['date'] = isodate.parse_date(dict['date'])
+        dict['date'] = str(isodate.parse_date(dict['date']))
     else:
-        dict['date'] = dt.date(1970, 1, 1)
+        dict['date'] = str(dt.date(1970, 1, 1))
     dict['goal'] = race['goal']['name']
     dict['num_entrants'] = race['entrants_count']
     if race['info']:
@@ -39,9 +39,9 @@ def parse_racetime_race(race, entrant):
     dict['recordable'] = race['recordable']
     dict['time'] = entrant['finish_time']
     if dict['time']:
-        dict['time'] = isodate.parse_duration(dict['time'])
+        dict['time'] = isodate.parse_duration(dict['time']).seconds
     else:
-        dict['time'] = dt.timedelta(seconds=0)
+        dict['time'] = 0
     dict['forfeit'] = entrant['status']['value'] == 'dnf'
     dict['dq'] = entrant['status']['value'] == 'dq'
     dict['rank'] = entrant['place']
@@ -97,6 +97,7 @@ def parse_version(goal, date):
     found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
     if found_version:
         return found_version.group()
+    date = dt.datetime.strptime(date, '%Y-%m-%d').date()
     for version, version_date in VERSIONS.items():
         version_date = dt.datetime.strptime(version_date, '%d-%m-%Y').date()
         if date >= version_date:
