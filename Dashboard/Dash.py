@@ -8,6 +8,7 @@ from Dashboard.HTML_page import get_html
 from RaceData.RaceData import get_player
 import dash
 from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 import logging
 
 
@@ -25,7 +26,6 @@ class Dashboard:
 
     def setup_app_callbacks(self, app):
 
-        # Upon changing the current player
         @app.callback([
             Output(component_id='stats', component_property='children'),
             Output(component_id='ranks-graph', component_property='children'),

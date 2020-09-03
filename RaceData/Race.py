@@ -1,13 +1,4 @@
-from Definitions import VERSIONS, BLACKLIST
-from Utils import *
-import re
 
-html_symbols = {
-    '&quot;' : '"',
-    '&amp;'  : '&',
-    '&lt;'   : '<',
-    '&gt;'   : '>'
-}
 
 class Race:
 
@@ -19,107 +10,24 @@ class Race:
         self.date = race_info['date']
         self.time = race_info['time']
 
-        self.seed = self.parse_seed(self.goal)
-        self.type = self.parse_type(self.goal)
+        self.seed = race_info['seed']
+        self.type = race_info['type']
+
+        self.is_bingo = race_info['bingo']
+        self.is_beta = race_info['beta']
 
         self.rank = race_info['rank']
         self.points = int(race_info['points'])
-        self.comment = self.parse_comment(race_info['comment'])
+        self.comment = race_info['comment']
         self.forfeit = race_info['forfeit']
         self.dq = race_info['dq']
         self.recordable = race_info['recordable']
         self.finished = not self.forfeit and not self.dq
-        self.row_id = self.parse_row_id(self.comment)
+        self.row_id = race_info['row_id']
         self.row = [] # gets filled later
 
 
-    def parse_type(self, goal):
-        goal = goal.lower()
-        self.is_bingo = False
-        self.is_beta = False
 
-        def parse_version():
-            found_version = re.search(r'v\d+(\.(\d)+)*|(beta)\d+(\.\d+)*(-[A-Za-z]*)?', goal)
-            if found_version:
-                return found_version.group()
-
-            for version, date in VERSIONS.items():
-                version_date = dt.datetime.strptime(date, '%d-%m-%Y').date()
-                if self.date >= version_date:
-                    return version
-
-        if self.id in BLACKLIST:
-            return 'blacklisted'
-
-        version = parse_version()
-
-        if 'speedrunslive.com/tools/oot-bingo' in goal or f'ootbingo.github.io/bingo/{version}/bingo.html' in goal:
-            for mode in ['short', 'long', 'blackout', 'black out', '3x3', 'anti', 'double', 'bufferless', 'child', 'jp', 'japanese', 'bingo-j']:
-                if mode in goal.lower():
-                    return mode
-            self.is_bingo = True
-            if 'beta' in version:
-                self.is_beta = True
-
-            version = version.replace('beta', 'b')
-            return version
-
-        if 'http://www.buzzplugg.com/bryan/v9.2nosaria/' in goal:
-            return 'no-saria'
-        for name in {'v4', 'v5', 'v6', 'v7', 'v8'}:
-            if name in goal:
-                return name.replace('.', '')
-        if 'series' in goal or 'championship' in goal:
-            return 'ocs '
-
-        return 'other'
-
-    def parse_seed(self,url):
-        seed = re.search('seed=(\d)+', url)
-        if seed:
-            seed = seed.group()
-        else:
-            seed = '-----'
-        digit = seed.replace('seed=', '')
-        return digit
-
-    def parse_row_id(self, comment):
-
-        def extract_row(comment):
-            row_pattern = '((((r(ow)?)|(c(ol)?))( )?(\d))|(tl(-| )?br)|(bl(-| )?tr)){1}'
-            pattern = rf'(?:^|\s|[^\w]){row_pattern}(?:$|[^\d])'
-
-            match = re.search(pattern, comment, re.IGNORECASE)
-            if match:
-                return match.groups()[0].lower().strip()
-            else:
-                return 'blank'
-
-        regex_row = extract_row(comment)
-
-        if regex_row == 'blank':
-            return regex_row
-
-        digit_match = re.search(r'\d', regex_row)
-        if digit_match:
-            digit = int(digit_match.group())
-            if digit < 1 or digit > 5:
-                logging.debug(f'FOUND WRONG ROW NUMBER IN COMMENT: {comment}')
-                return 'blank'
-            if regex_row.startswith('r'):
-                return 'row' + str(digit)
-            else:
-                return 'col' + str(digit)
-        # tlbr or bltr
-        else:
-            row = regex_row.replace('-', '').replace(' ', '')
-            return row
-
-    def parse_comment(self, comment):
-        comment = str(comment)
-        for name, symbol in html_symbols.items():
-            comment = comment.replace(name, symbol)
-        return comment
 
     def is_type(self, type):
         if self.type == type:

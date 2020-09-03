@@ -1,15 +1,16 @@
 from Utils import *
 import logging
 from Definitions import is_supported_version
+from RaceData.Race import Race
 
 SHORT_GOAL_NAMES = convert_to_dict('short_goal_names.txt', to_lower=True)
 
 class Player:
 
-    def __init__(self, name, include_betas=False):
+    def __init__(self, name, races_data, include_betas=False):
         self.name = name
         self.include_betas = include_betas
-        self.races = []
+        self.races = [Race(race_data) for race_data in races_data]
 
     def select_races(self, n=-1, type = 'bingo', sort = 'best', forfeits=False, blanks=True, span = None):
         # type
@@ -97,7 +98,7 @@ class Player:
 
     def get_favorite_row(self):
         bingos = self.select_races(type='bingo', blanks=False)
-        rows = [race.row_id for race in bingos if race.row]
+        rows = [race.row_id for race in bingos if race.row_id]
         if rows != []:
             fav_row =  max(set(rows), key=rows.count)
             count = len([r for r in bingos if r.row_id==fav_row])
