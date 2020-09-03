@@ -34,11 +34,10 @@ class Dashboard:
             if input_name is '':
                 # prevent the None callbacks is important with the store component.
                 # you don't want to update the store for nothing.
-                print('load_player_data: prevent update!')
+                logging.debug('PreventUpdate for update_player_data()')
                 raise PreventUpdate
-            print('loading data')
+
             player_data = load_player_data(input_name, include_betas) or {}
-            print(player_data)
             return player_data
 
 
@@ -58,9 +57,8 @@ class Dashboard:
         )
         def update_output_div(ts, data):
             if ts is None or data is None:
-                print('update_output_div: prevent update!')
+                logging.debug('PreventUpdate for update_output_div()')
                 raise PreventUpdate
-            print('updating outputs')
 
             player = get_player(data)
             markdown = get_stats_divs(player, player.name)

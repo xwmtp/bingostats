@@ -118,7 +118,6 @@ class Player:
         times = [r.time for r in latest_races]
         forfeits = self.get_forfeit_count(n, type, latest_races)
         if len(times) > 0:
-            logging.debug([str(time) for time in times])
             return sum(times, dt.timedelta(0)) / len(times), forfeits
         else:
             return '-', 0

@@ -1,4 +1,5 @@
 from Dashboard.Plots.Layout import colors
+import dash_html_components as html
 import dash_table
 import pandas as pd
 
@@ -43,4 +44,4 @@ def get_bingo_table(player=None):
         export_format = 'csv'
     )
 
-    return table
+    return [html.H3('Bingo races table'), table]

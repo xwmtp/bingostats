@@ -73,13 +73,16 @@ table.cell-table {
   justify-content: center;
 }
 
-
-
 #stats-ranks-graph {
   width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+#storage-div {
+    display: block;
+    margin: 20px;
 }
 
 
@@ -109,7 +112,6 @@ table.cell-table {
   width: 80%;
 }
 
-
 #smaller-graphs {
   width: 90%;
   display: flex;
@@ -120,14 +122,11 @@ table.cell-table {
 
 /* SRL points graph */
 #srl-point-graph {
-  width: 100%;
+  display:block;
+  width: 49%;
   height: 600px;
 }
 
-#srl-point-graph-loading-block {
-  width: 49%;
-  display: block;
-}
 
 /* PB progression graph*/
 #pb-graph {
@@ -142,10 +141,6 @@ table.cell-table {
   align-items: flex-end;
 }
 
-#pb-graph-loading-block {
-  width: 100%;
-  display: block;
-}
 
 #dropdown {
   color: black;
@@ -159,21 +154,11 @@ table.cell-table {
 
 
 /* Data table */
-#bingo-table-div {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-}
 
 #bingo-table {
-  width: 100%;
-  padding: 30px;
-}
-
-#bingo-table-loading-block {
-  width: 80%;
+  width: 85%;
   display: block;
+  padding: 30px;
 }
 
 
