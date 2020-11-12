@@ -57,6 +57,7 @@ def add_bingo_data(dict):
     dict['beta'] = is_beta
     dict['seed'] = parse_seed(dict['goal'])
     dict['row_id'] = parse_row_id(dict['comment'])
+    dict['row'] = [] # gets filled later
     return dict
 
 

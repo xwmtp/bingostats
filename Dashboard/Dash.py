@@ -29,15 +29,19 @@ class Dashboard:
         @app.callback(Output('storage', 'data'),
                       [Input(component_id='current-player', component_property='children'),
                        Input(component_id='use-betas', component_property='children'),
-                       ])
-        def update_player_data(input_name, include_betas):
+                       ],
+                      [State('storage', 'data')])
+        def update_player_data(input_name, include_betas, current_data):
             if input_name is '':
                 # prevent the None callbacks is important with the store component.
                 # you don't want to update the store for nothing.
                 logging.debug('PreventUpdate for update_player_data()')
                 raise PreventUpdate
 
-            player_data = load_player_data(input_name, include_betas) or {}
+            if current_data and current_data['name'] == input_name:
+                player_data = current_data
+            else:
+                player_data = load_player_data(input_name, include_betas) or {}
             return player_data
 
 
@@ -91,7 +95,7 @@ class Dashboard:
                 display = 'display'
             return input_value, display
 
-        # Called opon checking/unchecking beta-version checkbox
+        # Called upon checking/unchecking beta-version checkbox
         @app.callback(
             Output('use-betas', 'children'),
             [Input('beta-checkbox', 'value')],
@@ -109,13 +113,11 @@ class Dashboard:
             [Output('pb-graph-2', 'children'),
              Output('current-version', 'children')],
             [Input('dropdown', 'value')],
-            [State('current-player', 'children'),
-             State('current-version', 'children'),
-             State('use-betas', 'children'),
+            [State('current-version', 'children'),
              State('storage', 'data')
              ]
         )
-        def update_pb_version(new_version, player_title, current_version, include_betas, data):
+        def update_pb_version(new_version, current_version, data):
             player = get_player(data)
             PB_graph = get_PB_graph(player, new_version)
             value_was_changed = current_version != '' and new_version != current_version

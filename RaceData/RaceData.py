@@ -40,7 +40,7 @@ def lookup_player_data(name, include_betas=False, player_data=None):
         if racetime_user_id:
             player_data['races'] += parse_racetime_races(name, racetime_user_id)
 
-        #add_goals(player_data['races']) TODO
+        add_goals(player_data['races'])
     return player_data
 
 
@@ -86,10 +86,10 @@ def parse_racetime_races(name, id):
 
 
 def add_goals(races):
-    bingos = [r for r in races if r.is_bingo]
-    versions = set([r.type for r in bingos])
+    bingos = [r for r in races if r['bingo']]
+    versions = set([r['type'] for r in bingos])
     for version in versions:
-        version_bingos = [r for r in bingos if r.type == version]
+        version_bingos = [r for r in bingos if r['type'] == version]
         # version has been pre generated
         if is_pregenerated_version(version):
             add_pregenerated_goals(version, version_bingos)
@@ -101,20 +101,20 @@ def add_pregenerated_goals(version, races):
     logging.debug(f'Using {len(races)} pre-generated boards for version {version}')
     version_boards = BINGO_VERSIONS[version]
     for bingo in races:
-        if bingo.row_id != 'blank':
-            bingo.row = version_boards.get_row(int(bingo.seed), bingo.row_id)
+        if bingo['row_id'] != 'blank':
+            bingo['row'] = version_boards.get_row(int(bingo['seed']), bingo['row_id'])
 
 def add_api_goals(version, races):
     logging.debug(f'Looking up {len(races)} boards for version {version}')
-    seeds = [r.seed for r in races]
+    seeds = [r['seed'] for r in races]
     goal_data = readjson(f"https://scaramangado.de/oot-bingo-api?version={version.replace('b', 'beta')}&seeds={','.join(seeds)}&mode=normal")
     if goal_data:
         boards = goal_data['boards']
         for i in range(len(races)):
             bingo = races[i]
-            if bingo.row_id != 'blank':
-                indices = ROW_INDICES[bingo.row_id]
-                bingo.row = [boards[i]['goals'][j] for j in indices]
+            if bingo['row_id'] != 'blank':
+                indices = ROW_INDICES[bingo['row_id']]
+                bingo['row'] = [boards[i]['goals'][j] for j in indices]
 
 
 

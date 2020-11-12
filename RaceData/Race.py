@@ -25,7 +25,7 @@ class Race:
         self.comment = race_info['comment']
 
         self.row_id = race_info['row_id']
-        self.row = [] # gets filled later
+        self.row = race_info['row']
 
 
 
