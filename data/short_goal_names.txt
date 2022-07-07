@@ -147,12 +147,12 @@ Frog's HP;Frog HP
 Ganon's Castle Boss Key;Ganon BK
 Gerudo's Card;-
 Get Bombchu chest in Spirit Temple;Spirit Chu chest
-Get to the end of Fire Trial;Fire Trial
-Get to the end of Forest Trial;Forest Trial
-Get to the end of Light Trial;Light Trial
-Get to the end of Shadow Trial;Shadow Trial
-Get to the end of Spirit Trial;Spirit Trial
-Get to the end of Water Trial;Water Trial
+Open the Final Door of Fire Trial;Fire Trial
+Open the Final Door of Forest Trial;Forest Trial
+Open the Final Door of Light Trial;Light Trial
+Open the Final Door of Shadow Trial;Shadow Trial
+Open the Final Door of Spirit Trial;Spirit Trial
+Open the Final Door of Water Trial;Water Trial
 Giant's Knife;-
 Giant's Wallet;-
 Golden Gauntlets;-
