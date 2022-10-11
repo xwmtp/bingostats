@@ -24,7 +24,7 @@ def get_player(name, include_betas=False):
 
 def lookup_player(name, include_betas=False, player=None):
     logging.debug(f"Looking up name {name}...")
-    srl_json = readjson(f'https://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
+    #srl_json = readjson(f'https://api.speedrunslive.com/pastraces?player={name}&pageSize=1500')
     racetime_user_json = readjson(f'https://racetime.gg/autocomplete/user?term={name}')
 
     def find_racetime_user_id(name, results):
@@ -36,12 +36,12 @@ def lookup_player(name, include_betas=False, player=None):
                 return user['url'].replace('/user/', '')
 
     racetime_user_id = find_racetime_user_id(name, racetime_user_json['results'])
-    if srl_json or racetime_user_json:
+    if racetime_user_json: # or srl_json:
         if not player:
             logging.debug(f'Creating now player object for name {name}')
             player = Player(name, include_betas)
-        if srl_json:
-            player.races += parse_srl_races(name, srl_json)
+        # if srl_json:
+        #     player.races += parse_srl_races(name, srl_json)
         if racetime_user_id:
             player.races += parse_racetime_races(name, racetime_user_id)
 
